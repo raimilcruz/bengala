@@ -8,7 +8,7 @@ using Bengala.AST.SemanticsUtils;
 
 namespace Bengala
 {
-    internal class BengalaParser : tigerParser
+    public class BengalaParser : tigerParser
     {
         public BengalaParser(List<Message> errorsLexer, ITokenStream input) : base(input)
         {

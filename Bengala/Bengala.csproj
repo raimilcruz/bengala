@@ -71,6 +71,8 @@
     <Compile Include="AST\ArrayAccessAST.cs" />
     <Compile Include="AST\ArrayDeclarationAST.cs" />
     <Compile Include="AST\ArrayInstatiationAST.cs" />
+    <Compile Include="AST\AstNode.cs" />
+    <Compile Include="AST\AstVisitor.cs" />
     <Compile Include="AST\BreakAST.cs" />
     <Compile Include="AST\CodeGenerationUtils\IExpressionGenerator.cs" />
     <Compile Include="AST\CodeGenerationUtils\ILCode.cs" />

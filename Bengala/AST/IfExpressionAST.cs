@@ -138,5 +138,10 @@ namespace Bengala.AST
         #endregion
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitIfExpression(this);
+        }
     }
 }

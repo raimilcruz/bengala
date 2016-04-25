@@ -8,7 +8,7 @@ using Bengala.AST.SemanticsUtils;
 
 namespace Bengala
 {
-    internal class BengalaLexer : tigerLexer
+    public class BengalaLexer : tigerLexer
     {
         public BengalaLexer(ICharStream iCharStream) : base(iCharStream)
         {

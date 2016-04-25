@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using Bengala.AST.CodeGenerationUtils;
 using Bengala.AST.SemanticsUtils;
@@ -11,7 +12,7 @@ namespace Bengala.AST
     /// <summary>
     /// Representa a una expresion en el lenguaje tiger.Es la clase base de todas las posibles expresiones
     /// </summary>
-    public abstract class ExpressionAST
+    public abstract class ExpressionAST : AstNode
     {
         #region Fields and Properties
 
@@ -72,5 +73,10 @@ namespace Bengala.AST
         public abstract void GenerateCode(ILCode code);
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

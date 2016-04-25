@@ -28,7 +28,8 @@ namespace Bengala.AST
         public StringAST(string value, int line, int col) : base(line, col)
         {
             //se eliminan las comillas
-            Value = value.Substring(1, value.Length - 2);
+            //TODO: We do not need to assume that value start and end with qoutes
+            Value = RemoveBeginAndEndQuote(value);
             Value = Value.Replace("\\n", "\n");
             Value = Value.Replace("\\t", "\t");
             Value = Value.Replace("\\\\", "\\");
@@ -36,6 +37,14 @@ namespace Bengala.AST
             Value = Value.Replace("\\^", "^");
 
             AlwaysReturn = true;
+        }
+        string RemoveBeginAndEndQuote(string s) {
+            var result = s;
+            if (result.Length > 0 && result[0] == '\"')
+                result = result.Substring(1, result.Length - 1);
+            if(result.Length>0 && result[result.Length-1] == '\"')
+                result = result.Substring(0, s.Length - 1);
+            return result;
         }
 
         #endregion
@@ -57,5 +66,10 @@ namespace Bengala.AST
         }
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitStringAst(this);
+        }
     }
 }
