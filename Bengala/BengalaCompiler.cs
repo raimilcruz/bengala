@@ -119,33 +119,34 @@ namespace Bengala
         /// <returns>Retorna una lista con los errores que se produjeron</returns>
         private List<Message> Compile(string filename, string typeName)
         {
-            var stm = new StreamReader(filename);
-            var reader = new ANTLRReaderStream(stm);
-            var lexer = new BengalaLexer(reader);
-            var cm = new CommonTokenStream(lexer);
-            var parser = new BengalaParser(lexer.Errors, cm);
+            //var stm = new StreamReader(filename);
+            //var reader = new ANTLRReaderStream(stm);
+            //var lexer = new BengalaLexer(reader);
+            //var cm = new CommonTokenStream(lexer);
+            //var parser = new BengalaParser(lexer.Errors, cm);
 
-            exp = parser.program();
+            //exp = parser.program();
 
-            List<Message> erroresWarning = parser.Errors;
-            //if (parser.NumberOfSyntaxErrors == 0)
-            if (parser.Errors.Count == 0)
-            {
-                var generalScope = new Scope(null);
-                init = new Inizializator<ILCode>(generalScope);
+            //List<Message> erroresWarning = parser.Errors;
+            ////if (parser.NumberOfSyntaxErrors == 0)
+            //if (parser.Errors.Count == 0)
+            //{
+            //    var generalScope = new Scope(null);
+            //    init = new Inizializator<ILCode>(generalScope);
 
-                InitScope(generalScope);
+            //    InitScope(generalScope);
 
-                erroresWarning = new List<Message>();
-                exp.CheckSemantic(generalScope, erroresWarning);
+            //    erroresWarning = new List<Message>();
+            //    exp.CheckSemantic(generalScope, erroresWarning);
 
-                var realErrores = from message in erroresWarning
-                                  where message is ErrorMessage 
-                                  select message;
-                if (realErrores.Count() == 0)
-                    CreateCode(FileName(filename), typeName);
-            }
-            return erroresWarning ?? new List<Message>();
+            //    var realErrores = from message in erroresWarning
+            //                      where message is ErrorMessage 
+            //                      select message;
+            //    if (realErrores.Count() == 0)
+            //        CreateCode(FileName(filename), typeName);
+            //}
+            //return erroresWarning ?? new List<Message>();
+            return new List<Message>();
         }
 
         private static void AddMainToScope(Scope scope)

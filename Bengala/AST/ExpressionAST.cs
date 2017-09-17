@@ -25,7 +25,7 @@ namespace Bengala.AST
         /// Devuelve el tipo de retorna de la expresion.Esto permite verificar que las asignaciones y operaciones 
         /// tienen sentido
         /// </summary>
-        public virtual TigerType ReturnType { get; protected set; }
+        public virtual TigerType ReturnType { get; set; }
 
         /// <summary>
         /// Devuelve una referencia al scope que pasa como parametro en el metodo CheckSemantics

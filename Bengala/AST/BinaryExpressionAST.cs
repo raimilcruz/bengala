@@ -47,7 +47,7 @@ namespace Bengala.AST
 
         #region Static Methods
 
-        //TODO : Este metodo ver como implementarlo con un patron factory
+        //TODO : Move to the parser namespace
         /// <summary>
         /// Metodo para crear alguna de la expresiones que siempre tienen todos los lenguajes
         /// </summary>
@@ -112,47 +112,9 @@ namespace Bengala.AST
 
         public override bool CheckSemantic(Scope scope, List<Message> listError)
         {
-            LeftExp.CheckSemantic(scope, listError);
-            TigerType leftType = LeftExp.ReturnType;
-
-            RightExp.CheckSemantic(scope, listError);
-            TigerType rightType = RightExp.ReturnType;
-
-            TigerType tt;
-            if (CheckOperator(leftType, rightType, out tt))
-            {
-                ReturnType = tt;
-                return true;
-            }
-            listError.Add(
-                new ErrorMessage(string.Format(Message.LoadMessage("SupportOp"), Operator, leftType, rightType), Line,
-                                 Columns));
-            ReturnType = TigerType.GetType<ErrorType>();
-            return false;
+            throw new NotImplementedException("Implementation has been move to StaticChecker.VisitBinaryExpression as part of refactoring");
         }
-
-        /// <summary>
-        /// Es usado a la hora del chequeo semantico, para saber si dos operandos soportan cierto operador
-        /// </summary>
-        /// <param name="leftType"></param>
-        /// <param name="rightType"></param>
-        /// <param name="tt"></param>
-        /// <returns></returns>
-        protected virtual bool CheckOperator(TigerType leftType, TigerType rightType, out TigerType tt)
-        {
-            if (leftType.SupportsOperator(rightType, Operator))
-            {
-                tt = leftType.GetOperationResult(rightType, Operator);
-                return true;
-            }
-            if (rightType.SupportsOperator(leftType, Operator))
-            {
-                tt = rightType.GetOperationResult(leftType, Operator);
-                return true;
-            }
-            tt = null;
-            return false;
-        }
+     
 
         /// <summary>
         /// Este metodo es redefinido en cada hijo para hacer cada uno la operacion correspondiente con los  operandos

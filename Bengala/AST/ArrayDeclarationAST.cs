@@ -35,39 +35,7 @@ namespace Bengala.AST
 
         public override bool CheckSemantic(Scope scope, List<Message> listError)
         {
-            CurrentScope = scope;
-
-            //la clase base chequea q el id sea valido
-            if (base.CheckSemantic(scope, listError))
-            {
-                TigerType tt;
-                if (scope.HasType(BaseTypeID, out tt) != ScopeLocation.NotDeclared)
-                {
-                    var at = new ArrayType(tt, TypeId);
-                    scope.AddType(TypeId, at);
-                    return true;
-                }
-                int savedErrorPos = listError.Count;
-                scope.TypeAdded += (sender, args) =>
-                                       {
-                                           if (args.TypeName == BaseTypeID)
-                                               scope.AddType(TypeId, new ArrayType(args.NewType, TypeId));
-                                       };
-                scope.FinalizeScope += (sender, args) =>
-                                           {
-                                               if (sender.HasType(BaseTypeID) == ScopeLocation.NotDeclared)
-                                               {
-                                                   listError.Insert(savedErrorPos,
-                                                                    new ErrorMessage(
-                                                                        string.Format(
-                                                                            Message.LoadMessage("TypeUndecl"),
-                                                                            BaseTypeID), Line, Columns));
-                                                   ReturnType = TigerType.GetType<ErrorType>();
-                                               }
-                                           };
-                return true;
-            }
-            return false;
+           throw new NotImplementedException("The implementation has been moved to StaticChecker.VisitArrayDeclaration");
         }
 
         public override void GenerateCode(ILCode code)
@@ -88,5 +56,10 @@ namespace Bengala.AST
         }
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitArrayDeclaration(this);
+        }
     }
 }

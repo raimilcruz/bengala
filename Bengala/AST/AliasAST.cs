@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using Bengala.AST.CodeGenerationUtils;
 using Bengala.AST.SemanticsUtils;
@@ -9,8 +10,8 @@ using Bengala.AST.SemanticsUtils;
 namespace Bengala.AST
 {
     /// <summary>
-    /// Representa la declaracion de un alias:
-    /// type t = "TipoYaDefinido"
+    /// Represents an alias declaration :
+    /// type t = [TypeIdentifierAlreadyDefined]
     /// </summary>
     public class AliasAST : TypeDeclarationAST
     {
@@ -43,44 +44,7 @@ namespace Bengala.AST
 
         public override bool CheckSemantic(Scope scope, List<Message> listError)
         {
-            //se asume que no habra problema
-            ReturnType = TigerType.GetType<NoType>();
-            //la clase base verifica q el id del type sea valido
-            //aqui si se ve q el return true hace falta
-            if (base.CheckSemantic(scope, listError))
-            {
-                TigerType tt;
-                //se verifica que exista el tipo del cual se esta creando un alias
-                if (scope.HasType(AliasToWho, out tt) != ScopeLocation.NotDeclared)
-                {
-                    //se anade una nueva entrada del mismo type, lo q con otro id
-                    scope.AddAlias(TypeId, AliasToWho);
-                    return true;
-                }
-                int savedErrorPos = listError.Count;
-                //manejador de evento
-                scope.TypeAdded += (sender, args) =>
-                                       {
-                                           if (args.TypeName == AliasToWho)
-                                               scope.AddType(TypeId, args.NewType);
-                                       };
-
-                //manejador de evento
-                scope.FinalizeScope += (sender, args) =>
-                                           {
-                                               if (sender.HasType(AliasToWho) == ScopeLocation.NotDeclared)
-                                               {
-                                                   listError.Insert(savedErrorPos,
-                                                                    new ErrorMessage(
-                                                                        string.Format(
-                                                                            Message.LoadMessage("TypeUndecl"),
-                                                                            AliasToWho), Line, Columns));
-                                                   ReturnType = TigerType.GetType<ErrorType>();
-                                               }
-                                           };
-                return true;
-            }
-            return false;
+            throw new NotImplementedException("Implementation has been moved to StaticChecker.VisitAlias");
         }
 
         public override void GenerateCode(ILCode code)
@@ -89,5 +53,11 @@ namespace Bengala.AST
         }
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitAlias(this);
+        }
     }
+
 }

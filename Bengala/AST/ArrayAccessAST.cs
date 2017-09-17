@@ -49,29 +49,7 @@ namespace Bengala.AST
 
         public override bool CheckSemantic(Scope scope, List<Message> listError)
         {
-            //esto es para quedarme con el scope actual
-            CurrentScope = scope;
-
-
-            ReturnType = TigerType.GetType<ErrorType>();
-            array.CheckSemantic(scope, listError);
-            //verifico que la expresion 'array' sea de tipo ArrayType
-            var arrayType = array.ReturnType as ArrayType;
-            if (arrayType != null)
-            {
-                indexer.CheckSemantic(scope, listError);
-                //verifico que la expresion que indexa sea de tipo IntType
-                var intType = indexer.ReturnType as IntType;
-                if (intType != null)
-                {
-                    ReturnType = arrayType.BaseType;
-                    return AlwaysReturn = true;
-                }
-                listError.Add(new ErrorMessage(Message.LoadMessage("ArrayIndex"), Line, Columns));
-                return false;
-            }
-            listError.Add(new ErrorMessage(Message.LoadMessage("Index"), Line, Columns));
-            return false;
+           throw new NotImplementedException("The implementation has been moved to StatiChecker.VisitArrayAccess");
         }
 
         #endregion
@@ -137,5 +115,10 @@ namespace Bengala.AST
         #endregion
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitArrayAccess(this);
+        }
     }
 }

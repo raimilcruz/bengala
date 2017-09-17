@@ -11,33 +11,33 @@ using Bengala.AST.SemanticsUtils;
 namespace Bengala.AST
 {
     /// <summary>
-    /// Representa la instruction :   arrayType '[' sizeExp ']' 'of' initiaExp
+    /// Representa la instruction :   arrayType '[' SizeExp ']' 'of' initiaExp
     /// </summary>
     public class ArrayInstatiationAST : ExpressionAST
     {
         #region Fields and Properties
 
-        private readonly string arrayTypeId;
-        private readonly ExpressionAST initialExp;
-        private readonly ExpressionAST sizeExp;
+        public readonly string ArrayTypeIdentifier;
+        public readonly ExpressionAST InitializationExp;
+        public readonly ExpressionAST SizeExp;
 
         #endregion
 
         #region Constructors
 
-        public ArrayInstatiationAST(string arrayType, ExpressionAST sizeExp, ExpressionAST initialExp)
+        public ArrayInstatiationAST(string arrayType, ExpressionAST sizeExp, ExpressionAST initializationExp)
         {
-            arrayTypeId = arrayType;
-            this.sizeExp = sizeExp;
-            this.initialExp = initialExp;
+            ArrayTypeIdentifier = arrayType;
+            this.SizeExp = sizeExp;
+            this.InitializationExp = initializationExp;
         }
 
-        public ArrayInstatiationAST(string arrayType, ExpressionAST sizeExp, ExpressionAST initialExp, int line, int col)
+        public ArrayInstatiationAST(string arrayType, ExpressionAST sizeExp, ExpressionAST initializationExp, int line, int col)
             : base(line, col)
         {
-            this.arrayTypeId = arrayType;
-            this.sizeExp = sizeExp;
-            this.initialExp = initialExp;
+            this.ArrayTypeIdentifier = arrayType;
+            this.SizeExp = sizeExp;
+            this.InitializationExp = initializationExp;
         }
 
         #endregion
@@ -46,51 +46,19 @@ namespace Bengala.AST
 
         public override bool CheckSemantic(Scope scope, List<Message> listError)
         {
-            CurrentScope = scope;
-
-            ReturnType = TigerType.GetType<ErrorType>();
-            TigerType t;
-            if (scope.HasType(arrayTypeId, out t) != ScopeLocation.NotDeclared)
-                //Chequeo si este tipo de array fue declarado
-            {
-                var typeArray = t as ArrayType;
-                if (typeArray != null)
-                {
-                    sizeExp.CheckSemantic(scope, listError);
-                    if (sizeExp.ReturnType != TigerType.GetType<IntType>())
-                        //Chequeo que el length del array sea un entero                   
-                        listError.Add(new ErrorMessage(Message.LoadMessage("ArrayIndex"), Line, Columns));
-                    else
-                    {
-                        initialExp.CheckSemantic(scope, listError);
-                        if (!initialExp.ReturnType.CanConvertTo(typeArray.BaseType))
-                            listError.Add(
-                                new ErrorMessage(
-                                    string.Format(Message.LoadMessage("Match"), initialExp.ReturnType,
-                                                  typeArray.BaseType), Line, Columns));
-                        else
-                        {
-                            ReturnType = typeArray;
-                            return AlwaysReturn = true;
-                        }
-                    }
-                    return false;
-                }
-            }
-            listError.Add(new ErrorMessage(Message.LoadMessage("TypeUndecl"), Line, Columns));
-            return false;
+            throw new NotImplementedException("The implementation has been moved to StaticChecker.VisitArrayInstantiation");
         }
 
         public override void GenerateCode(ILCode code)
         {
             //tengo que declarar un metodo que sea el que inicialize este array. es decir que le asigne el valor de sizeexp;
-            TypeInfo tI = CurrentScope.GetTypeInfo(arrayTypeId);
+            TypeInfo tI = CurrentScope.GetTypeInfo(ArrayTypeIdentifier);
             Type array = code.DefinedType[tI.CodeName];
 
 
             ILGenerator il = code.Method.GetILGenerator();
 
-            sizeExp.GenerateCode(code);
+            SizeExp.GenerateCode(code);
             il.Emit(OpCodes.Newarr, array.GetElementType());
 
             //guardar el array .
@@ -98,7 +66,7 @@ namespace Bengala.AST
             il.Emit(OpCodes.Stloc, localArray.LocalIndex);
 
             //inicializar correctamente el array 
-            // for (i =0 to sizeExp ) array[i] = initialExp
+            // for (i =0 to SizeExp ) array[i] = InitializationExp
             Initialize(code, localArray, array);
 
             il.Emit(OpCodes.Ldloc, localArray.LocalIndex);
@@ -134,21 +102,21 @@ namespace Bengala.AST
             il.Emit(OpCodes.Ldloc, varFor.LocalIndex);
             //carga la expresion from
             code.PushOnStack = true;
-            sizeExp.GenerateCode(code);
+            SizeExp.GenerateCode(code);
             // tengo que ver si i<exp 
             il.Emit(OpCodes.Clt);
 
             //salto al final si no se cumplio la condicion
             il.Emit(OpCodes.Brfalse, endLoop);
 
-            // a[i] = initialExp
+            // a[i] = InitializationExp
             code.PushOnStack = pushOnStack;
             //cargar el array
             il.Emit(OpCodes.Ldloc, localArray.LocalIndex);
             //cargar el indexer
             il.Emit(OpCodes.Ldloc, varFor.LocalIndex);
             //cargar la exp
-            initialExp.GenerateCode(code);
+            InitializationExp.GenerateCode(code);
             //hacer la asignacion
             il.Emit(OpCodes.Stelem, arrayType.IsArray ? arrayType.GetElementType() : arrayType);
 
@@ -167,5 +135,10 @@ namespace Bengala.AST
         }
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitArrayInstantiation(this);
+        }
     }
 }
