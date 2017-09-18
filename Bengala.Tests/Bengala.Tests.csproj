@@ -66,6 +66,7 @@
     <Compile Include="Static\FunctionDeclarationcs.cs" />
     <Compile Include="Static\IfExpressionTest.cs" />
     <Compile Include="Static\LetTests.cs" />
+    <Compile Include="Static\ArrayTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Bengala\Bengala.csproj">

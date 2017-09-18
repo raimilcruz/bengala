@@ -704,6 +704,7 @@ namespace Bengala.Analysis
             //notify that all types in this scope where proccessed. Then if there was fields with unsolved
             //types, this is the momemnt to catch errors.
             sc.NotifyEndTypeScope();
+            var errorAfterClosingScope = _errorListener.Count != 0;
 
             //Declaration List
 
@@ -739,8 +740,9 @@ namespace Bengala.Analysis
             //cierra el scope pq no habran mas declaraciones
 
 
-            //chequeo de semantica del cuerpo del let
-            if (letExpr.SequenceExpressionList.Accept(this) && letExpr.ReturnType == TigerType.GetType<NoType>())
+            //checks the body of the let
+            //verifies that there were no errors (eg. that a type was not found after closing the scope)
+            if (letExpr.SequenceExpressionList.Accept(this) && letExpr.ReturnType == TigerType.GetType<NoType>() && !errorAfterClosingScope)
             {
                 letExpr.AlwaysReturn = letExpr.SequenceExpressionList.AlwaysReturn;
                 letExpr.ReturnType = letExpr.SequenceExpressionList.ReturnType;

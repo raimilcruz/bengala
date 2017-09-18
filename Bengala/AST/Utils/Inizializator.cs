@@ -80,6 +80,10 @@ namespace Bengala.AST.Utils
             //predifined types
             scope.AddType("int",TigerType.GetType<IntType>());
             scope.AddType("string",TigerType.GetType<StringType>());
+            //We add ErrorType to scope, because when a variable is not defined
+            //we say that it has ErrorType, so ErrorType must be in the 
+            //Scope.
+            scope.AddType(TigerType.GetType<ErrorType>().TypeID, TigerType.GetType<StringType>());
         }
     }
 }

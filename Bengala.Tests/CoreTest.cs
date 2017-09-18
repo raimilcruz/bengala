@@ -39,6 +39,20 @@ namespace Bengala.Tests
             return new LetExpressionAST(declarations,body);
         }
 
+        protected ArrayDeclarationAST ArrayDecl(string arrayTypeId, string baseTypeId)
+        {
+            return new ArrayDeclarationAST(arrayTypeId, baseTypeId,0,0);
+        }
+
+        protected ArrayInstatiationAST ArrayInst(string arrayTypeId, ExpressionAST sizeExpr,ExpressionAST initExpr)
+        {
+            return new ArrayInstatiationAST(arrayTypeId, sizeExpr, initExpr, 0, 0);
+        }
+
+        protected ArrayAccessAST ArrayAccess(ExpressionAST arrayExpr, ExpressionAST indexExpr)
+        {
+            return new ArrayAccessAST(arrayExpr, indexExpr, 0, 0);
+        }
 
         protected FunctionDeclarationAST Fun(string name, List<KeyValuePair<string, string>> parameters,ExpressionAST body,String retType)
         {
