@@ -8,7 +8,7 @@ namespace Bengala.AST.SemanticsUtils
 {
     public class FunctionInfo
     {
-        public FunctionInfo(List<KeyValuePair<string, TigerType>> parameterList)
+        private FunctionInfo(List<KeyValuePair<string, TigerType>> parameterList)
         {
             ParameterList = parameterList ?? new List<KeyValuePair<string, TigerType>>();
             FunctionReturnType = TigerType.GetType<NoType>();
@@ -19,10 +19,6 @@ namespace Bengala.AST.SemanticsUtils
             : this(parameterList)
         {
             FunctionReturnType = retType;
-        }
-
-        public FunctionInfo()
-        {
         }
 
         public List<KeyValuePair<string, TigerType>> ParameterList { get; private set; }

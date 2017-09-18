@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using Bengala.AST.CodeGenerationUtils;
@@ -40,43 +41,7 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            ExpressionFrom.CheckSemantic(scope, listError);
-            ReturnType = TigerType.GetType<ErrorType>();
-            //si la expresion "from" no es de tipo entero.
-            if (ExpressionFrom.ReturnType != TigerType.GetType<IntType>())
-                listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("ForInit"), VarId), Line, Columns));
-            else
-            {
-                ExpressionTo.CheckSemantic(scope, listError);
-                // si la expresion "to" no es tipo entero.
-                if (ExpressionTo.ReturnType != TigerType.GetType<IntType>())
-                    listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("ForStop"), VarId), Line, Columns));
-                else
-                {
-                    var sc = new Scope(scope, this);
-                    CurrentScope = sc;
-                    if (scope.HasVar(VarId) != ScopeLocation.NotDeclared)
-                    {
-                        listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("VarDecl"), VarId), Line,
-                                                       Columns));
-                        ReturnType = TigerType.GetType<ErrorType>();
-                        return false;
-                    }
-                    //annado la variable al scope 
-                    sc.AddVarFor(VarId, TigerType.Int);
-
-                    if (BodyExpressions.CheckSemantic(sc, listError))
-                    {
-                        ReturnType = BodyExpressions.ReturnType;
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
+ 
         public override void GenerateCode(ILCode code)
         {
             //--->
@@ -156,5 +121,10 @@ namespace Bengala.AST
         }
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitForExpression(this);
+        }
     }
 }

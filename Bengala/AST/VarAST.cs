@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using Bengala.AST.CodeGenerationUtils;
@@ -32,43 +33,10 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public bool IsForeignVar { get; private set; }
+        public bool IsForeignVar { get; set; }
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            //es posible que se quite
-            CurrentScope = scope;
-
-            TigerType tt;
-            //comprobar que la variable esta definida
-            if (scope.HasVar(VarId, out tt) != ScopeLocation.NotDeclared)
-            {
-                //dar el valor correspondiente al tipo de esa expresion
-                ReturnType = tt;
-
-                if (IsVarFromDifferentFunction())
-                    SetVarAsUsedForAnotherFunction();
-
-                return true;
-            }
-            //error en caso q la variable no este definida
-            listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("VarUndecl"), VarId), Line, Columns));
-            ReturnType = TigerType.GetType<ErrorType>();
-            return false;
-        }
-
-        private void SetVarAsUsedForAnotherFunction()
-        {
-            IsForeignVar = true;
-
-            VarInfo varInfo = CurrentScope.GetVarInfo(VarId);
-            varInfo.IsLocalVariable = false;
-            varInfo.IsUsedForAnotherFunction = true;
-            FunctionInfo funInfo = CurrentScope.GetFunction(varInfo.FunctionNameParent);
-            funInfo.ContainVarsUsedForAnotherFunction = true;
-            if (!funInfo.VarsUsedForAnotherFunction.Contains(varInfo))
-                CurrentScope.AsociatteVarToFunctionAsUsedForChildFunction(VarId);
-        }
+    
+      
 
         public override void GenerateCode(ILCode code)
         {
@@ -174,15 +142,7 @@ namespace Bengala.AST
             code.PushOnStack = pushOnStack;
         }
 
-        /// <summary>
-        /// Este metodo devuelve true si la variable actual se declaro en otra funcion que no el la actual.
-        /// </summary>
-        /// <returns></returns>
-        private bool IsVarFromDifferentFunction()
-        {
-            VarInfo varInfo = CurrentScope.GetVarInfo(VarId);
-            return (varInfo.FunctionNameParent != CurrentScope.CurrentFunction.FunctionName);
-        }
+      
 
         #endregion
 

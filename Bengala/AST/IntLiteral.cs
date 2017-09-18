@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using Bengala.AST.CodeGenerationUtils;
@@ -12,7 +13,7 @@ namespace Bengala.AST
     /// <summary>
     /// Clase que representa a un entero
     /// </summary>
-    public class IntAST : ExpressionAST
+    public class IntLiteral : ExpressionAST
     {
         #region Fields and Properties
 
@@ -22,13 +23,13 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public IntAST(int value)
+        public IntLiteral(int value)
         {
             Value = value;
             AlwaysReturn = true;
         }
 
-        public IntAST(int value, int line, int col) : base(line, col)
+        public IntLiteral(int value, int line, int col) : base(line, col)
         {
             Value = value;
             AlwaysReturn = true;
@@ -38,11 +39,7 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            ReturnType = TigerType.GetType<IntType>();
-            return true;
-        }
+   
 
         public override void GenerateCode(ILCode code)
         {
@@ -55,7 +52,7 @@ namespace Bengala.AST
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {
-            return visitor.VisitIntAst(this);
+            return visitor.VisitIntLiteral(this);
         }
     }
 }

@@ -44,11 +44,7 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            throw new NotImplementedException("The implementation has been moved to StaticChecker.VisitArrayInstantiation");
-        }
-
+    
         public override void GenerateCode(ILCode code)
         {
             //tengo que declarar un metodo que sea el que inicialize este array. es decir que le asigne el valor de sizeexp;

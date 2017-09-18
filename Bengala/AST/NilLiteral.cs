@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using Bengala.AST.CodeGenerationUtils;
@@ -12,22 +13,18 @@ namespace Bengala.AST
     /// <summary>
     /// Esta clase representa al valor nil o null de los lenguajes de programacion
     /// </summary>
-    public class NilAST : ExpressionAST
+    public class NilLiteral : ExpressionAST
     {
         #region Constructors
 
-        public NilAST(int line, int col) : base(line, col)
+        public NilLiteral(int line, int col) : base(line, col)
         {
             AlwaysReturn = true;
         }
 
         #endregion
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            ReturnType = TigerType.GetType<NilType>();
-            return true;
-        }
+     
 
         public override void GenerateCode(ILCode code)
         {
@@ -36,6 +33,11 @@ namespace Bengala.AST
             il.Emit(OpCodes.Ldnull);
             if (!code.PushOnStack)
                 il.Emit(OpCodes.Pop);
+        }
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitNilLiteral(this);
         }
     }
 }

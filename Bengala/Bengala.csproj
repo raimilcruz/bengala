@@ -86,7 +86,7 @@
     <Compile Include="AST\LoopAST.cs" />
     <Compile Include="AST\LValueAST.cs" />
     <Compile Include="AST\NegExpressionAST.cs" />
-    <Compile Include="AST\NilAST.cs" />
+    <Compile Include="AST\NilLiteral.cs" />
     <Compile Include="AST\RecordAccessAST.cs" />
     <Compile Include="AST\RecordDeclarationAST.cs" />
     <Compile Include="AST\RecordInstantiationAST.cs" />
@@ -121,13 +121,13 @@
     <Compile Include="AST\SemanticsUtils\FunctionInfo.cs" />
     <Compile Include="AST\SemanticsUtils\NoType.cs" />
     <Compile Include="AST\SemanticsUtils\Operators.cs" />
-    <Compile Include="AST\IntAST.cs" />
+    <Compile Include="AST\IntLiteral.cs" />
     <Compile Include="AST\SemanticsUtils\TypeInfo.cs" />
     <Compile Include="AST\SemanticsUtils\VarInfo.cs" />
     <Compile Include="AST\TypeDeclarationAST.cs" />
     <Compile Include="AST\SemanticsUtils\WarningMessage.cs" />
     <Compile Include="AST\SequenceExpressionAST.cs" />
-    <Compile Include="AST\StringAST.cs" />
+    <Compile Include="AST\StringLiteral.cs" />
     <Compile Include="AST\VarAST.cs" />
     <Compile Include="AST\VarDeclarationAST.cs" />
     <Compile Include="AST\WhileExpressionAST.cs" />

@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using Bengala.AST.CodeGenerationUtils;
@@ -12,7 +13,7 @@ namespace Bengala.AST
     /// <summary>
     /// Representa una constante string :   "bengala"   
     /// </summary>
-    public class StringAST : ExpressionAST
+    public class StringLiteral : ExpressionAST
     {
         #region Fields and Properties
 
@@ -25,7 +26,7 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public StringAST(string value, int line, int col) : base(line, col)
+        public StringLiteral(string value, int line, int col) : base(line, col)
         {
             //se eliminan las comillas
             //TODO: We do not need to assume that value start and end with qoutes
@@ -51,11 +52,7 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            ReturnType = TigerType.GetType<StringType>();
-            return true;
-        }
+     
 
         public override void GenerateCode(ILCode code)
         {
@@ -69,7 +66,7 @@ namespace Bengala.AST
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {
-            return visitor.VisitStringAst(this);
+            return visitor.VisitStringLiteral(this);
         }
     }
 }

@@ -28,16 +28,16 @@ namespace Bengala.AST
 
         #region Constructors
 
-        protected BinaryExpressionAST(ExpressionAST leftExp, ExpressionAST rightExp)
+        protected BinaryExpressionAST(ExpressionAST leftExp, ExpressionAST rightExp, string op)
+            : this(leftExp, rightExp, op, 0, 0)
         {
-            LeftExp = leftExp;
-            RightExp = rightExp;
-            AlwaysReturn = true;
+          
         }
 
-        protected BinaryExpressionAST(ExpressionAST leftExp, ExpressionAST rightExp, int line, int col)
+        protected BinaryExpressionAST(ExpressionAST leftExp, ExpressionAST rightExp, string op, int line, int col)
             : base(line, col)
         {
+            Operator = GetOperator(op);
             LeftExp = leftExp;
             RightExp = rightExp;
             AlwaysReturn = true;
@@ -57,64 +57,45 @@ namespace Bengala.AST
         /// <param name="line"></param>
         /// <param name="col"></param>
         /// <returns></returns>
-        public static BinaryExpressionAST GetBinaryExpressionAST(ExpressionAST e1, ExpressionAST e2, string op, int line,
-                                                                 int col)
+        private static Operators GetOperator(string op)
         {
-            var b = new BinaryExpressionAST(e1, e2, line, col);
             switch (op)
             {
                 case "<=":
-                    b.Operator = Operators.LessEqual;
-                    break;
+                    return Operators.LessEqual;
                 case "<":
-                    b.Operator = Operators.LessThan;
-                    break;
+                    return Operators.LessThan;
                 case ">":
-                    b.Operator = Operators.GreaterThan;
-                    break;
+                    return Operators.GreaterThan;
                 case ">=":
-                    b.Operator = Operators.GreaterEqual;
-                    break;
+                    return Operators.GreaterEqual;
                 case "=":
-                    b.Operator = Operators.Equal;
-                    break;
+                    return Operators.Equal;
                 case "<>":
-                    b.Operator = Operators.NotEqual;
-                    break;
+                    return Operators.NotEqual;
                 case "-":
-                    b.Operator = Operators.Minus;
-                    break;
+                    return Operators.Minus;
                 case "+":
-                    b.Operator = Operators.Plus;
-                    break;
+                    return Operators.Plus;
                 case "/":
-                    b.Operator = Operators.Div;
-                    break;
+                    return Operators.Div;
                 case "*":
-                    b.Operator = Operators.Prod;
-                    break;
+                    return Operators.Prod;
                 case "%":
-                    b.Operator = Operators.Mod;
-                    break;
+                    return Operators.Mod;
                 case "&":
-                    return new AndExpressionAST(e1, e2, line, col);
+                    return Operators.And;
                 case "|":
-                    return new AndExpressionAST(e1, e2, line, col);
+                    return Operators.Or;
                 default:
-                    throw new ArgumentException("Operacion no conocida");
+                    throw new ArgumentException("Unknown operator");
             }
-            return b;
         }
 
         #endregion
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            throw new NotImplementedException("Implementation has been move to StaticChecker.VisitBinaryExpression as part of refactoring");
-        }
-     
 
         /// <summary>
         /// Este metodo es redefinido en cada hijo para hacer cada uno la operacion correspondiente con los  operandos

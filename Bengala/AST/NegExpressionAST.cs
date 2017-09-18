@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using Bengala.AST.CodeGenerationUtils;
@@ -9,7 +10,7 @@ using Bengala.AST.SemanticsUtils;
 
 namespace Bengala.AST
 {
-    internal class NegExpressionAST : UnaryExpressionAST
+    public class NegExpressionAST : UnaryExpressionAST
     {
         public NegExpressionAST(ExpressionAST exp, int line, int col)
             : base(exp, line, col)
@@ -17,22 +18,7 @@ namespace Bengala.AST
             AlwaysReturn = true;
         }
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            CurrentScope = scope;
-            if (Expression.CheckSemantic(scope, listError))
-            {
-                if (Expression.ReturnType == TigerType.GetType<IntType>())
-                {
-                    ReturnType = TigerType.GetType<IntType>();
-                    return true;
-                }
-                listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("NegExp"), Expression.ReturnType), Line,
-                                               Columns));
-            }
-            ReturnType = TigerType.GetType<ErrorType>();
-            return false;
-        }
+   
 
         public override void GenerateCode(ILCode code)
         {
@@ -50,6 +36,11 @@ namespace Bengala.AST
 
             if (!code.PushOnStack)
                 il.Emit(OpCodes.Pop);
+        }
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitNegExpression(this);
         }
     }
 }

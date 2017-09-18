@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using Bengala.AST.CodeGenerationUtils;
 using Bengala.AST.SemanticsUtils;
@@ -9,7 +10,8 @@ using Bengala.AST.SemanticsUtils;
 namespace Bengala.AST
 {
     /// <summary>
-    /// Representa una asignacion en el lenguaje tiger: lvalue ':=' exp
+    /// Represents an assigment instruction in the language.
+    /// Example. lvalue ':=' exp
     /// </summary>
     public class AssignExpressionAST : ExpressionAST
     {
@@ -41,24 +43,7 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            CurrentScope = scope;
-
-            ReturnType = TigerType.GetType<ErrorType>();
-            if (!LeftExpression.CheckSemantic(scope, listError) || !RightExpression.CheckSemantic(scope, listError))
-                return false;
-            if (RightExpression.ReturnType.CanConvertTo(LeftExpression.ReturnType))
-            {
-                ReturnType = TigerType.GetType<NoType>();
-                return true;
-            }
-            listError.Add(
-                new ErrorMessage(
-                    string.Format(Message.LoadMessage("Match"), LeftExpression.ReturnType, RightExpression.ReturnType),
-                    Line, Columns));
-            return false;
-        }
+      
 
         public override void GenerateCode(ILCode code)
         {
@@ -67,5 +52,10 @@ namespace Bengala.AST
         }
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitAssignExpression(this);
+        }
     }
 }

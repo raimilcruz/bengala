@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Bengala.AST.CodeGenerationUtils;
@@ -40,27 +41,7 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            //Se asume q no se retorna nada
-            ReturnType = TigerType.GetType<NoType>();
-
-            foreach (var exp in ExpressionList)
-                if (!exp.CheckSemantic(scope, listError))
-                    //hubo error
-                    ReturnType = TigerType.GetType<ErrorType>();
-
-            ExpressionAST last = ExpressionList.LastOrDefault();
-            if (last != null)
-            {
-                //si existe una ultima expresion, esta define el retorno del let
-                AlwaysReturn = last.AlwaysReturn;
-                ReturnType = last.ReturnType;
-            }
-            //true si no hubo ningun error
-            return ReturnType != TigerType.GetType<ErrorType>();
-        }
-
+     
         public override void GenerateCode(ILCode code)
         {
             bool pushStack = code.PushOnStack;
@@ -79,5 +60,10 @@ namespace Bengala.AST
         }
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitSequence(this);
+        }
     }
 }

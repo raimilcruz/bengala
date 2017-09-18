@@ -33,18 +33,7 @@ namespace Bengala.AST
 
         #endregion
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            TigerType tt;
-            if (scope.HasType(TypeId, out tt) != ScopeLocation.NotDeclared)
-            {
-                listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("TypeDecl"), TypeId), Line, Columns));
-                ReturnType = TigerType.GetType<ErrorType>();
-                return false;
-            }
-            ReturnType = TigerType.GetType<NoType>();
-            return true;
-        }
+     
 
         /// <summary>
         /// Este metodo es usado para crear un tipo al cual se hace referencia y es posible que no haya sido previamente creado en el codigo IL
@@ -72,6 +61,11 @@ namespace Bengala.AST
                 return temp;
             }
             throw new NotImplementedException("Los restantes tipos no estan soportados en tiger");
+        }
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitTypeDeclaration(this);
         }
     }
 }

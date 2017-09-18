@@ -47,50 +47,20 @@ namespace Bengala.AST
             ReturnTypeId = retType;
         }
 
-        public FunctionDeclarationAST(string id, List<KeyValuePair<string, string>> parameterList,
+        private FunctionDeclarationAST(string id, List<KeyValuePair<string, string>> parameterList,
                                       ExpressionAST exprInstructions)
         {
             FunctionId = id;
-            ParameterList = parameterList;
+            ParameterList = parameterList??new List<KeyValuePair<string, string>>();
             ExprInstructions = exprInstructions;
-            base.ReturnType = TigerType.GetType<NoType>();
+            ReturnType = TigerType.GetType<NoType>();
         }
 
         #endregion
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-
-            //chequear la semantica del cuerpo de la funcion, la signatura ya fue chequeada en el let correspondiente
-
-            CurrentScope = scope;
-            TigerType retType = ReturnTypeId != null ? CurrentScope.GetType(ReturnTypeId) : TigerType.GetType<NoType>();
-
-
-            //poner esta funcion como la funcion actual de scope donde se encuentra.
-            FunctionInfo temp = scope.CurrentFunction;
-            scope.CurrentFunction = scope.GetFunction(FunctionId);
-
-            ExprInstructions.CheckSemantic(scope, listError);
-
-            scope.CurrentFunction = temp;
-
-            if (!ExprInstructions.AlwaysReturn && retType != TigerType.GetType<NoType>())
-                listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("FuncDeclRet"), FunctionId), Line,
-                                               Columns));
-            else if (string.IsNullOrEmpty(ReturnTypeId) ||
-                     ExprInstructions.ReturnType.CanConvertTo(scope.GetType(ReturnTypeId)))
-                return true;
-            else
-                listError.Add(
-                    new ErrorMessage(
-                        string.Format(Message.LoadMessage("Match"), ReturnTypeId, ExprInstructions.ReturnType), Line,
-                        Columns));
-            ReturnType = TigerType.GetType<ErrorType>();
-            return false;
-        }
+   
 
         public override void GenerateCode(ILCode code)
         {
@@ -289,5 +259,10 @@ namespace Bengala.AST
         }
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitFunctionDeclaration(this);
+        }
     }
 }

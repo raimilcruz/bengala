@@ -35,42 +35,6 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            CurrentScope = scope;
-
-            TigerType tt;
-            RecordType rt;
-            //verificando que exista el tipo, 
-            if (scope.HasType(Id, out tt) != ScopeLocation.NotDeclared && (rt = tt as RecordType) != null)
-            {
-                ReturnType = rt;
-                if (ExpressionValue == null)
-                    return true;
-
-                foreach (var kvp in ExpressionValue)
-                {
-                    kvp.Value.CheckSemantic(scope, listError);
-                    if (rt.Contains(kvp.Key))
-                    {
-                        if (kvp.Value.ReturnType.CanConvertTo(rt[kvp.Key]))
-                            continue;
-                        listError.Add(
-                            new ErrorMessage(
-                                string.Format(Message.LoadMessage("Match"), kvp.Value.ReturnType, rt[kvp.Key].TypeID),
-                                Line, Columns));
-                    }
-                    else
-                        listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("RecField"), Id, kvp.Key), Line,
-                                                       Columns));
-                    ReturnType = TigerType.GetType<ErrorType>();
-                }
-                return ReturnType != TigerType.GetType<ErrorType>();
-            }
-            ReturnType = TigerType.GetType<ErrorType>();
-            listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("TypeUndecl"), Id), Line, Columns));
-            return false;
-        }
 
         public override void GenerateCode(ILCode code)
         {
@@ -112,5 +76,10 @@ namespace Bengala.AST
         }
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitRecordInstantiation(this);
+        }
     }
 }

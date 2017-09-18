@@ -43,64 +43,7 @@ namespace Bengala.AST
         #endregion
 
         #region Instance Methods
-
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            CurrentScope = scope;
-
-            //se asuma que no habra problemas
-            ReturnType = TigerType.GetType<NoType>();
-            //la clase base verifica el ID del type
-            if (base.CheckSemantic(scope, listError))
-            {
-                var rt = new RecordType(TypeId);
-                //se anade el record creado al scope para q puedan haber records recursivos en su def
-                scope.AddType(TypeId, rt);
-                //se verifica cada una de las declaraciones de los campos del record
-                int savedErrorPos = listError.Count;
-                foreach (var kvp in Fields)
-                {
-                    if (!rt.Contains(kvp.Key))
-                    {
-                        TigerType tt;
-                        if (scope.HasType(kvp.Value, out tt) == ScopeLocation.NotDeclared)
-                        {
-                            KeyValuePair<string, string> savedKvp = kvp;
-                            scope.TypeAdded += (sender, args) =>
-                                                   {
-                                                       if (args.TypeName == savedKvp.Value)
-                                                           rt.AddField(savedKvp.Key, args.NewType);
-                                                   };
-                            scope.FinalizeScope += (sender, args) =>
-                                                       {
-                                                           if (sender.HasType(savedKvp.Value) ==
-                                                               ScopeLocation.NotDeclared)
-                                                           {
-                                                               listError.Insert(savedErrorPos,
-                                                                                new ErrorMessage(
-                                                                                    string.Format(
-                                                                                        Message.LoadMessage("TypeUndecl"),
-                                                                                        savedKvp.Value), Line, Columns));
-                                                               ReturnType = TigerType.GetType<ErrorType>();
-                                                           }
-                                                       };
-                        }
-                        else
-                        {
-                            rt.AddField(kvp.Key, tt);
-                        }
-                    }
-                    else
-                    {
-                        listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("RecDecl"), kvp.Key, TypeId),
-                                                       Line, Columns));
-                    }
-                }
-                //TODO aqui se ve el prob con los ret Types y los return true pq no se puede decir nada en este momento
-                return true;
-            }
-            return false;
-        }
+        
 
         #region Generacion de codigo
 
@@ -130,5 +73,10 @@ namespace Bengala.AST
         #endregion
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitRecordDeclaration(this);
+        }
     }
 }

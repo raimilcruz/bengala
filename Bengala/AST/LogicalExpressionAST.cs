@@ -10,8 +10,8 @@ namespace Bengala.AST
 {
     public abstract class LogicalExpressionAST : BinaryExpressionAST
     {
-        protected LogicalExpressionAST(ExpressionAST leftExp, ExpressionAST rightExp, int line, int col)
-            : base(leftExp, rightExp, line, col)
+        protected LogicalExpressionAST(ExpressionAST leftExp, ExpressionAST rightExp,string op, int line, int col)
+            : base(leftExp, rightExp,op, line, col)
         {
         }
 

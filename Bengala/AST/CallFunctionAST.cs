@@ -41,44 +41,6 @@ namespace Bengala.AST
 
         #region Instance Method
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            //probablemente se cambie
-            CurrentScope = scope;
-
-            bool ok = true;
-
-            FunctionInfo functionInfo;
-            string message;
-            //verificar que la funcion existe.
-            if (scope.HasFunction(FunctionId, out functionInfo) != ScopeLocation.NotDeclared)
-            {
-                //coger su tipo de retorno
-                if (functionInfo.ParameterList.Count == RealParam.Count)
-                {
-                    for (int i = 0; i < functionInfo.ParameterList.Count; i++)
-                    {
-                        //no es necesario chequear q el chequeo de los parametros sea true o no
-                        RealParam[i].CheckSemantic(scope, listError);
-                        ok = ok && (RealParam[i].ReturnType.CanConvertTo(functionInfo.ParameterList[i].Value));
-                    }
-                    if (ok)
-                    {
-                        AlwaysReturn = !(functionInfo.FunctionReturnType is NoType);
-                        ReturnType = functionInfo.FunctionReturnType;
-                        return true;
-                    }
-                    message = string.Format(Message.LoadMessage("FuncParams"), FunctionId);
-                }
-                else
-                    message = string.Format(Message.LoadMessage("FuncParamsCount"), FunctionId, RealParam.Count);
-            }
-            else
-                message = string.Format(Message.LoadMessage("FuncUndecl"), FunctionId);
-            listError.Add(new ErrorMessage(message, Line, Columns));
-            ReturnType = TigerType.GetType<ErrorType>();
-            return false;
-        }
 
         #region Generacion de codigo
 
@@ -284,5 +246,10 @@ namespace Bengala.AST
         #endregion
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitFunctionInvocation(this);
+        }
     }
 }

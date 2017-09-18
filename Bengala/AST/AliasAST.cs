@@ -42,11 +42,7 @@ namespace Bengala.AST
 
         #region InstanceMethods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            throw new NotImplementedException("Implementation has been moved to StaticChecker.VisitAlias");
-        }
-
+     
         public override void GenerateCode(ILCode code)
         {
             //el alias no genera codigo

@@ -47,10 +47,6 @@ namespace Bengala.AST
 
         #region Check Semantics
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-           throw new NotImplementedException("The implementation has been moved to StatiChecker.VisitArrayAccess");
-        }
 
         #endregion
 

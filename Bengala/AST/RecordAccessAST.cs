@@ -41,30 +41,7 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            CurrentScope = scope;
-            ExpressionRecord.CheckSemantic(scope, listError);
-            TigerType record = ExpressionRecord.ReturnType;
-            if (record is RecordType)
-            {
-                //verificar que el record contiene el campo
-                var r = (RecordType) record;
-                if (r.Contains(FieldId))
-                {
-                    ReturnType = r[FieldId];
-                    return AlwaysReturn = true;
-                }
-                listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("RecField"), r.TypeID, FieldId), Line,
-                                               Columns));
-                ReturnType = TigerType.GetType<ErrorType>();
-                return false;
-            }
-            //la expresion no es un record
-            ReturnType = TigerType.GetType<ErrorType>();
-            listError.Add(new ErrorMessage(Message.LoadMessage("RecAccess"), Line, Columns));
-            return false;
-        }
+    
 
         #endregion
 
@@ -99,5 +76,10 @@ namespace Bengala.AST
         }
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitRecordAccess(this);
+        }
     }
 }

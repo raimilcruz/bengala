@@ -16,9 +16,9 @@ namespace Bengala.AST
     {
         public abstract T VisitNode(AstNode node);
 
-        public abstract T VisitIntAst(IntAST ast);
+        public abstract T VisitIntLiteral(IntLiteral literal);
 
-        public abstract T VisitStringAst(StringAST ast);
+        public abstract T VisitStringLiteral(StringLiteral literal);
 
         //TODO: Check if VarAst is used in both side: left and right
         public abstract T VisitVar(VarAST ast);
@@ -38,5 +38,31 @@ namespace Bengala.AST
         public abstract T VisitArrayDeclaration(ArrayDeclarationAST arrayDeclaration);
 
         public abstract T VisitArrayInstantiation(ArrayInstatiationAST arrayInstatiation);
+
+        public abstract T VisitAssignExpression(AssignExpressionAST assignExpression);
+
+        public abstract T VisitForExpression(ForExpressionAST forExpressionAst);
+
+        public abstract T VisitFunctionDeclaration(FunctionDeclarationAST functionDeclaration);
+
+        public abstract T VisitNegExpression(NegExpressionAST negExpression);
+
+        public abstract T VisitNilLiteral(NilLiteral nil);
+
+        public abstract T VisitSequence(SequenceExpressionAST sequenceExpression);
+
+        public abstract T VisitTypeDeclaration(TypeDeclarationAST typeDeclaration);
+
+        public abstract T VisitWhileExpression(WhileExpressionAST whileExpression);
+
+        public abstract T VisitBreakStatement(BreakAST breakStm);
+
+        public abstract T VisitFunctionInvocation(CallFunctionAST functionInvocation);
+
+        public abstract T VisitRecordAccess(RecordAccessAST recordAccess);
+
+        public abstract T VisitRecordInstantiation(RecordInstantiationAST recordInstantiation);
+
+        public abstract T VisitRecordDeclaration(RecordDeclarationAST recordDeclaration);
     }
 }

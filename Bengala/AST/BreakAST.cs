@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using Bengala.AST.CodeGenerationUtils;
@@ -12,11 +13,11 @@ namespace Bengala.AST
     /// <summary>
     /// Representa la instruccion "break".
     /// </summary>
-    internal class BreakAST : ExpressionAST
+    public class BreakAST : ExpressionAST
     {
         #region Fields and Properties
 
-        public LoopAST BreakeableLoop { get; private set; }
+        public LoopAST BreakeableLoop { get; set; }
 
         #endregion
 
@@ -30,20 +31,6 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            CurrentScope = scope;
-
-            if (!scope.IsInLoop)
-            {
-                listError.Add(new ErrorMessage(Message.LoadMessage("Break"), Line, Columns));
-                ReturnType = TigerType.GetType<ErrorType>();
-                return false;
-            }
-            BreakeableLoop = scope.ContainerLoop;
-            ReturnType = TigerType.GetType<NoType>();
-            return true;
-        }
 
         public override void GenerateCode(ILCode code)
         {
@@ -53,5 +40,10 @@ namespace Bengala.AST
         }
 
         #endregion
+
+        public override T Accept<T>(AstVisitor<T> visitor)
+        {
+            return visitor.VisitBreakStatement(this);
+        }
     }
 }

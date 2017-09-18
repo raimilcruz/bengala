@@ -11,6 +11,6 @@ namespace Bengala.AST
     {
         public abstract T Accept<T>(AstVisitor<T> visitor);
 
-        public TigerType NodeType { get; set;}            
+               
     }
 }

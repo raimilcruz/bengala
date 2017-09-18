@@ -62,21 +62,9 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        /// <summary>
-        /// Metodo que permite comprobar la semantica de una expresion
-        /// </summary>
-        /// <param name="scope">El scope donde se usa esta expresion</param>
-        /// <param name="listError">Una lista para poner los errores encontrados</param>
-        /// <returns>El retorno no es todavia confiable</returns>
-        public abstract bool CheckSemantic(Scope scope, List<Message> listError);
-
         public abstract void GenerateCode(ILCode code);
 
         #endregion
 
-        public override T Accept<T>(AstVisitor<T> visitor)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

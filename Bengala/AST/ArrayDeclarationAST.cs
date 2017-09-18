@@ -33,11 +33,7 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-           throw new NotImplementedException("The implementation has been moved to StaticChecker.VisitArrayDeclaration");
-        }
-
+      
         public override void GenerateCode(ILCode code)
         {
             //quedandome con el TypeInfo de tipo base del array.

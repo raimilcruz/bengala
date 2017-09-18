@@ -16,7 +16,7 @@ namespace Bengala.AST
         #region Constructors
 
         public OrExpressionAST(ExpressionAST leftExp, ExpressionAST rightExp, int line, int col)
-            : base(leftExp, rightExp, line, col)
+            : base(leftExp, rightExp,"|", line, col)
         {
             Operator = Operators.Or;
         }

@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 using Bengala.AST.CodeGenerationUtils;
@@ -57,39 +58,7 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            ExpConditional.CheckSemantic(scope, listError);
-            ReturnType = TigerType.GetType<ErrorType>();
-            if (ExpConditional.ReturnType != TigerType.GetType<IntType>())
-                listError.Add(new ErrorMessage(Message.LoadMessage("IfCond"), Line, Columns));
-            else if (ExpressionThen.CheckSemantic(scope, listError))
-            {
-                if (ExpressionElse != null)
-                {
-                    ExpressionElse.CheckSemantic(scope, listError);
-                    ReturnType = ExpressionElse.ReturnType.CanConvertTo(ExpressionThen.ReturnType)
-                                     ?
-                                         ExpressionThen.ReturnType
-                                     :
-                                         ExpressionThen.ReturnType.CanConvertTo(ExpressionElse.ReturnType)
-                                             ?
-                                                 ExpressionElse.ReturnType
-                                             : TigerType.GetType<ErrorType>();
-                    if (!(ReturnType is ErrorType))
-                        return AlwaysReturn = true;
-
-                    listError.Add(
-                        new ErrorMessage(
-                            string.Format(Message.LoadMessage("Match"), ExpressionThen.ReturnType,
-                                          ExpressionElse.ReturnType), Line, Columns));
-                }
-                AlwaysReturn = false;
-                ReturnType = TigerType.GetType<NoType>();
-                return true;
-            }
-            return false;
-        }
+     
 
         #region Generacion  de Codigo
 

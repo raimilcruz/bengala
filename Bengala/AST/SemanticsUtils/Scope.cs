@@ -393,7 +393,7 @@ namespace Bengala.AST.SemanticsUtils
         /// <summary>
         /// Indica que no se anadiran mas tipos al scope
         /// </summary>
-        public virtual void Close()
+        public virtual void NotifyEndTypeScope()
         {
             OnFinalize();
         }

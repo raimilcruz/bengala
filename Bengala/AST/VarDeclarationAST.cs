@@ -68,67 +68,6 @@ namespace Bengala.AST
 
         #region Instance Methods
 
-        public override bool CheckSemantic(Scope scope, List<Message> listError)
-        {
-            //linea nueva ,posiblemente cambiable.
-            CurrentScope = scope;
-
-            ScopeLocation idLocation = scope.HasVar(Id);
-            if (idLocation == ScopeLocation.DeclaredLocal)
-            {
-                listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("VarDecl"), Id), Line, Columns));
-                ReturnType = TigerType.GetType<ErrorType>();
-                return false;
-            }
-            if (idLocation != ScopeLocation.NotDeclared)
-                listError.Add(new WarningMessage(string.Format(Message.LoadMessage("Hide"), Id), Line, Columns));
-
-            ExpressionValue.CheckSemantic(scope, listError);
-
-
-            //se asume q no habran problemas de compatibilidad
-            ReturnType = TigerType.GetType<NoType>();
-
-            // si se expecifico de forma explicita el tipo de la variable...
-            if (!string.IsNullOrEmpty(TypeId))
-            {
-                TigerType tt;
-                //existe el tipo
-                if (scope.HasType(TypeId, out tt) != ScopeLocation.NotDeclared)
-                {
-                    //el tipo de la variable no machea con el de la expression
-                    if (!ExpressionValue.ReturnType.CanConvertTo(tt))
-                    {
-                        listError.Add(
-                            new ErrorMessage(
-                                string.Format(Message.LoadMessage("Match"), TypeId, ExpressionValue.ReturnType.TypeID),
-                                Line, Columns));
-                        ReturnType = TigerType.GetType<ErrorType>();
-                        scope.AddVar(Id, TigerType.GetType<ErrorType>().TypeID);
-                        return false;
-                    }
-                    ReturnType = ExpressionValue.ReturnType;
-                    //si me especifica el tipo explicitamente .
-                    scope.AddVar(Id, tt.TypeID);
-                    return true;
-                }
-                // no existe el tipo de la variable
-                listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("TypeUndecl"), TypeId), Line, Columns));
-                ReturnType = TigerType.GetType<ErrorType>();
-                scope.AddVar(Id, TigerType.GetType<ErrorType>().TypeID);
-                return false;
-            }
-            if (!ExpressionValue.ReturnType.IsLegalType)
-            {
-                listError.Add(new ErrorMessage(string.Format(Message.LoadMessage("InferType"), Id), Line, Columns));
-                ReturnType = TigerType.GetType<ErrorType>();
-                scope.AddVar(Id, TigerType.GetType<ErrorType>().TypeID);
-                return false;
-            }
-            scope.AddVar(Id, ExpressionValue.ReturnType.TypeID);
-            return true;
-        }
-
         public override void GenerateCode(ILCode code)
         {
             VarInfo varInfo = CurrentScope.GetVarInfo(Id);
