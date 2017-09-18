@@ -9,7 +9,7 @@ namespace Bengala.AST
 
         public abstract void Insert(int pos, ErrorMessage msg);
 
-        public int Count { get; protected set; }
+        public abstract int Count { get;}
 
     }
     public abstract class AstVisitor<T>

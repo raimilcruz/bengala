@@ -17,7 +17,7 @@ namespace Bengala.AST
         /// <summary>
         /// lista de declaraciones del let
         /// </summary>
-        public List<ExpressionAST> DeclarationList;
+        public List<Declaration> DeclarationList;
 
         /// <summary>
         /// cuerpo del let
@@ -32,11 +32,11 @@ namespace Bengala.AST
         /// </summary>
         /// <param name="declarationList">lista de declaraciones del let</param>
         /// <param name="seqExpList">cuerpo del let</param>
-        public LetExpressionAST(List<ExpressionAST> declarationList, SequenceExpressionAST seqExpList) : base(0, 0)
+        public LetExpressionAST(List<Declaration> declarationList, SequenceExpressionAST seqExpList) : base(0, 0)
             //no problemas con pasar 0,0 let no produce errores propios
         {
             SequenceExpressionList = seqExpList;
-            DeclarationList = declarationList ?? new List<ExpressionAST>();
+            DeclarationList = declarationList ?? new List<Declaration>();
         }
 
         #endregion

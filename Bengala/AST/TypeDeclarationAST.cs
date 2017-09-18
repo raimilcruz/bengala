@@ -12,7 +12,7 @@ namespace Bengala.AST
     /// <summary>
     /// clase base de todas las declaraciones de tipos: arrayDec, recordDec, aliasDec
     /// </summary>
-    public abstract class TypeDeclarationAST : ExpressionAST
+    public abstract class TypeDeclarationAST : Declaration
     {
         /// <summary>
         /// Nombre del tipo q se declara

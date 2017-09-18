@@ -72,4 +72,14 @@ namespace Bengala.AST.Utils
             }
         }
     }
+
+    public class ScopeInitializator
+    {
+        public void InitScope(Scope scope)
+        {
+            //predifined types
+            scope.AddType("int",TigerType.GetType<IntType>());
+            scope.AddType("string",TigerType.GetType<StringType>());
+        }
+    }
 }

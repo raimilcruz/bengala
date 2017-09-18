@@ -67,4 +67,17 @@ namespace Bengala.AST
         #endregion
 
     }
+
+    public abstract class Declaration : ExpressionAST
+    {
+        protected Declaration()
+        {
+            
+        }
+
+        protected Declaration(int line, int col):base(line,col)
+        {
+            
+        }
+    }
 }

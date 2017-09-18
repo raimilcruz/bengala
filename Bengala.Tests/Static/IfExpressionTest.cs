@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bengala.Analysis;
 
 namespace Bengala.Tests.Static
 {
@@ -16,9 +17,11 @@ namespace Bengala.Tests.Static
         {
             var ast = If(BinExpr(Num(1),Num(1),">"), Num(2), Num(3));
 
-            StaticSemanticsChecker staticChecker = new StaticSemanticsChecker(new PrinterErrorListener());
+            var errorListener = new PrinterErrorListener();
 
-            Assert.IsTrue(ast.Accept(staticChecker));
+            StaticChecker staticChecker = new StaticChecker(errorListener);
+
+            Assert.IsTrue(ast.Accept(staticChecker) && errorListener.Count == 0);
         }
     }
 }

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Bengala.AST;
 using Bengala.AST.SemanticsUtils;
+using Bengala.AST.Utils;
 
 namespace Bengala.Analysis
 {
     public class StaticChecker : AstVisitor<bool>
     {
         Scope _scope;
-        ErrorListener _errorListener;
+        readonly ErrorListener _errorListener;
         public StaticChecker()
         {
             //TODO: Add another constructor overload for _scope
@@ -17,7 +18,13 @@ namespace Bengala.Analysis
         }
         public StaticChecker(ErrorListener errorListener)
         {
+            _scope = new Scope(null);
             _errorListener = errorListener;
+
+            //TODO: move to another place
+            ScopeInitializator scopeInitializator = new ScopeInitializator();
+            scopeInitializator.InitScope(_scope);
+            
         }
 
         public override bool VisitNode(AstNode node)
@@ -822,7 +829,7 @@ namespace Bengala.Analysis
                 {
                     TigerType t;
                     //verificar si existe el tipo del parametro.
-                    if (_scope.HasType(nameType.Value, out t) != ScopeLocation.NotDeclared)
+                    if (_scope.HasType(nameType.Value, out t) == ScopeLocation.NotDeclared)
                     {
                         _errorListener.Add(new ErrorMessage(
                             $"Type {nameType.Value} in parameter {fDecl.FunctionId} is not defined", fDecl.Line, fDecl.Columns));
@@ -851,6 +858,12 @@ namespace Bengala.Analysis
         {
             int posParam = 0;
             //get from the scope the function signature.
+            if (_scope.HasFunction(fDecl.FunctionId) == ScopeLocation.NotDeclared)
+            {
+                _errorListener.Add(new ErrorMessage(
+                    $"It is expected that the function {fDecl.FunctionId} is at scope at this point",fDecl.Line,fDecl.Columns));
+                return false;
+            }
             var funInfo = _scope.GetFunction(fDecl.FunctionId);
             foreach (var parameter in funInfo.ParameterList)
             {
@@ -859,7 +872,7 @@ namespace Bengala.Analysis
                 {
                     _errorListener.Add(
                         new ErrorMessage(
-                            string.Format(Message.LoadMessage("FuncDeclParams"), parameter.Key), fDecl.Line,
+                            string.Format(Message.LoadMessage("FuncDeclParams"), parameter.Key,fDecl.FunctionId), fDecl.Line,
                             fDecl.Columns));
                     fDecl.ReturnType = TigerType.GetType<ErrorType>();
                     return false;
@@ -886,7 +899,7 @@ namespace Bengala.Analysis
         private bool IsVarFromDifferentFunction(VarAST ast)
         {
             VarInfo varInfo = _scope.GetVarInfo(ast.VarId);
-            return (varInfo.FunctionNameParent != _scope.CurrentFunction.FunctionName);
+            return (varInfo.FunctionNameParent != _scope.CurrentFunction?.FunctionName);
         }
 
         private void SetVarAsUsedForAnotherFunction(VarAST ast)

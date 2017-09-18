@@ -14,36 +14,36 @@ namespace Bengala.Tests.Parser
     public class BinaryExpressionParserTest:CoreParserTest
     {
 
-        [TestMethod]
-        public void AddTwoNumbers() {
-            var program = "1 + 2";
-            var ast = parseText(program);
+        //[TestMethod]
+        //public void AddTwoNumbers() {
+        //    var program = "1 + 2";
+        //    var ast = parseText(program);
 
-            var other = BinExpr(Num(1), Num(2), "+");
+        //    var other = BinExpr(Num(1), Num(2), "+");
 
-            Assert.IsTrue(AstComparer.EqualNodes(ast,other));            
-        }
+        //    Assert.IsTrue(AstComparer.EqualNodes(ast,other));            
+        //}
 
-        [TestMethod]
-        public void AddTwoVars()
-        {
-            var program = "y + x";
-            var ast = parseText(program);
+        //[TestMethod]
+        //public void AddTwoVars()
+        //{
+        //    var program = "y + x";
+        //    var ast = parseText(program);
 
-            var other = BinExpr(Var("y"), Var("x"), "+");
+        //    var other = BinExpr(Var("y"), Var("x"), "+");
 
-            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
-        }
+        //    Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        //}
 
-        [TestMethod]
-        public void GreaterThanExp()
-        {
-            var program = "2 > 1";
-            var ast = parseText(program);
+        //[TestMethod]
+        //public void GreaterThanExp()
+        //{
+        //    var program = "2 > 1";
+        //    var ast = parseText(program);
 
-            var other = BinExpr(Num(2), Num(1), ">");
+        //    var other = BinExpr(Num(2), Num(1), ">");
 
-            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
-        }
+        //    Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        //}
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Bengala.Analysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Bengala.AST;
 
@@ -12,15 +13,27 @@ namespace Bengala.Tests
         {
             var binAst = BinExpr(Num(1), Num(3),"+");
 
-            StaticSemanticsChecker staticChecker = new StaticSemanticsChecker(new PrinterErrorListener());
+            var staticChecker = new StaticChecker(new PrinterErrorListener());
 
             Assert.IsTrue(binAst.Accept(staticChecker));
         }
+
+        [TestMethod]
+        public void SubstractNumberAndStringFails()
+        {
+            var binAst = BinExpr(Num(1), Str("3"), "-");
+
+            var errorCollector = new PrinterErrorListener();
+            var staticChecker = new StaticChecker(errorCollector);
+
+            Assert.IsFalse(binAst.Accept(staticChecker) && (errorCollector.Count!=0));
+        }
+
         [TestMethod]
         public void AddNumberAndString() {
             var binAst = BinExpr(Num(1), Str("3"), "/");
 
-            StaticSemanticsChecker staticChecker = new StaticSemanticsChecker(new PrinterErrorListener());
+            var staticChecker = new StaticChecker(new PrinterErrorListener());
 
             Assert.IsFalse(binAst.Accept(staticChecker));
         }

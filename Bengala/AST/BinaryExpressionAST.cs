@@ -28,13 +28,13 @@ namespace Bengala.AST
 
         #region Constructors
 
-        protected BinaryExpressionAST(ExpressionAST leftExp, ExpressionAST rightExp, string op)
+        public BinaryExpressionAST(ExpressionAST leftExp, ExpressionAST rightExp, string op)
             : this(leftExp, rightExp, op, 0, 0)
         {
           
         }
 
-        protected BinaryExpressionAST(ExpressionAST leftExp, ExpressionAST rightExp, string op, int line, int col)
+        public BinaryExpressionAST(ExpressionAST leftExp, ExpressionAST rightExp, string op, int line, int col)
             : base(line, col)
         {
             Operator = GetOperator(op);

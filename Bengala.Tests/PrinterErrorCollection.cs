@@ -11,34 +11,40 @@ namespace Bengala.Tests
 {
     class PrinterErrorListener : ErrorListener
     {
-        List<ErrorMessage> _errors = new List<ErrorMessage>();
-        List<WarningMessage> _warnings = new List<WarningMessage>();
+        List<Message> _errors = new List<Message>();
 
-        public List<ErrorMessage> Errors
+        public IEnumerable<ErrorMessage> Errors
         {
             get
             {
-                return _errors;
+                return _errors.Where(x=>x is ErrorMessage).Cast<ErrorMessage>();
             }            
         }
 
-        public List<WarningMessage> Warnings
+        public IEnumerable<WarningMessage> Warnings
         {
             get
             {
-                return _warnings;
+                return _errors.Where(x=> x is WarningMessage).Cast<WarningMessage>();
             }
            
         }
 
         public override void Add(WarningMessage msg)
         {
-            Warnings.Add(msg);
+            _errors.Add(msg);
         }
+
+        public override void Insert(int pos, ErrorMessage msg)
+        {
+            _errors.Insert(pos,msg);
+        }
+
+        public override int Count => _errors.Count;
 
         public override void Add(ErrorMessage msg)
         {
-            Errors.Add(msg);
+            _errors.Add(msg);
         }
     }
 }

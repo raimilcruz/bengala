@@ -16,7 +16,7 @@ namespace Bengala.AST
     ///Ejemplos
     ///   var i  := 8
     /// </summary>
-    public class VarDeclarationAST : ExpressionAST
+    public class VarDeclarationAST : Declaration
     {
         #region Fields and Properties
 

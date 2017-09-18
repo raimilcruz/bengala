@@ -16,7 +16,7 @@ namespace Bengala.AST
     /// procedimientos  :   'function' functionId '(' paramsList ')' = exp
     /// funciones       :   'function' functionId '(' paramsList ')' : typeId = exp
     /// </summary>
-    public class FunctionDeclarationAST : ExpressionAST
+    public class FunctionDeclarationAST : Declaration
     {
         #region Fields and Properties
 
