@@ -60,11 +60,7 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Methods
 
-        public abstract void GenerateCode(ILCode code);
-
-        #endregion
 
     }
 

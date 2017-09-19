@@ -3,113 +3,92 @@
   <Class Name="Bengala.AST.AliasAST" Collapsed="true">
     <Position X="23" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QAAAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>QIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AST\AliasAST.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Bengala.AST.AndExpressionAST" Collapsed="true">
-    <Position X="0.5" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEA=</HashCode>
-      <FileName>AST\AndExpressionAST.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Bengala.AST.ArrayAccessAST" Collapsed="true">
-    <Position X="43.25" Y="3.25" Width="1.5" />
+    <Position X="41.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAAACAAIAAgAAAAAAAEAAAAAAAAAAAAAAAQ=</HashCode>
+      <HashCode>AIAABAAAAAAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>AST\ArrayAccessAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.ArrayDeclarationAST" Collapsed="true">
     <Position X="25.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAAAIAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AST\ArrayDeclarationAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.ArrayInstatiationAST" Collapsed="true">
     <Position X="32" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAQAIAACAAAAAAAEAAAEAAAAAAgAAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAAACAAAAAAAABAAAAAAAAAABAAAAAAA=</HashCode>
       <FileName>AST\ArrayInstatiationAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.AssignExpressionAST" Collapsed="true">
     <Position X="38.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAICAAAAAAAAAEAAAAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>AST\AssignExpressionAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.BinaryExpressionAST" Collapsed="true">
     <Position X="1.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAABgAAAAAAAAAIAAAAAAAAAAEAAAIBAAAAAAAAIAA=</HashCode>
+      <HashCode>AIAABAIAAAAAAAAAAAAAAAAAAAAAAAIBAAAAAAAAIAA=</HashCode>
       <FileName>AST\BinaryExpressionAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.BreakAST" Collapsed="true">
     <Position X="9.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AST\BreakAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.CallFunctionAST" Collapsed="true">
     <Position X="18.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CgAAgBAAAACiAEAIAAACQAgAIAEAAAAAAIAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAQAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AST\CallFunctionAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.ExpressionAST" Collapsed="true">
     <Position X="26.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAgAAAAIAAAAAAAAAAEAAAAAAAAAAAgFAAA=</HashCode>
+      <HashCode>AAAAIAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAgFAAA=</HashCode>
       <FileName>AST\ExpressionAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.ForExpressionAST" Collapsed="true">
     <Position X="36.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAAAAIAAEAAAAAAAEAAAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AIAAQAAAAAAAAAAAAAEAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>AST\ForExpressionAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.FunctionDeclarationAST" Collapsed="true">
     <Position X="41" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CgAAAAAEAACAAEAIAAAABIiAAAEAAAAABIAAAAAAAAA=</HashCode>
+      <HashCode>CIAAAAAEAAAAAAAAAAAAAAiAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AST\FunctionDeclarationAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.IfExpressionAST" Collapsed="true">
     <Position X="5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAACAAAIAAAAAAAAAAEAgAAAAAAAAAAAAAI=</HashCode>
+      <HashCode>AIAAAAAAAAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAI=</HashCode>
       <FileName>AST\IfExpressionAST.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Bengala.AST.IntAST" Collapsed="true">
-    <Position X="11.75" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>AST\IntAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.LetExpressionAST" Collapsed="true">
     <Position X="20.75" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAFAAAAAIAAAAAAAIAAEAAAAAAAAACIBAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACABAAAA=</HashCode>
       <FileName>AST\LetExpressionAST.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Bengala.AST.LogicalExpressionAST" Collapsed="true">
-    <Position X="1.5" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAABAAAAAABAAAAAAAACEA=</HashCode>
-      <FileName>AST\LogicalExpressionAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.LoopAST" Collapsed="true">
@@ -119,73 +98,52 @@
       <FileName>AST\LoopAST.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Bengala.AST.LValueAST" Collapsed="true">
+  <Class Name="Bengala.AST.NilLiteral" Collapsed="true">
     <Position X="45.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>AST\LValueAST.cs</FileName>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AST\NilLiteral.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.NegExpressionAST" Collapsed="true">
     <Position X="29.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AST\NegExpressionAST.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Bengala.AST.NilAST" Collapsed="true">
-    <Position X="14" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>AST\NilAST.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Bengala.AST.OrExpressionAST" Collapsed="true">
-    <Position X="2.75" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEA=</HashCode>
-      <FileName>AST\OrExpressionAST.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Bengala.AST.RecordAccessAST" Collapsed="true">
-    <Position X="45.5" Y="3.25" Width="1.5" />
+    <Position X="44.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAACAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAABA=</HashCode>
+      <HashCode>AIAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
       <FileName>AST\RecordAccessAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.RecordDeclarationAST" Collapsed="true">
     <Position X="27.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAAAAAAgAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>AST\RecordDeclarationAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.RecordInstantiationAST" Collapsed="true">
     <Position X="50" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAIAAAIAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIACAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AST\RecordInstantiationAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.SequenceExpressionAST" Collapsed="true">
     <Position X="7.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAACAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AST\SequenceExpressionAST.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Bengala.AST.StringAST" Collapsed="true">
-    <Position X="16.25" Y="1.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAEAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>AST\StringAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.TypeDeclarationAST" Collapsed="true">
     <Position X="25.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAEAAAAgAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>AST\TypeDeclarationAST.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -197,24 +155,52 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.VarAST" Collapsed="true">
-    <Position X="47.75" Y="3.25" Width="1.5" />
+    <Position X="46.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEABAAAAAAAAAEIAAAAAAAAAAEAAAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AIAABAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>AST\VarAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.VarDeclarationAST" Collapsed="true">
     <Position X="52.25" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAIAAAIAAAAAAAAAAEAAAAgBAAAAAAgAAA=</HashCode>
+      <HashCode>AIACAAAAAAAIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>AST\VarDeclarationAST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Bengala.AST.WhileExpressionAST" Collapsed="true">
     <Position X="34.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAIAIAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AST\WhileExpressionAST.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bengala.AST.IntLiteral" Collapsed="true">
+    <Position X="14.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>AST\IntLiteral.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bengala.AST.StringLiteral" Collapsed="true">
+    <Position X="16.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAACA=</HashCode>
+      <FileName>AST\StringLiteral.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bengala.AST.LHSExpressionAST" Collapsed="true">
+    <Position X="43.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AST\LHSExpressionAST.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Bengala.AST.AstNode" Collapsed="true">
+    <Position X="24" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AST\AstNode.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

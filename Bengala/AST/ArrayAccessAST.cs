@@ -13,7 +13,7 @@ namespace Bengala.AST
     /// <summary>
     /// Representa el acceso a un array: exp'['indexer']'
     /// </summary>
-    public class ArrayAccessAST : LValueAST
+    public class ArrayAccessAST : LHSExpressionAST
     {
         #region Fields and Properties
 
@@ -43,74 +43,7 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Methods
-
-        #region Check Semantics
-
-
-        #endregion
-
-        #region Code Generation
-
-        public override void GenerateCode(ILCode code)
-        {
-            //--->
-            bool pushOnStack = code.PushOnStack;
-
-            ILGenerator il = code.Method.GetILGenerator();
-            //cargar el array
-            if (pushOnStack)
-            {
-                code.PushOnStack = true;
-                array.GenerateCode(code);
-                //cargar el indexer
-                code.PushOnStack = true;
-                indexer.GenerateCode(code);
-
-                //aca tengo que pedir el tipo del array , y luego el type asociado a el.
-                string typeCodeName = CurrentScope.GetTypeInfo(array.ReturnType.TypeID).CodeName;
-                Type t = code.DefinedType[typeCodeName];
-                il.Emit(OpCodes.Ldelem, t.IsArray ? t.GetElementType() : t);
-            }
-            //<---
-            code.PushOnStack = pushOnStack;
-        }
-
-        /// <summary>
-        /// Genera codigo para la asignacion a un array
-        /// </summary>
-        /// <param name="code"></param>
-        /// <param name="exp"></param>
-        public override void GenerateCode(ILCode code, ExpressionAST exp)
-        {
-            //--->
-            bool pushOnStack = code.PushOnStack;
-
-            //cargo primero el array.
-            code.PushOnStack = true;
-            array.GenerateCode(code);
-            //cargo el indice al cual voy a acceder
-            code.PushOnStack = true;
-            Indexer.GenerateCode(code);
-            //cargo el valor que le voy a asignar
-            code.PushOnStack = true;
-            //generar el codigo de la expresion que quiero asignar.
-            exp.GenerateCode(code);
-
-            ILGenerator il = code.Method.GetILGenerator();
-
-            //aca tengo que pedir el tipo del array , y luego el type asociado a el.
-            string typeCodeName = CurrentScope.GetTypeInfo(array.ReturnType.TypeID).CodeName;
-            Type t = code.DefinedType[typeCodeName];
-            il.Emit(OpCodes.Stelem, t.IsArray ? t.GetElementType() : t);
-
-            //<----
-            code.PushOnStack = pushOnStack;
-        }
-
-        #endregion
-
-        #endregion
+     
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {

@@ -37,18 +37,7 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Methods
-
-   
-
-        public override void GenerateCode(ILCode code)
-        {
-            if(code.PushOnStack)
-                //cargando el entero para la pila
-                code.Method.GetILGenerator().Emit(OpCodes.Ldc_I4, Value);
-        }
-
-        #endregion
+      
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {

@@ -42,37 +42,6 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Methods
-        
-
-        #region Generacion de codigo
-
-        public override void GenerateCode(ILCode code)
-        {
-            ModuleBuilder mod = code.Module;
-            string typeCodeName = CurrentScope.GetTypeInfo(TypeId).CodeName;
-            //definiendo el tipo en IL
-            //esto es para pedir el tipo ,si  ya esta me lo devuelve sino me lo crea.
-            var type = (TypeBuilder) code.GetTypeBuilderMaybeNotCreated(typeCodeName);
-
-            FieldBuilder field;
-            Type itemType;
-            foreach (var item in Fields)
-            {
-                //aca es para coger el type del campo              
-                // es posible que el tipo de este campo no exista todavia por tanto esta es la funcion a usar.
-                itemType = CreateTypeNotFounded(item.Value, code);
-                //aca es para crear el campo.
-                type.DefineField(item.Key, itemType, FieldAttributes.Public | FieldAttributes.HasDefault);
-                //guardar estos campos .
-            }
-            //crear el tipo
-            type.CreateType();
-        }
-
-        #endregion
-
-        #endregion
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {

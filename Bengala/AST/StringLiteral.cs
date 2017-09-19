@@ -50,20 +50,6 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Methods
-
-     
-
-        public override void GenerateCode(ILCode code)
-        {
-            ILGenerator il = code.Method.GetILGenerator();
-            il.Emit(OpCodes.Ldstr, Value);
-            if (!code.PushOnStack)
-                il.Emit(OpCodes.Pop);
-        }
-
-        #endregion
-
         public override T Accept<T>(AstVisitor<T> visitor)
         {
             return visitor.VisitStringLiteral(this);

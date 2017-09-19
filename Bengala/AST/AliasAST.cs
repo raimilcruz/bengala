@@ -40,15 +40,7 @@ namespace Bengala.AST
 
         #endregion
 
-        #region InstanceMethods
-
      
-        public override void GenerateCode(ILCode code)
-        {
-            //el alias no genera codigo
-        }
-
-        #endregion
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {

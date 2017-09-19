@@ -13,7 +13,7 @@ namespace Bengala.AST
     /// <summary>
     /// Representa un accesso a record en el lenguaje Tiger.
     /// </summary>
-    public class RecordAccessAST : LValueAST
+    public class RecordAccessAST : LHSExpressionAST
     {
         #region Fields and Properties
 
@@ -39,43 +39,7 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Methods
-
-    
-
-        #endregion
-
-        #region Code Generation
-
-        /// <summary>
-        /// Este metodo se encarga de generar el codigo para el acceso a un record
-        /// </summary>
-        /// <param name="code"></param>
-        public override void GenerateCode(ILCode code)
-        {
-            ILGenerator il = code.Method.GetILGenerator();
-            //--->
-            bool pushOnStack = code.PushOnStack;
-
-            //cargando el valor del campo del record
-            code.PushOnStack = true;
-            ExpressionRecord.GenerateCode(code);
-
-            string typeCodeName = CurrentScope.GetTypeInfo(ExpressionRecord.ReturnType.TypeID).CodeName;
-            Type recordType = code.DefinedType[typeCodeName];
-            il.Emit(OpCodes.Ldfld, recordType.GetField(FieldId));
-
-            //<---
-            if (!pushOnStack)
-                il.Emit(OpCodes.Pop);
-            code.PushOnStack = pushOnStack;
-        }
-
-        public override void GenerateCode(ILCode code, ExpressionAST exp)
-        {
-        }
-
-        #endregion
+      
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {

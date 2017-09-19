@@ -33,39 +33,5 @@ namespace Bengala.AST
 
         #endregion
 
-     
-
-        /// <summary>
-        /// Este metodo es usado para crear un tipo al cual se hace referencia y es posible que no haya sido previamente creado en el codigo IL
-        /// </summary>
-        /// <param name="typeId"></param>
-        /// <param name="code"></param>
-        /// <returns></returns>
-        protected Type CreateTypeNotFounded(string typeId, ILCode code)
-        {
-            TypeInfo type = CurrentScope.GetTypeInfo(typeId);
-            if (code.DefinedType.ContainsKey(type.CodeName))
-                return code.DefinedType[type.CodeName];
-            TigerType t = type.Type;
-            if (t is ArrayType)
-            {
-                Type baseType = CreateTypeNotFounded(((ArrayType) t).BaseType.TypeID, code);
-                Type arrayType = baseType.MakeArrayType();
-                code.DefinedType.Add(type.CodeName, arrayType);
-                return arrayType;
-            }
-            if (t is RecordType)
-            {
-                Type temp = code.Module.DefineType(type.CodeName);
-                code.DefinedType.Add(type.CodeName, temp);
-                return temp;
-            }
-            throw new NotImplementedException("Los restantes tipos no estan soportados en tiger");
-        }
-
-        public override T Accept<T>(AstVisitor<T> visitor)
-        {
-            return visitor.VisitTypeDeclaration(this);
-        }
     }
 }

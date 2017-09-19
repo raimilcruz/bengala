@@ -31,44 +31,6 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Method
-
-   
-
-        #region Generacion de Codigo
-
-        public override void GenerateCode(ILCode code)
-        {
-            ILGenerator il = code.Method.GetILGenerator();
-
-            //declaracion de las etiquetas de salto
-            Label evaluarCond = il.DefineLabel();
-            Label bodyInstr = il.DefineLabel();
-
-            //--->
-            Label loopAboveEnd = code.EndCurrentLoop;
-            code.EndCurrentLoop = il.DefineLabel();
-            //salto a la comparacion
-            il.Emit(OpCodes.Br, evaluarCond);
-            //body
-            il.MarkLabel(bodyInstr);
-            code.PushOnStack = false;
-            BodyExpressions.GenerateCode(code);
-            //condicion
-            il.MarkLabel(evaluarCond);
-            code.PushOnStack = true;
-            ExpressionConditional.GenerateCode(code);
-            il.Emit(OpCodes.Brtrue, bodyInstr);
-            //lo que viene detras del while.
-            il.MarkLabel(code.EndCurrentLoop);
-
-            //<--- reponiendo la marca del posible ciclo sobre mi.
-            code.EndCurrentLoop = loopAboveEnd;
-        }
-
-        #endregion
-
-        #endregion
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {

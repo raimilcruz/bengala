@@ -56,57 +56,7 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Methods
-
      
-
-        #region Generacion  de Codigo
-
-        public override void GenerateCode(ILCode code)
-        {
-            //---> quedandome con el valor .
-            bool pushOnStack = code.PushOnStack;
-
-            ILGenerator il = code.Method.GetILGenerator();
-
-            //generar el codigo de la condicional
-            code.PushOnStack = true;
-            ExpConditional.GenerateCode(code);
-
-            //definiendo donde esta la marca del else
-            Label parteElse = il.DefineLabel();
-            //definiendo el final del if
-            Label endIf = il.DefineLabel();
-
-            //si la comparacion fue false salta a la parteElse
-            il.Emit(OpCodes.Brfalse, parteElse);
-
-            //sino ejecuta la parte del then
-            code.PushOnStack = true;
-            ExpressionThen.GenerateCode(code);
-            //saltar al final del if
-            il.Emit(OpCodes.Br, endIf);
-            //marca la donde empieza el else
-            il.MarkLabel(parteElse);
-            //generar el else si lo tengo
-            if (ExpressionElse != null)
-            {
-                code.PushOnStack = true;
-                ExpressionElse.GenerateCode(code);
-            }
-            //marcando el final de if
-            il.MarkLabel(endIf);
-
-            //quitar lo que hay en la pila "si hay algo" y no debo ponerlo
-            if (!(ReturnType is NoType) && !pushOnStack)
-                il.Emit(OpCodes.Pop);
-            //<--- poniendo el valor
-            code.PushOnStack = pushOnStack;
-        }
-
-        #endregion
-
-        #endregion
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {

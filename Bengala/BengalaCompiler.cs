@@ -11,6 +11,7 @@ using Bengala.AST;
 using Bengala.AST.CodeGenerationUtils;
 using Bengala.AST.SemanticsUtils;
 using Bengala.AST.Utils;
+using Bengala.Compilation;
 
 #endregion
 
@@ -68,8 +69,10 @@ namespace Bengala
             TypeBuilder nested = AddFunctionMainToCode(ilcode, methMain);
 
             ilcode.Type = nested;
+
+            ILCodeGenerator codeGenerator = new ILCodeGenerator(ilcode);
             //generacion de codigos
-            exp.GenerateCode(ilcode);
+            exp.Accept(codeGenerator);
             ILGenerator il = methMain.GetILGenerator();
 
             il.Emit(OpCodes.Ret);

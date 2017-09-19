@@ -110,28 +110,7 @@ namespace Bengala.AST
                 throw new InvalidOperationException("The operation is not supported");
         }
 
-        public override void GenerateCode(ILCode code)
-        {
-            ILGenerator il = code.Method.GetILGenerator();
-
-            //---> me quedo con el valor
-            bool pushOnStack = code.PushOnStack;
-
-            // cargar valor exp1 
-            code.PushOnStack = true;
-            LeftExp.GenerateCode(code);
-            //cargar valor expr2
-            code.PushOnStack = true;
-            RightExp.GenerateCode(code);
-            //aplicar el operador correspondient      
-            DoOperation(code);
-
-            if (!pushOnStack)
-                il.Emit(OpCodes.Pop);
-
-            //<--- pongo el valor 
-            code.PushOnStack = pushOnStack;
-        }
+     
 
         #endregion
 

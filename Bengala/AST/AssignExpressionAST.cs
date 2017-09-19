@@ -17,21 +17,21 @@ namespace Bengala.AST
     {
         #region Fields and Properties
 
-        public LValueAST LeftExpression { get; private set; }
+        public LHSExpressionAST LeftExpression { get; private set; }
         public ExpressionAST RightExpression { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public AssignExpressionAST(LValueAST leftExp, ExpressionAST rightExp)
+        public AssignExpressionAST(LHSExpressionAST leftExp, ExpressionAST rightExp)
         {
             LeftExpression = leftExp;
             RightExpression = rightExp;
             ReturnType = TigerType.GetType<NoType>();
         }
 
-        public AssignExpressionAST(LValueAST leftExp, ExpressionAST rightExp, int line, int col)
+        public AssignExpressionAST(LHSExpressionAST leftExp, ExpressionAST rightExp, int line, int col)
             : base(line, col)
         {
             LeftExpression = leftExp;
@@ -41,17 +41,6 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Methods
-
-      
-
-        public override void GenerateCode(ILCode code)
-        {
-            //generar la asignacion.
-            LeftExpression.GenerateCode(code, RightExpression);
-        }
-
-        #endregion
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {

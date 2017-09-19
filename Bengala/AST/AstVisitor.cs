@@ -51,8 +51,6 @@ namespace Bengala.AST
 
         public abstract T VisitSequence(SequenceExpressionAST sequenceExpression);
 
-        public abstract T VisitTypeDeclaration(TypeDeclarationAST typeDeclaration);
-
         public abstract T VisitWhileExpression(WhileExpressionAST whileExpression);
 
         public abstract T VisitBreakStatement(BreakAST breakStm);

@@ -138,11 +138,7 @@ namespace Bengala.Tests
         {
             throw new NotImplementedException();
         }
-
-        public override bool VisitTypeDeclaration(TypeDeclarationAST typeDeclaration)
-        {
-            throw new NotImplementedException();
-        }
+     
 
         public override bool VisitWhileExpression(WhileExpressionAST whileExpression)
         {

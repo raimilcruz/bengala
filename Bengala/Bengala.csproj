@@ -72,19 +72,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AST\AliasAST.cs" />
-    <Compile Include="AST\AndExpressionAST.cs" />
     <Compile Include="AST\ArrayAccessAST.cs" />
     <Compile Include="AST\ArrayDeclarationAST.cs" />
     <Compile Include="AST\ArrayInstatiationAST.cs" />
     <Compile Include="AST\AstNode.cs" />
     <Compile Include="AST\AstVisitor.cs" />
     <Compile Include="AST\BreakAST.cs" />
-    <Compile Include="AST\CodeGenerationUtils\IExpressionGenerator.cs" />
     <Compile Include="AST\CodeGenerationUtils\ILCode.cs" />
     <Compile Include="AST\CodeGenerationUtils\MethodCodeInfo.cs" />
     <Compile Include="AST\CodeGenerationUtils\TypeCodeInfo.cs" />
     <Compile Include="AST\LoopAST.cs" />
-    <Compile Include="AST\LValueAST.cs" />
+    <Compile Include="AST\LHSExpressionAST.cs" />
     <Compile Include="AST\NegExpressionAST.cs" />
     <Compile Include="AST\NilLiteral.cs" />
     <Compile Include="AST\RecordAccessAST.cs" />
@@ -100,6 +98,11 @@
     <Compile Include="AST\Utils\OperationInfo.cs" />
     <Compile Include="BengalaCompiler.cs" />
     <Compile Include="BengalaLexer.cs" />
+    <Compile Include="Compilation\BinaryExpressionILGenerator.cs" />
+    <Compile Include="Compilation\FunctionDeclarationILGeneratorHelper.cs" />
+    <Compile Include="Compilation\ILAssignmentGenerator.cs" />
+    <Compile Include="Compilation\ILCodeGenerator.cs" />
+    <Compile Include="Compilation\ILCodeGeneratorFuntionInvocationHelper.cs" />
     <Compile Include="FunctionPredifined.cs" />
     <Compile Include="AST\Utils\Inizializator.cs" />
     <Compile Include="AST\SemanticsUtils\NilType.cs" />
@@ -114,8 +117,6 @@
     <Compile Include="AST\IfExpressionAST.cs" />
     <Compile Include="AST\SemanticsUtils\IntType.cs" />
     <Compile Include="AST\LetExpressionAST.cs" />
-    <Compile Include="AST\LogicalExpressionAST.cs" />
-    <Compile Include="AST\OrExpressionAST.cs" />
     <Compile Include="AST\SemanticsUtils\ErrorMessage.cs" />
     <Compile Include="AST\SemanticsUtils\Message.cs" />
     <Compile Include="AST\SemanticsUtils\FunctionInfo.cs" />
@@ -167,9 +168,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Compilation\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

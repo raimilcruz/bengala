@@ -39,27 +39,6 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Methods
-
-     
-        public override void GenerateCode(ILCode code)
-        {
-            bool pushStack = code.PushOnStack;
-            
-            //recorrer las expresiones y generar un codigo para cada una.
-            for (int i = 0; i < ExpressionList.Count - 1; i++)
-            {
-                var item = ExpressionList[i];
-                //si la expresion no es la ultima no debe poner valor en la pila.
-                code.PushOnStack = false;
-                item.GenerateCode(code);
-            }
-            code.PushOnStack = pushStack;
-            if(ExpressionList.Count > 0)
-                ExpressionList.LastOrDefault().GenerateCode(code);
-        }
-
-        #endregion
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {

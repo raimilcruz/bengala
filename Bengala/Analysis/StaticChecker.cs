@@ -479,7 +479,7 @@ namespace Bengala.Analysis
             return sequenceExpression.ReturnType != TigerType.GetType<ErrorType>();
         }
 
-        public override bool VisitTypeDeclaration(TypeDeclarationAST typeDeclaration)
+        private bool VisitTypeDeclaration(TypeDeclarationAST typeDeclaration)
         {
             TigerType tt;
             if (_scope.HasType(typeDeclaration.TypeId, out tt) != ScopeLocation.NotDeclared)

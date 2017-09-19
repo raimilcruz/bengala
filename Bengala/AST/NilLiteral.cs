@@ -26,15 +26,6 @@ namespace Bengala.AST
 
      
 
-        public override void GenerateCode(ILCode code)
-        {
-            ILGenerator il = code.Method.GetILGenerator();
-            //cargando null para la pila
-            il.Emit(OpCodes.Ldnull);
-            if (!code.PushOnStack)
-                il.Emit(OpCodes.Pop);
-        }
-
         public override T Accept<T>(AstVisitor<T> visitor)
         {
             return visitor.VisitNilLiteral(this);

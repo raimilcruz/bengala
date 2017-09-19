@@ -31,27 +31,6 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Methods
-
-      
-        public override void GenerateCode(ILCode code)
-        {
-            //quedandome con el TypeInfo de tipo base del array.
-            TypeInfo t = CurrentScope.GetTypeInfo(BaseTypeID);
-
-            //en este momento es posible que el tipo del array no halla sido creado en el codigo il.
-            //este tipo puede ser un array ,un alias o un record ,incluso una clase si se quiere extender esto un poco mas
-
-            //creando el tipo del array
-            Type arrayType = CreateTypeNotFounded(t.TypeId, code).MakeArrayType();
-
-            //annadir el tipo si es necesario.
-            string arrayCodeName = CurrentScope.GetTypeInfo(TypeId).CodeName;
-            if (!code.DefinedType.ContainsKey(arrayCodeName))
-                code.DefinedType.Add(arrayCodeName, arrayType);
-        }
-
-        #endregion
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {
