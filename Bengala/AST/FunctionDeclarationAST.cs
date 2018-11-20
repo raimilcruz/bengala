@@ -22,7 +22,7 @@ namespace Bengala.AST
 
         public string FunctionId { get; private set; }
         public string ReturnTypeId { get; private set; }
-        public ExpressionAST ExprInstructions { get; set; }
+        public ExpressionAst ExprInstructions { get; set; }
         public List<KeyValuePair<string, string>> ParameterList { get; private set; }
 
         #endregion
@@ -30,7 +30,7 @@ namespace Bengala.AST
         #region Constructors
 
         public FunctionDeclarationAST(string id, List<KeyValuePair<string, string>> parameterList,
-                                      ExpressionAST exprInstructions,
+                                      ExpressionAst exprInstructions,
                                       string retType)
             : this(id, parameterList, exprInstructions)
         {
@@ -38,7 +38,7 @@ namespace Bengala.AST
         }
 
         public FunctionDeclarationAST(string id, List<KeyValuePair<string, string>> parameterList,
-                                      ExpressionAST exprInstructions,
+                                      ExpressionAst exprInstructions,
                                       string retType, int line, int col)
             : this(id, parameterList, exprInstructions)
         {
@@ -48,7 +48,7 @@ namespace Bengala.AST
         }
 
         private FunctionDeclarationAST(string id, List<KeyValuePair<string, string>> parameterList,
-                                      ExpressionAST exprInstructions)
+                                      ExpressionAst exprInstructions)
         {
             FunctionId = id;
             ParameterList = parameterList??new List<KeyValuePair<string, string>>();

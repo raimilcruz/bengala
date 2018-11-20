@@ -12,22 +12,22 @@ namespace Bengala.AST
     /// <summary>
     /// Representa la instan
     /// </summary>
-    public class RecordInstantiationAST : ExpressionAST
+    public class RecordInstantiationAST : ExpressionAst
     {
         #region Fields and Properties
 
         public string Id { get; private set; }
-        public List<KeyValuePair<string, ExpressionAST>> ExpressionValue { get; private set; }
+        public List<KeyValuePair<string, ExpressionAst>> ExpressionValue { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public RecordInstantiationAST(string id, List<KeyValuePair<string, ExpressionAST>> exp, int line, int col)
+        public RecordInstantiationAST(string id, List<KeyValuePair<string, ExpressionAst>> exp, int line, int col)
             : base(line, col)
         {
             Id = id;
-            ExpressionValue = exp ?? new List<KeyValuePair<string, ExpressionAST>>();
+            ExpressionValue = exp ?? new List<KeyValuePair<string, ExpressionAst>>();
         }
 
         #endregion

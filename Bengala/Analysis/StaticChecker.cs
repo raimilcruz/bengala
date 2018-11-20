@@ -464,7 +464,7 @@ namespace Bengala.Analysis
                     //hubo error
                     sequenceExpression.ReturnType = TigerType.GetType<ErrorType>();
 
-            ExpressionAST last = sequenceExpression.ExpressionList.LastOrDefault();
+            ExpressionAst last = sequenceExpression.ExpressionList.LastOrDefault();
             if (last != null)
             {
                 //si existe una ultima expresion, esta define el retorno del let

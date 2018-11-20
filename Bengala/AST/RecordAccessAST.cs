@@ -16,7 +16,7 @@ namespace Bengala.AST
     {
         #region Fields and Properties
 
-        public ExpressionAST ExpressionRecord { get; private set; }
+        public ExpressionAst ExpressionRecord { get; private set; }
         public string FieldId { get; private set; }
 
         #endregion
@@ -30,7 +30,7 @@ namespace Bengala.AST
         /// <param name="exp">La expresion que representa a la instancia del record</param>
         /// <param name="line">Linea correspondiente en el codigo</param>
         /// <param name="col">Columna correspondiente en el codigo</param>
-        public RecordAccessAST(string fieldId, ExpressionAST exp, int line, int col) : base(line, col)
+        public RecordAccessAST(string fieldId, ExpressionAst exp, int line, int col) : base(line, col)
         {
             FieldId = fieldId;
             ExpressionRecord = exp;

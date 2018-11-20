@@ -13,24 +13,24 @@ namespace Bengala.AST
     /// <summary>
     /// Representa un llamado a funcion
     /// </summary>
-    public class CallFunctionAST : ExpressionAST
+    public class CallFunctionAST : ExpressionAst
     {
         #region Fields and Properties
 
         public string FunctionId { get; private set; }
-        public List<ExpressionAST> RealParam { get; private set; }
+        public List<ExpressionAst> RealParam { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public CallFunctionAST(string functionId, List<ExpressionAST> realParam)
+        public CallFunctionAST(string functionId, List<ExpressionAst> realParam)
         {
             FunctionId = functionId;
             RealParam = realParam;
         }
 
-        public CallFunctionAST(string functionId, List<ExpressionAST> realParam, int line, int col) : base(line, col)
+        public CallFunctionAST(string functionId, List<ExpressionAst> realParam, int line, int col) : base(line, col)
         {
             FunctionId = functionId;
             RealParam = realParam;

@@ -16,16 +16,16 @@ namespace Bengala.AST
     {
         #region Fields and Properties
 
-        private readonly ExpressionAST array;
+        private readonly ExpressionAst array;
 
-        private readonly ExpressionAST indexer;
+        private readonly ExpressionAst indexer;
 
-        public ExpressionAST Array
+        public ExpressionAst Array
         {
             get { return array; }
         }
 
-        public ExpressionAST Indexer
+        public ExpressionAst Indexer
         {
             get { return indexer; }
         }
@@ -34,7 +34,7 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public ArrayAccessAST(ExpressionAST array, ExpressionAST indexer, int line, int col) : base(line, col)
+        public ArrayAccessAST(ExpressionAst array, ExpressionAst indexer, int line, int col) : base(line, col)
         {
             this.array = array;
             this.indexer = indexer;

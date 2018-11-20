@@ -12,7 +12,7 @@ namespace Bengala.AST
     /// <summary>
     /// Clase que representa a un entero
     /// </summary>
-    public class IntLiteral : ExpressionAST
+    public class IntLiteral : ExpressionAst
     {
         #region Fields and Properties
 

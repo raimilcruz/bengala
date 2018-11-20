@@ -26,11 +26,11 @@ namespace Bengala.Tests
             return declarations.ToList();
         }
 
-        protected VarDeclarationAST VarDecl(String s, ExpressionAST expr)
+        protected VarDeclarationAST VarDecl(String s, ExpressionAst expr)
         {
             return new VarDeclarationAST(s,expr);
         }
-        protected SequenceExpressionAST Seq(params ExpressionAST[] expressions )
+        protected SequenceExpressionAST Seq(params ExpressionAst[] expressions )
         {
             return new SequenceExpressionAST(expressions.ToList());
         }
@@ -44,17 +44,17 @@ namespace Bengala.Tests
             return new ArrayDeclarationAST(arrayTypeId, baseTypeId,0,0);
         }
 
-        protected ArrayInstatiationAST ArrayInst(string arrayTypeId, ExpressionAST sizeExpr,ExpressionAST initExpr)
+        protected ArrayInstatiationAST ArrayInst(string arrayTypeId, ExpressionAst sizeExpr,ExpressionAst initExpr)
         {
             return new ArrayInstatiationAST(arrayTypeId, sizeExpr, initExpr, 0, 0);
         }
 
-        protected ArrayAccessAST ArrayAccess(ExpressionAST arrayExpr, ExpressionAST indexExpr)
+        protected ArrayAccessAST ArrayAccess(ExpressionAst arrayExpr, ExpressionAst indexExpr)
         {
             return new ArrayAccessAST(arrayExpr, indexExpr, 0, 0);
         }
 
-        protected FunctionDeclarationAST Fun(string name, List<KeyValuePair<string, string>> parameters,ExpressionAST body,String retType)
+        protected FunctionDeclarationAST Fun(string name, List<KeyValuePair<string, string>> parameters,ExpressionAst body,String retType)
         {
             return new FunctionDeclarationAST(name,parameters, body, retType);
         }
@@ -69,11 +69,11 @@ namespace Bengala.Tests
             return new KeyValuePair<string, string>(name, type);
         }
 
-        protected BinaryExpressionAST BinExpr(ExpressionAST l,ExpressionAST r,string op) {
+        protected BinaryExpressionAST BinExpr(ExpressionAst l,ExpressionAst r,string op) {
             return new BinaryExpressionAST(l,r,op);
         }
 
-        protected IfExpressionAST If(ExpressionAST c, ExpressionAST l, ExpressionAST r)
+        protected IfExpressionAST If(ExpressionAst c, ExpressionAst l, ExpressionAst r)
         {
             return new IfExpressionAST(c, l, r);
         }

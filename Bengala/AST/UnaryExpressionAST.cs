@@ -1,12 +1,12 @@
 ﻿namespace Bengala.AST
 {
-    public abstract class UnaryExpressionAST : ExpressionAST
+    public abstract class UnaryExpressionAST : ExpressionAst
     {
-        public ExpressionAST Expression { get; private set; }
+        public ExpressionAst Expression { get; private set; }
 
         #region Constructors
 
-        public UnaryExpressionAST(ExpressionAST exp, int line, int col) : base(line, col)
+        public UnaryExpressionAST(ExpressionAst exp, int line, int col) : base(line, col)
         {
             Expression = exp;
         }

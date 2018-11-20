@@ -12,7 +12,7 @@ namespace Bengala.AST
     /// <summary>
     /// Representa una constante string :   "bengala"   
     /// </summary>
-    public class StringLiteral : ExpressionAST
+    public class StringLiteral : ExpressionAst
     {
         #region Fields and Properties
 

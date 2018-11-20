@@ -17,15 +17,15 @@ namespace Bengala.AST
     {
         #region Fields and Properties
 
-        public ExpressionAST ExpressionFrom { get; private set; }
-        public ExpressionAST ExpressionTo { get; private set; }
+        public ExpressionAst ExpressionFrom { get; private set; }
+        public ExpressionAst ExpressionTo { get; private set; }
         public string VarId { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public ForExpressionAST(string id, ExpressionAST expFrom, ExpressionAST expTo, ExpressionAST expInstruction,
+        public ForExpressionAST(string id, ExpressionAst expFrom, ExpressionAst expTo, ExpressionAst expInstruction,
                                 int line, int col)
             : base(expInstruction, line, col)
         {

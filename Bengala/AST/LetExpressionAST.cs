@@ -9,7 +9,7 @@ using Bengala.AST.SemanticsUtils;
 
 namespace Bengala.AST
 {
-    public class LetExpressionAST : ExpressionAST
+    public class LetExpressionAST : ExpressionAst
     {
         #region Fields and Properties
 

@@ -13,39 +13,39 @@ namespace Bengala.AST
     /// Representa las expresiones: 'if' expCond 'then' expThen 'else' expElse 
     ///                             'if' expCond 'then' expThen
     /// </summary>
-    public class IfExpressionAST : ExpressionAST
+    public class IfExpressionAST : ExpressionAst
     {
         #region Fields and Properties
 
-        public ExpressionAST ExpConditional { get; private set; }
-        public ExpressionAST ExpressionElse { get; private set; }
-        public ExpressionAST ExpressionThen { get; private set; }
+        public ExpressionAst ExpConditional { get; private set; }
+        public ExpressionAst ExpressionElse { get; private set; }
+        public ExpressionAst ExpressionThen { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public IfExpressionAST(ExpressionAST expCondition, ExpressionAST expThen)
+        public IfExpressionAST(ExpressionAst expCondition, ExpressionAst expThen)
         {
             ExpConditional = expCondition;
             ExpressionThen = expThen;
         }
 
-        public IfExpressionAST(ExpressionAST expCondition, ExpressionAST expThen,
-                               ExpressionAST expElse)
+        public IfExpressionAST(ExpressionAst expCondition, ExpressionAst expThen,
+                               ExpressionAst expElse)
             : this(expCondition, expThen)
         {
             ExpressionElse = expElse;
         }
 
-        public IfExpressionAST(ExpressionAST expCondition, ExpressionAST expThen, int line, int col) : base(line, col)
+        public IfExpressionAST(ExpressionAst expCondition, ExpressionAst expThen, int line, int col) : base(line, col)
         {
             ExpConditional = expCondition;
             ExpressionThen = expThen;
         }
 
-        public IfExpressionAST(ExpressionAST expCondition, ExpressionAST expThen,
-                               ExpressionAST expElse, int line, int col)
+        public IfExpressionAST(ExpressionAst expCondition, ExpressionAst expThen,
+                               ExpressionAst expElse, int line, int col)
             : this(expCondition, expThen)
         {
             Line = line;

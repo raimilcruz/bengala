@@ -22,7 +22,7 @@ namespace Bengala.AST
         /// <summary>
         /// Devuelve la expresion que representa al valor de la variable
         /// </summary>
-        public ExpressionAST ExpressionValue { get; private set; }
+        public ExpressionAst ExpressionValue { get; private set; }
 
         /// <summary>
         /// El identificador de la variable
@@ -45,7 +45,7 @@ namespace Bengala.AST
         /// <param name="expValue">La expresion que define el valor de la variable</param>
         /// <param name="line">Linea correspondiente en el codigo</param>
         /// <param name="col">Columna correspondiente en el codigo</param>
-        public VarDeclarationAST(string id, string typeId, ExpressionAST expValue, int line, int col) : base(line, col)
+        public VarDeclarationAST(string id, string typeId, ExpressionAst expValue, int line, int col) : base(line, col)
         {
             TypeId = typeId;
             Id = id;
@@ -57,7 +57,7 @@ namespace Bengala.AST
         /// </summary>
         /// <param name="id">El id de la variable</param>
         /// <param name="expValue">La expresion que define el valor de la variable</param>
-        public VarDeclarationAST(string id, ExpressionAST expValue)
+        public VarDeclarationAST(string id, ExpressionAst expValue)
         {
             Id = id;
             ExpressionValue = expValue;

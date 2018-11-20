@@ -17,7 +17,7 @@ namespace Bengala.Compilation
         {
             CodeGenerator = codeGenerator;
         }
-        public abstract void GenerateCode(ILCode code, ExpressionAST rightExpr);
+        public abstract void GenerateCode(ILCode code, ExpressionAst rightExpr);
     }
 
     public class ILGeneratorArrayAssignment:ILAssignmentGenerator
@@ -28,7 +28,7 @@ namespace Bengala.Compilation
         {
             _arrayAccess = arrayAccess;
         }
-        public override void GenerateCode(ILCode code, ExpressionAST rightExpr)
+        public override void GenerateCode(ILCode code, ExpressionAst rightExpr)
         {
             //--->
             bool pushOnStack = code.PushOnStack;
@@ -65,7 +65,7 @@ namespace Bengala.Compilation
             _varAst = varAst;
         }
 
-        public override void GenerateCode(ILCode code, ExpressionAST rightExpr)
+        public override void GenerateCode(ILCode code, ExpressionAst rightExpr)
         {
             ILGenerator il = code.Method.GetILGenerator();
 
@@ -129,7 +129,7 @@ namespace Bengala.Compilation
             
         }
 
-        public override void GenerateCode(ILCode code, ExpressionAST rightExpr)
+        public override void GenerateCode(ILCode code, ExpressionAst rightExpr)
         {
            
         }

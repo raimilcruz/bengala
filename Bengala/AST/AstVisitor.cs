@@ -1,18 +1,5 @@
-﻿using Bengala.AST.SemanticsUtils;
-using System;
-using Bengala.AST.Errors;
-
-namespace Bengala.AST
+﻿namespace Bengala.AST
 {
-    public abstract class ErrorListener {
-        public abstract void Add(ErrorMessage msg);
-        public abstract void Add(WarningMessage msg);
-
-        public abstract void Insert(int pos, ErrorMessage msg);
-
-        public abstract int Count { get;}
-
-    }
     public abstract class AstVisitor<T>
     {
         public abstract T VisitNode(AstNode node);

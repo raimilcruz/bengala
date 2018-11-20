@@ -12,7 +12,7 @@ namespace Bengala.AST
     /// <summary>
     /// Representa la instruccion "break".
     /// </summary>
-    public class BreakAST : ExpressionAST
+    public class BreakAST : ExpressionAst
     {
         #region Fields and Properties
 

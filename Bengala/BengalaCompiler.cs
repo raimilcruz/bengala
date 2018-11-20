@@ -20,7 +20,7 @@ namespace Bengala
     public class BengalaCompiler
     {
         private const string MainFunction = "main$";
-        protected ExpressionAST exp;
+        protected ExpressionAst exp;
         protected Inizializator<ILCode> init;
 
         private static TypeBuilder AddFunctionMainToCode(ILCode code, MethodBuilder main)

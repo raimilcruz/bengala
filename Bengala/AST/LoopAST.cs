@@ -9,13 +9,13 @@ namespace Bengala.AST
     /// <summary>
     /// Abstract class to factorize bucle statements. Used to solve the "break" problem.
     /// </summary>
-    public abstract class LoopAST : ExpressionAST
+    public abstract class LoopAST : ExpressionAst
     {
         #region Fields and Propertied
 
         public List<int> BreakPos { get; protected set; }
 
-        public ExpressionAST BodyExpressions { get; private set; }
+        public ExpressionAst BodyExpressions { get; private set; }
 
         #endregion
 
@@ -27,7 +27,7 @@ namespace Bengala.AST
         /// <param name="bodyExpressions">La expression del cuerpo del ciclo</param>
         /// <param name="line">Linea correspondiente en el codigo</param>
         /// <param name="col">Columna correspondiente en el codigo</param>
-        protected LoopAST(ExpressionAST bodyExpressions, int line, int col) : base(line, col)
+        protected LoopAST(ExpressionAst bodyExpressions, int line, int col) : base(line, col)
         {
             BreakPos = new List<int>();
             BodyExpressions = bodyExpressions;

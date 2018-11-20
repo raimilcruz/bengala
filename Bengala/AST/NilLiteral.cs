@@ -12,7 +12,7 @@ namespace Bengala.AST
     /// <summary>
     /// Esta clase representa al valor nil o null de los lenguajes de programacion
     /// </summary>
-    public class NilLiteral : ExpressionAST
+    public class NilLiteral : ExpressionAst
     {
         #region Constructors
 

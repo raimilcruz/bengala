@@ -13,14 +13,14 @@ namespace Bengala.AST
     /// Representa una sequencia de expresiones del lenguaje Tiger.
     /// sequence expression :   '(' exp (',' exp)* ')'
     /// </summary>
-    public class SequenceExpressionAST : ExpressionAST
+    public class SequenceExpressionAST : ExpressionAst
     {
         #region Fields and Properties
 
         /// <summary>
         /// Devuelve la lista de expresiones que forman la secuencia
         /// </summary>
-        public List<ExpressionAST> ExpressionList { get; private set; }
+        public List<ExpressionAst> ExpressionList { get; private set; }
 
         #endregion
 
@@ -30,10 +30,10 @@ namespace Bengala.AST
         /// Lista de expresiones de la secuencia
         /// </summary>
         /// <param name="expList"></param>
-        public SequenceExpressionAST(List<ExpressionAST> expList) : base(0, 0)
+        public SequenceExpressionAST(List<ExpressionAst> expList) : base(0, 0)
             //no hay problemas con pasar 0,0 pq esta instruccion no emite errores
         {
-            ExpressionList = expList ?? new List<ExpressionAST>();
+            ExpressionList = expList ?? new List<ExpressionAst>();
         }
 
         #endregion

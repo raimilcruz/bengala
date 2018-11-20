@@ -16,13 +16,13 @@ namespace Bengala.AST
     {
         #region Fields and Properties
 
-        public ExpressionAST ExpressionConditional { get; private set; }
+        public ExpressionAst ExpressionConditional { get; private set; }
 
         #endregion
 
         #region Constructors
 
-        public WhileExpressionAST(ExpressionAST expCondition, ExpressionAST expInstruction, int line, int col) :
+        public WhileExpressionAST(ExpressionAst expCondition, ExpressionAst expInstruction, int line, int col) :
             base(expInstruction, line, col)
         {
             ExpressionConditional = expCondition;

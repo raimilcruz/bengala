@@ -11,7 +11,7 @@ namespace Bengala.AST
 {
     public class NegExpressionAST : UnaryExpressionAST
     {
-        public NegExpressionAST(ExpressionAST exp, int line, int col)
+        public NegExpressionAST(ExpressionAst exp, int line, int col)
             : base(exp, line, col)
         {
             AlwaysReturn = true;

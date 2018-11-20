@@ -4,7 +4,7 @@
 
 namespace Bengala.AST
 {
-    public abstract class LHSExpressionAST : ExpressionAST
+    public abstract class LHSExpressionAST : ExpressionAst
     {
         #region Constructors
 
