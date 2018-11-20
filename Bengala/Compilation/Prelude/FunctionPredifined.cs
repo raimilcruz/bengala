@@ -1,10 +1,11 @@
 ﻿#region Usings
 
 using Bengala.AST.SemanticsUtils;
+using Bengala.AST.Types;
 
 #endregion
 
-namespace Bengala
+namespace Bengala.Compilation.Prelude
 {
     /// <summary>
     /// Cualquier funcion predefinida en el lenguaje puede ser annadida usando esta clase.

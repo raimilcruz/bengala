@@ -1,10 +1,11 @@
 ﻿#region Usings
 
 using System.Reflection.Emit;
+using Bengala.AST.SemanticsUtils;
 
 #endregion
 
-namespace Bengala.AST.SemanticsUtils
+namespace Bengala.AST.Types
 {
     /// <summary>
     /// Esta clase representa al tipo entero en el lenguaje Tiger.

@@ -1,6 +1,6 @@
 ﻿#region Usings
 
-using Bengala.AST.CodeGenerationUtils;
+using Bengala.Compilation.Helpers;
 
 #endregion
 

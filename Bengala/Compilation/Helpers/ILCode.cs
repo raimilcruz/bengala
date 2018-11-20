@@ -6,7 +6,7 @@ using System.Reflection.Emit;
 
 #endregion
 
-namespace Bengala.AST.CodeGenerationUtils
+namespace Bengala.Compilation.Helpers
 {
     /// <summary>
     /// Esta clase contiene toda la informacion necesaria para la generacion de codigo IL.

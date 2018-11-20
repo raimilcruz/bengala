@@ -5,8 +5,8 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using Bengala.AST;
-using Bengala.AST.CodeGenerationUtils;
 using Bengala.AST.SemanticsUtils;
+using Bengala.Compilation.Helpers;
 
 namespace Bengala.Compilation
 {

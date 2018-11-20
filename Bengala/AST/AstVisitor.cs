@@ -1,5 +1,6 @@
 ﻿using Bengala.AST.SemanticsUtils;
 using System;
+using Bengala.AST.Errors;
 
 namespace Bengala.AST
 {

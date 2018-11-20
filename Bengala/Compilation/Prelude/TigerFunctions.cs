@@ -6,13 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using Bengala.AST.CodeGenerationUtils;
 using Bengala.AST.SemanticsUtils;
+using Bengala.AST.Types;
 using Bengala.AST.Utils;
+using Bengala.Compilation.Helpers;
 
 #endregion
 
-namespace Bengala
+namespace Bengala.Compilation.Prelude
 {
     /// <summary>
     /// Constituye el paquete de las funciones basicas del Tiger

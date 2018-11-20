@@ -1,10 +1,11 @@
 ﻿#region Usings
 
 using System.Collections.Generic;
+using Bengala.AST.SemanticsUtils;
 
 #endregion
 
-namespace Bengala.AST.SemanticsUtils
+namespace Bengala.AST.Types
 {
     /// <summary>
     /// Representa a un tipo Record en el lenguaje Tiger.

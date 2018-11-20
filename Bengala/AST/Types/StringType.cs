@@ -2,10 +2,11 @@
 
 using System;
 using System.Reflection.Emit;
+using Bengala.AST.SemanticsUtils;
 
 #endregion
 
-namespace Bengala.AST.SemanticsUtils
+namespace Bengala.AST.Types
 {
     /// <summary>
     /// Representa al tipo string en Tiger.

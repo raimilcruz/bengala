@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Bengala.AST.Errors;
 using Bengala.AST.SemanticsUtils;
 
 #endregion
@@ -13,6 +14,7 @@ namespace Bengala
     {
         private static void Main(string[] args)
         {
+            //TODO: Use a package to provide a better parser for CLI options
             if (args != null && args.Length != 0)
             {
                 if (args.Count() == 1)

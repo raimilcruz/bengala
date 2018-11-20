@@ -1,4 +1,4 @@
-﻿namespace Bengala.AST.SemanticsUtils
+﻿namespace Bengala.AST.Types
 {
     /// <summary>
     /// Representa al tipo nil en el lenguaje Tiger.

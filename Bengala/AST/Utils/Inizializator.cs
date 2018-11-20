@@ -2,6 +2,8 @@
 
 using System.Collections.Generic;
 using Bengala.AST.SemanticsUtils;
+using Bengala.AST.Types;
+using Bengala.Compilation.Prelude;
 
 #endregion
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Bengala;
 using Bengala.AST;
+using Bengala.AST.Errors;
 using Bengala.AST.SemanticsUtils;
 
 namespace Bengala.Tests

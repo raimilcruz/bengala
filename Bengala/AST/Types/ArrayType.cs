@@ -1,4 +1,6 @@
-﻿namespace Bengala.AST.SemanticsUtils
+﻿using Bengala.AST.SemanticsUtils;
+
+namespace Bengala.AST.Types
 {
     public class ArrayType : TigerType
     {

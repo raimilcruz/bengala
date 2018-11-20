@@ -1,10 +1,11 @@
 ﻿#region Usings
 
+using Bengala.AST.SemanticsUtils;
 using Bengala.AST.Utils;
 
 #endregion
 
-namespace Bengala.AST.SemanticsUtils
+namespace Bengala.AST.Types
 {
     /// <summary>
     /// Esta clase es utilizada cuando una expresion da error. Se le asigna entonces a esa expresion

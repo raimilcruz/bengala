@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Xml.Serialization;
-using Antlr.Runtime.Tree;
 using Bengala.AST;
-using Bengala.AST.CodeGenerationUtils;
 using Bengala.AST.SemanticsUtils;
+using Bengala.AST.Types;
+using Bengala.Compilation.Helpers;
+using TypeInfo = Bengala.AST.SemanticsUtils.TypeInfo;
 
 namespace Bengala.Compilation
 {

@@ -1,14 +1,11 @@
-﻿#region Usings
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using Bengala.AST.CodeGenerationUtils;
+using Bengala.AST.SemanticsUtils;
 using Bengala.AST.Utils;
+using Bengala.Compilation.Helpers;
 
-#endregion
-
-namespace Bengala.AST.SemanticsUtils
+namespace Bengala.AST.Types
 {
     /// <summary>
     /// Es la clase base de todos los tipos de Tiger.

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Bengala.AST.Types;
 
 #endregion
 

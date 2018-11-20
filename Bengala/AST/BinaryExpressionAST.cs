@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using Bengala.AST.CodeGenerationUtils;
 using Bengala.AST.SemanticsUtils;
 using Bengala.AST.Utils;
 
@@ -94,25 +93,6 @@ namespace Bengala.AST
 
         #endregion
 
-        #region Instance Methods
-
-
-        /// <summary>
-        /// Este metodo es redefinido en cada hijo para hacer cada uno la operacion correspondiente con los  operandos
-        /// </summary>
-        protected virtual void DoOperation(ILCode code)
-        {
-            GenOperation g = LeftExp.ReturnType.GetOperationGenerator(RightExp.ReturnType, Operator) ??
-                             RightExp.ReturnType.GetOperationGenerator(LeftExp.ReturnType, Operator);
-            if (g != null)
-                g(code);
-            else
-                throw new InvalidOperationException("The operation is not supported");
-        }
-
-     
-
-        #endregion
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {

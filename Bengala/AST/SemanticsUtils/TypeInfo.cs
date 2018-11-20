@@ -1,4 +1,6 @@
-﻿namespace Bengala.AST.SemanticsUtils
+﻿using Bengala.AST.Types;
+
+namespace Bengala.AST.SemanticsUtils
 {
     /// <summary>
     /// TypeInfo es usada para almacenar toda la informacion referente a la declaracion de un tipo

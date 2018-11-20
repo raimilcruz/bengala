@@ -6,7 +6,7 @@ using System.Reflection.Emit;
 
 #endregion
 
-namespace Bengala.AST.CodeGenerationUtils
+namespace Bengala.Compilation.Helpers
 {
     public class MethodCodeInfo
     {

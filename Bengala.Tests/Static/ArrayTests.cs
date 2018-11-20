@@ -1,6 +1,7 @@
 ﻿using System;
 using Bengala.Analysis;
 using Bengala.AST.SemanticsUtils;
+using Bengala.AST.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Bengala.Tests.Static

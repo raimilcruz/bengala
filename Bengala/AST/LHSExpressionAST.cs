@@ -1,7 +1,5 @@
 ﻿#region Usings
 
-using Bengala.AST.CodeGenerationUtils;
-
 #endregion
 
 namespace Bengala.AST

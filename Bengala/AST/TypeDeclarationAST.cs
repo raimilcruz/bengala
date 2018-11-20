@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using Bengala.AST.CodeGenerationUtils;
 using Bengala.AST.SemanticsUtils;
 
 #endregion

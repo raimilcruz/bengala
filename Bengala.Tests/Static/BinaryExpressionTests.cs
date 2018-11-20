@@ -1,7 +1,5 @@
-﻿using System;
-using Bengala.Analysis;
+﻿using Bengala.Analysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Bengala.AST;
 
 namespace Bengala.Tests
 {
@@ -19,7 +17,7 @@ namespace Bengala.Tests
         }
 
         [TestMethod]
-        public void SubstractNumberAndStringFails()
+        public void SubtractNumberAndStringFails()
         {
             var binAst = BinExpr(Num(1), Str("3"), "-");
 

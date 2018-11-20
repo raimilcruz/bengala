@@ -1,4 +1,4 @@
-﻿namespace Bengala.AST.SemanticsUtils
+﻿namespace Bengala.AST.Errors
 {
     /// <summary>
     /// Esta clase es usada para representar Warning en la compilacion

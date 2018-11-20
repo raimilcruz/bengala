@@ -2,6 +2,7 @@
 
 using System;
 using Bengala.AST.SemanticsUtils;
+using Bengala.AST.Types;
 
 #endregion
 

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Bengala.AST;
+using Bengala.AST.Errors;
 using Bengala.AST.SemanticsUtils;
+using Bengala.AST.Types;
 using Bengala.AST.Utils;
 
 namespace Bengala.Analysis
@@ -11,11 +13,7 @@ namespace Bengala.Analysis
     {
         Scope _scope;
         readonly ErrorListener _errorListener;
-        public StaticChecker()
-        {
-            //TODO: Add another constructor overload for _scope
-            _scope = new Scope(null);
-        }
+
         public StaticChecker(ErrorListener errorListener)
         {
             _scope = new Scope(null);
@@ -49,9 +47,8 @@ namespace Bengala.Analysis
             //es posible que se quite
             ast.CurrentScope = _scope;
 
-            TigerType tt;
             //comprobar que la variable esta definida
-            if (_scope.HasVar(ast.VarId, out tt) != ScopeLocation.NotDeclared)
+            if (_scope.HasVar(ast.VarId, out var tt) != ScopeLocation.NotDeclared)
             {
                 //dar el valor correspondiente al tipo de esa expresion
                 ast.ReturnType = tt;
@@ -75,8 +72,7 @@ namespace Bengala.Analysis
             expr.RightExp.Accept(this);
             TigerType rightType = expr.RightExp.ReturnType;
 
-            TigerType tt;
-            if (CheckOperator(leftType, rightType, expr.Operator, out tt))
+            if (CheckOperator(leftType, rightType, expr.Operator, out var tt))
             {
                 expr.ReturnType = tt;
                 return true;
@@ -481,8 +477,7 @@ namespace Bengala.Analysis
 
         private bool VisitTypeDeclaration(TypeDeclarationAST typeDeclaration)
         {
-            TigerType tt;
-            if (_scope.HasType(typeDeclaration.TypeId, out tt) != ScopeLocation.NotDeclared)
+            if (_scope.HasType(typeDeclaration.TypeId, out _) != ScopeLocation.NotDeclared)
             {
                 _errorListener.Add(new ErrorMessage(string.Format(Message.LoadMessage("TypeDecl"), typeDeclaration.TypeId), typeDeclaration.Line, typeDeclaration.Columns));
                 typeDeclaration.ReturnType = TigerType.GetType<ErrorType>();

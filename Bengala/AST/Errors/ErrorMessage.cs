@@ -1,4 +1,4 @@
-﻿namespace Bengala.AST.SemanticsUtils
+﻿namespace Bengala.AST.Errors
 {
     public class ErrorMessage : Message
     {

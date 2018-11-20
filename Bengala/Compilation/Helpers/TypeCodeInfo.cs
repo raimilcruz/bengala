@@ -7,7 +7,7 @@ using System.Reflection.Emit;
 
 #endregion
 
-namespace Bengala.AST.CodeGenerationUtils
+namespace Bengala.Compilation.Helpers
 {
     /// <summary>
     /// Esta clase se utiliza para guardar la informacion de un tipo en la clase ILCode

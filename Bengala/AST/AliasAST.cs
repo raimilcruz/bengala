@@ -1,29 +1,11 @@
-﻿#region Usings
-
-using System;
-using System.Collections.Generic;
-using Bengala.AST.CodeGenerationUtils;
-using Bengala.AST.SemanticsUtils;
-
-#endregion
-
-namespace Bengala.AST
+﻿namespace Bengala.AST
 {
     /// <summary>
-    /// Represents an alias declaration :
-    /// type t = [TypeIdentifierAlreadyDefined]
+    ///     Represents an alias declaration :
+    ///     type t = [TypeIdentifierAlreadyDefined]
     /// </summary>
     public class AliasAST : TypeDeclarationAST
     {
-        #region Field and Properties
-
-        /// <summary>
-        /// Devuelve el typeId del tipo al cual se le hizo el alias.
-        /// </summary>
-        public string AliasToWho { get; private set; }
-
-        #endregion
-
         #region  Constructors
 
         /// <summary>
@@ -40,12 +22,19 @@ namespace Bengala.AST
 
         #endregion
 
-     
+        #region Field and Properties
+
+        /// <summary>
+        ///     Devuelve el typeId del tipo al cual se le hizo el alias.
+        /// </summary>
+        public string AliasToWho { get; }
+
+        #endregion
+
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {
             return visitor.VisitAlias(this);
         }
     }
-
 }

@@ -1,4 +1,4 @@
-﻿namespace Bengala.AST.SemanticsUtils
+﻿namespace Bengala.AST.Types
 {
     /// <summary>
     /// Esta clase se usa en la implementacion de un compilador para las expression que no retornan un valor.

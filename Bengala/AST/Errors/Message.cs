@@ -5,15 +5,15 @@ using System.Resources;
 
 #endregion
 
-namespace Bengala.AST.SemanticsUtils
+namespace Bengala.AST.Errors
 {
     public abstract class Message
     {
-        public Message()
+        protected Message()
         {
         }
 
-        public Message(string innerMessage, int line, int column)
+        protected Message(string innerMessage, int line, int column)
         {
             InnerMessage = innerMessage;
             Line = line;

@@ -1,6 +1,7 @@
 ﻿#region Usings
 
 using System.Collections.Generic;
+using Bengala.AST.Types;
 
 #endregion
 
