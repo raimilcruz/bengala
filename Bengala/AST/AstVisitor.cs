@@ -13,7 +13,7 @@
 
         public abstract T VisitIfExpression(IfExpressionAST ast);
 
-        public abstract T VisitBinaryExpression(BinaryExpressionAST expr);
+        public abstract T VisitBinaryExpression(BinaryExpressionAst expr);
 
         public abstract T VisitLetExpression(LetExpressionAST expr);
 

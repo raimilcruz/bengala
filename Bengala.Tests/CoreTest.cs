@@ -69,8 +69,8 @@ namespace Bengala.Tests
             return new KeyValuePair<string, string>(name, type);
         }
 
-        protected BinaryExpressionAST BinExpr(ExpressionAst l,ExpressionAst r,string op) {
-            return new BinaryExpressionAST(l,r,op);
+        protected BinaryExpressionAst BinExpr(ExpressionAst l,ExpressionAst r,string op) {
+            return new BinaryExpressionAst(l,r,op);
         }
 
         protected IfExpressionAST If(ExpressionAst c, ExpressionAst l, ExpressionAst r)

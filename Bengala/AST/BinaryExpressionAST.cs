@@ -13,7 +13,7 @@ namespace Bengala.AST
     /// <summary>
     /// Esta clase representa a las expresiones binarias.
     /// </summary>
-    public class BinaryExpressionAST : ExpressionAst
+    public class BinaryExpressionAst : ExpressionAst
     {
         #region Fields and Properties
 
@@ -27,13 +27,13 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public BinaryExpressionAST(ExpressionAst leftExp, ExpressionAst rightExp, string op)
+        public BinaryExpressionAst(ExpressionAst leftExp, ExpressionAst rightExp, string op)
             : this(leftExp, rightExp, op, 0, 0)
         {
           
         }
 
-        public BinaryExpressionAST(ExpressionAst leftExp, ExpressionAst rightExp, string op, int line, int col)
+        public BinaryExpressionAst(ExpressionAst leftExp, ExpressionAst rightExp, string op, int line, int col)
             : base(line, col)
         {
             Operator = GetOperator(op);

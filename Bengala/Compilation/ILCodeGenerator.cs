@@ -129,7 +129,7 @@ namespace Bengala.Compilation
             return Unit.Create();
         }
 
-        public override Unit VisitBinaryExpression(BinaryExpressionAST expr)
+        public override Unit VisitBinaryExpression(BinaryExpressionAst expr)
         {
             var binaryOperationGen = new BinaryExpressionILGenerator(expr,this);
             binaryOperationGen.GenerateCode(code);

@@ -1,11 +1,4 @@
-﻿#region Usings
-
-using System.Collections.Generic;
-using Antlr.Runtime;
-using Bengala.AST.SemanticsUtils;
-
-#endregion
-
+﻿
 namespace Bengala
 {
     //public class BengalaParser : tigerParser

@@ -33,9 +33,9 @@ namespace Bengala.Tests
             return first.Accept(this);
         }
 
-        public override bool VisitBinaryExpression(BinaryExpressionAST expr)
+        public override bool VisitBinaryExpression(BinaryExpressionAst expr)
         {
-            BinaryExpressionAST binExpr = _other as BinaryExpressionAST;
+            BinaryExpressionAst binExpr = _other as BinaryExpressionAst;
             if (binExpr == null)
                 return false;
 

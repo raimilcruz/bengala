@@ -8,10 +8,10 @@ namespace Bengala.Compilation
 {
     public class BinaryExpressionILGenerator
     {
-        private BinaryExpressionAST _binaryExpression;
+        private BinaryExpressionAst _binaryExpression;
         private ILCodeGenerator _codeGenerator;
 
-        public BinaryExpressionILGenerator(BinaryExpressionAST binExpr, ILCodeGenerator codeGenerator)
+        public BinaryExpressionILGenerator(BinaryExpressionAst binExpr, ILCodeGenerator codeGenerator)
         {
             _binaryExpression = binExpr;
             _codeGenerator = codeGenerator;

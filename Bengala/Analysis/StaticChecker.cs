@@ -64,7 +64,7 @@ namespace Bengala.Analysis
             return false;
         }
 
-        public override bool VisitBinaryExpression(BinaryExpressionAST expr)
+        public override bool VisitBinaryExpression(BinaryExpressionAst expr)
         {
             expr.LeftExp.Accept(this);
             TigerType leftType = expr.LeftExp.ReturnType;
