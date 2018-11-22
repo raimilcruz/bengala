@@ -13,12 +13,12 @@ namespace Bengala.Tests
             return new IntLiteral(n);
         }
         protected StringLiteral Str(string s) {
-            return new StringLiteral(s, 1, 1);
+            return new StringLiteral(s);
         }
 
-        protected VarAST Var(String s)
+        protected VarAST Var(string s)
         {
-            return new VarAST(s, 1, 1);
+            return new VarAST(s);
         }
 
         protected List<Declaration> Decls(params Declaration[] declarations)
@@ -51,7 +51,7 @@ namespace Bengala.Tests
 
         protected ArrayAccessAST ArrayAccess(ExpressionAst arrayExpr, ExpressionAst indexExpr)
         {
-            return new ArrayAccessAST(arrayExpr, indexExpr, 0, 0);
+            return new ArrayAccessAST(arrayExpr, indexExpr);
         }
 
         protected FunctionDeclarationAST Fun(string name, List<KeyValuePair<string, string>> parameters,ExpressionAst body,String retType)

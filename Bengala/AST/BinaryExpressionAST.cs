@@ -27,14 +27,9 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public BinaryExpressionAst(ExpressionAst leftExp, ExpressionAst rightExp, string op)
-            : this(leftExp, rightExp, op, 0, 0)
-        {
-          
-        }
+        
 
-        public BinaryExpressionAst(ExpressionAst leftExp, ExpressionAst rightExp, string op, int line, int col)
-            : base(line, col)
+        public BinaryExpressionAst(ExpressionAst leftExp, ExpressionAst rightExp, string op)
         {
             Operator = GetOperator(op);
             LeftExp = leftExp;

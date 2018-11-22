@@ -25,7 +25,7 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public StringLiteral(string value, int line, int col) : base(line, col)
+        public StringLiteral(string value) 
         {
             //se eliminan las comillas
             //TODO: We do not need to assume that value start and end with qoutes

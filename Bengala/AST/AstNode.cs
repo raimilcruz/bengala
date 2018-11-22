@@ -12,6 +12,20 @@
         /// </summary>
         public int Columns { get; set; }
 
+        public int CodeOffSet { get; set; }
+
         public abstract T Accept<T>(AstVisitor<T> visitor);
+    }
+
+    public class CodeOffSet
+    {
+        public int Start { get; set; }
+        public int End { get; set; }
+
+        public CodeOffSet(int start,int end)
+        {
+            Start = start;
+            End = end;
+        }
     }
 }

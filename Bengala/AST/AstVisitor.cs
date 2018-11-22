@@ -50,5 +50,7 @@
         public abstract T VisitRecordInstantiation(RecordInstantiationAST recordInstantiation);
 
         public abstract T VisitRecordDeclaration(RecordDeclarationAST recordDeclaration);
+
+        public abstract T VisitArgumentList(ArgumentList argumentList);
     }
 }

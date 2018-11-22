@@ -748,6 +748,12 @@ namespace Bengala.Analysis
             return false;
         }
 
+        public override bool VisitArgumentList(ArgumentList argumentList)
+        {
+            //it is not necessary to implement it.
+            throw new NotImplementedException();
+        }
+
 
         #region Helper functions
 

@@ -22,7 +22,7 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public VarAST(string varId, int line, int col) : base(line, col)
+        public VarAST(string varId) 
         {
             VarId = varId;
             AlwaysReturn = true;

@@ -8,7 +8,7 @@ namespace Bengala.AST
     {
         #region Constructors
 
-        protected LHSExpressionAST(int line, int col) : base(line, col)
+        protected LHSExpressionAST()
         {
         }
 

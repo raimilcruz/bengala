@@ -169,5 +169,10 @@ namespace Bengala.Tests
         {
             throw new NotImplementedException();
         }
+
+        public override bool VisitArgumentList(ArgumentList argumentList)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

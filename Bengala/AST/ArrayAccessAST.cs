@@ -34,7 +34,7 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public ArrayAccessAST(ExpressionAst array, ExpressionAst indexer, int line, int col) : base(line, col)
+        public ArrayAccessAST(ExpressionAst array, ExpressionAst indexer)
         {
             this.array = array;
             this.indexer = indexer;

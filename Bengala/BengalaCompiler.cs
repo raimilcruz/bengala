@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
+using Antlr4.Runtime;
+using Bengala.Antlr;
 using Bengala.AST;
 using Bengala.AST.Errors;
 using Bengala.AST.SemanticsUtils;
@@ -119,7 +121,6 @@ namespace Bengala
         /// <returns>Retorna una lista con los errores que se produjeron</returns>
         private List<Message> Compile(string filename, string typeName)
         {
-            //var stm = new StreamReader(filename);
             //var reader = new ANTLRReaderStream(stm);
             //var lexer = new BengalaLexer(reader);
             //var cm = new CommonTokenStream(lexer);

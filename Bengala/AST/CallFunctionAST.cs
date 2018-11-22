@@ -24,10 +24,10 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public CallFunctionAST(string functionId, List<ExpressionAst> realParam)
+        public CallFunctionAST(string functionId, ArgumentList realParam)
         {
             FunctionId = functionId;
-            RealParam = realParam;
+            RealParam = realParam.Arguments;
         }
 
         public CallFunctionAST(string functionId, List<ExpressionAst> realParam, int line, int col) : base(line, col)

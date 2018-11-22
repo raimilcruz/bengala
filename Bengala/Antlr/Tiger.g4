@@ -3,21 +3,24 @@ grammar Tiger;
 /*
  * Parser Rules
  */
-
+@header
+{
+	using Bengala.AST;	
+}
 //I comment the old way to build the AST in this program rule for references
-program    /*returns [ExpressionAst res]*/	   	: e =exp //{$ctx.res = $e.res;}
+program    /*returns [ExpressionAst res]	  */: e =exp //{$ctx.res = $e.res;}
 		EOF;
 
 //expresiones de tiger
-exp        : ifE = ifExp 
-						| forE = forExp 
-						| let= letExp 
+exp      : ifExp 
+						| forExp 
+						| letExp 
 						//| (lvalue ASSIGN)=>lv= lvalue s = ASSIGN initExp = exp  {res = new AssignExpressionAst(lv,initExp, s.Line, s.CharPositionInLine);}
 						//| (ID LBRACKET exp? RBRACKET OF )=> id = ID LBRACKET  sizeExp = exp RBRACKET OF initExp= exp {res = new ArrayInstatiationAST(id.Text,sizeExp,initExp, id.Line, id.CharPositionInLine);}
-						| whileE =  whileInstr 
-						| breakE = breakInstr 
-						| record = recordInstance 
-						| e= expOrAnd;
+						| whileInstr 
+						| breakInstr 
+						| recordInstance 
+						| expOrAnd;
 						
 						
 												
@@ -42,15 +45,12 @@ expNE 	   : e1 =expSumRes (
 									     s = DISTINC e2 =expSumRes  
 									   )? ;
 									   
-expSumRes  : e1 =expPorDiv (
-									    ( s = MINUS   
-									    |s = PLUS
-									    )    e2 =expPorDiv  
-									   )* ;
+expSumRes  : e1 = expPorDiv srList = sumResList*;
+sumResList :  ( s = MINUS | s = PLUS )  e2 =expPorDiv  ;
 									   
 expPorDiv  : e1 =expMod    ((
 									     s = SLASH  
-									    |s = ASTER)   e2 =expMod     
+									    |s = ASTER)   e2 =expMod   
 									   )* ;
 									   
 expMod	   : f = factor    (
@@ -58,19 +58,29 @@ expMod	   : f = factor    (
 									   )? ;	
 									   
 factor     :                           ( m = MINUS?   f =fExp  )
-								             | n = NIL ;	
-								                                                 
-seqExp 	 : LPAREN (temp= exp (SEMICOLON temp1 = exp)*)? RPAREN ;
+								             | n = NIL ;								                                                 
+
 						
-fExp 	 : i= INTCONST  
-						| s = STRINGCONST 
-						| seq_exp = seqExp 
+fExp 	 : 
+			intRule  
+						| strRule  
+						| seqExp 
 						//llamada a funcion		 
-						| id = ID LPAREN argList = listExp?  RPAREN
+						| fCall 
 			
-						| l_value =lvalue 
+						| prefixExpr 
 						;
 			
+
+
+intRule : i = INTCONST;
+
+strRule : s = STRINGCONST ;
+
+seqExp 	 : LPAREN (exp (SEMICOLON exp)*)? RPAREN ;
+
+fCall	   : ID LPAREN argList = listExp?  RPAREN ;
+
 listExp    :temp =  exp (COMMA temp1= exp)*;
 
 ifExp 	   :i = IF cond= exp THEN e1=exp (ELSE e2=exp)? ;
@@ -84,8 +94,16 @@ instructions : e1 = exp (SEMICOLON e2=exp )*;
 
 
 whileInstr : id = WHILE cond = exp DO body= exp ;
-	
-lvalue 	: id = ID (DOT fieldId= ID | LBRACKET indexExp=exp  RBRACKET )* ;
+
+/*
+example of matches: 
+- foo
+- foo.foo
+- foo[1].foo
+*/
+prefixExpr 	: id = ID prefixAccess*; 
+prefixAccess: DOT ID | 
+			  LBRACKET exp  RBRACKET ;
 
 
 //assignacion de valores a los campos de un record

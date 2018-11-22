@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Antlr\BengalaListener.cs" />
     <Compile Include="Antlr\BuildAstVisitor.cs" />
     <Compile Include="Antlr\Tiger.g4.lexer.cs">
       <DependentUpon>Tiger.g4</DependentUpon>
@@ -77,6 +78,7 @@
       <DependentUpon>Tiger.g4</DependentUpon>
     </Compile>
     <Compile Include="AST\AliasAST.cs" />
+    <Compile Include="AST\ArgumentList.cs" />
     <Compile Include="AST\ArrayAccessAST.cs" />
     <Compile Include="AST\ArrayDeclarationAST.cs" />
     <Compile Include="AST\ArrayInstatiationAST.cs" />

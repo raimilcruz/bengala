@@ -1,34 +1,32 @@
-﻿using Antlr.Runtime;
-using Bengala.AST;
-using System;
-using System.Collections.Generic;
+﻿using Bengala.AST;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Antlr4.Runtime;
+using Bengala.Antlr;
 
 namespace Bengala.Tests.Parser
 {
-    public class CoreParserTest:CoreTest
+    public class CoreParserTest : CoreTest
     {
-        //public AstNode parseText(string text)
-        //{
-        //    var stm = new StreamReader(GenerateStreamFromString(text));
-        //    var reader = new ANTLRReaderStream(stm);
-        //    var lexer = new BengalaLexer(reader);
-        //    var cm = new CommonTokenStream(lexer);
-        //    var parser = new BengalaParser(lexer.Errors, cm);
+        public AstNode ParseText(string text)
+        {
+            var s = new StreamReader(GenerateStreamFromString(text));
+            var stm = new AntlrInputStream(s); ;
+            var lexer = new TigerLexer(stm);
+            var tokenStream = new CommonTokenStream(lexer);
+            var parser = new TigerParser(tokenStream);
+            var expContext = parser.program();
 
-        //    return parser.program();
-        //}
-        //public Stream GenerateStreamFromString(string s)
-        //{
-        //    MemoryStream stream = new MemoryStream();
-        //    StreamWriter writer = new StreamWriter(stream);
-        //    writer.Write(s);
-        //    writer.Flush();
-        //    stream.Position = 0;
-        //    return stream;
-        //}        
+            var contextVisitor = new BuildAstVisitor();
+            return expContext.Accept(contextVisitor);
+        }
+        private static Stream GenerateStreamFromString(string s)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(s);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
+        }
     }
 }

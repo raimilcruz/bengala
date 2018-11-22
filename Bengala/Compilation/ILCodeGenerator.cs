@@ -620,6 +620,12 @@ namespace Bengala.Compilation
             return Unit.Create();
         }
 
+        public override Unit VisitArgumentList(ArgumentList argumentList)
+        {
+            //it not necessary to implement it
+            throw new NotImplementedException();
+        }
+
         #region Helper methods
 
         private void code_OnBeginMethod_var(VarDeclarationAST varDecl, ILCode theCode, BeginMethodEventArgs e)
