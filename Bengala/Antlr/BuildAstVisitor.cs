@@ -45,12 +45,18 @@ namespace Bengala.Antlr
             //1. It takes the first derivation
             if (context.ChildCount == 1)
                 return context.GetChild(0).Accept(this);
-            throw new NotImplementedException();
+            return new BinaryExpressionAst(
+                (ExpressionAst)context.GetChild(0).Accept(this),
+                (ExpressionAst)context.e2.Accept(this), context.s.Text);
         }
 
         public override AstNode VisitExpMod([NotNull] TigerParser.ExpModContext context)
         {
-            return base.VisitExpMod(context);
+            if (context.ChildCount == 1)
+                return context.GetChild(0).Accept(this);
+            return new BinaryExpressionAst(
+                (ExpressionAst) context.GetChild(0).Accept(this),
+                (ExpressionAst) context.e2.Accept(this), context.s.Text);
         }
 
         public override AstNode VisitExpNE([NotNull] TigerParser.ExpNEContext context)
@@ -59,7 +65,9 @@ namespace Bengala.Antlr
             //1. It takes the first derivation
             if (context.ChildCount == 1)
                 return context.GetChild(0).Accept(this);
-            throw new NotImplementedException();
+            return new BinaryExpressionAst(
+                (ExpressionAst)context.GetChild(0).Accept(this),
+                (ExpressionAst)context.e2.Accept(this), context.s.Text);
         }
 
         public override AstNode VisitExpOrAnd([NotNull] TigerParser.ExpOrAndContext context)
@@ -68,12 +76,21 @@ namespace Bengala.Antlr
             //1. It takes the first derivation
             if (context.ChildCount == 1)
                 return context.GetChild(0).Accept(this);
-            throw new NotImplementedException();
+            return context.expOrAndList().Aggregate(context.e1.Accept(this),
+                (acc, x) =>
+                    new BinaryExpressionAst((ExpressionAst)acc,
+                        (ExpressionAst)x.e2.Accept(this), x.s.Text));
         }
 
         public override AstNode VisitExpPorDiv([NotNull] TigerParser.ExpPorDivContext context)
         {
-            return base.VisitExpPorDiv(context);
+            if (context.ChildCount == 1)
+                return context.GetChild(0).Accept(this);
+
+            return context.expPorDivList().Aggregate(context.e1.Accept(this),
+                (acc, x) =>
+                    new BinaryExpressionAst((ExpressionAst)acc,
+                        (ExpressionAst)x.e2.Accept(this), x.s.Text));
         }
 
         public override AstNode VisitExpSumRes([NotNull] TigerParser.ExpSumResContext context)
@@ -92,6 +109,11 @@ namespace Bengala.Antlr
         public override AstNode VisitFactor([NotNull] TigerParser.FactorContext context)
         {
             return context.GetChild(0).Accept(this);
+        }
+
+        public override AstNode VisitNegExpr(TigerParser.NegExprContext context)
+        {
+            return new NegExpressionAST((ExpressionAst)context.fExp().Accept(this));
         }
 
         public override AstNode VisitFExp([NotNull] TigerParser.FExpContext context)
@@ -131,7 +153,7 @@ namespace Bengala.Antlr
 
         public override AstNode VisitListExp([NotNull] TigerParser.ListExpContext context)
         {
-            return base.VisitListExp(context);
+            return new ArgumentList(context.exp().Select(x=> (ExpressionAst)x.Accept(this)).ToList());
         }
 
         public override AstNode VisitPrefixExpr(TigerParser.PrefixExprContext context)
@@ -198,6 +220,11 @@ namespace Bengala.Antlr
         public override AstNode VisitStrRule(TigerParser.StrRuleContext context)
         {
             return new StringLiteral(context.s.Text);
+        }
+
+        public override AstNode VisitNilRule(TigerParser.NilRuleContext context)
+        {
+            return new NilLiteral();
         }
 
         public override AstNode VisitFCall(TigerParser.FCallContext context)

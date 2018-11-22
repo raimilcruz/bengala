@@ -16,7 +16,7 @@ namespace Bengala.AST
     {
         #region Constructors
 
-        public NilLiteral(int line, int col) : base(line, col)
+        public NilLiteral()
         {
             AlwaysReturn = true;
         }

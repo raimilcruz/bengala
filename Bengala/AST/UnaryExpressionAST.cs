@@ -2,15 +2,11 @@
 {
     public abstract class UnaryExpressionAST : ExpressionAst
     {
-        public ExpressionAst Expression { get; private set; }
+        public ExpressionAst Expression { get; }
 
-        #region Constructors
-
-        public UnaryExpressionAST(ExpressionAst exp, int line, int col) : base(line, col)
+        protected UnaryExpressionAST(ExpressionAst exp) 
         {
             Expression = exp;
         }
-
-        #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Bengala.AST;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Bengala.Tests.Parser
 {
@@ -48,5 +49,47 @@ namespace Bengala.Tests.Parser
 
             Assert.IsTrue(AstComparer.EqualNodes(ast, other));
         }
+        [TestMethod]
+        public void OrExp()
+        {
+            var program = "2 | 1";
+            var ast = ParseText(program);
+
+            var other = BinExpr(Num(2), Num(1), "|");
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
+        [TestMethod]
+        public void EqExp()
+        {
+            var program = "2 = 1";
+            var ast = ParseText(program);
+
+            var other = BinExpr(Num(2), Num(1), "=");
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
+        [TestMethod]
+        public void BinExprWithFunCall()
+        {
+            var program = "2 + f(2)";
+            var ast = ParseText(program);
+
+            var other = BinExpr(Num(2), FCall("f",Num(2)), "+");
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
+        [TestMethod]
+        public void BinExprWithNegExpr()
+        {
+            var program = "-2 + 1";
+            var ast = ParseText(program);
+
+            var other = BinExpr(Neq(Num(2)), Num(1), "+");
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
+
+      
     }
 }

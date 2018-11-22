@@ -24,10 +24,8 @@ exp      : ifExp
 						
 						
 												
-expOrAnd  : e1 =expCOMP 	(
-									     (s = AND
-								            |s = OR)      e2= expCOMP  
-								           )* ;
+expOrAnd  : e1 =expCOMP expOrAndList*;
+expOrAndList : 	(s = AND |s = OR) e2= expCOMP;
 								           								         
 expCOMP    : e1 =expEQ   	
 			(
@@ -48,17 +46,13 @@ expNE 	   : e1 =expSumRes (
 expSumRes  : e1 = expPorDiv srList = sumResList*;
 sumResList :  ( s = MINUS | s = PLUS )  e2 =expPorDiv  ;
 									   
-expPorDiv  : e1 =expMod    ((
-									     s = SLASH  
-									    |s = ASTER)   e2 =expMod   
-									   )* ;
+expPorDiv  : e1 =expMod  expPorDivList* ;
+expPorDivList: (s = SLASH  | s = ASTER) e2 =expMod;
 									   
-expMod	   : f = factor    (
-									     s = MOD     e2 =factor     
-									   )? ;	
+expMod	   : f = factor    (s = MOD  e2 =factor)? ;	
 									   
-factor     :                           ( m = MINUS?   f =fExp  )
-								             | n = NIL ;								                                                 
+factor     :  negExpr | fExp | nilRule;
+negExpr    : m = MINUS  f = fExp ;
 
 						
 fExp 	 : 
@@ -77,11 +71,13 @@ intRule : i = INTCONST;
 
 strRule : s = STRINGCONST ;
 
+nilRule : n = NIL;
+
 seqExp 	 : LPAREN (exp (SEMICOLON exp)*)? RPAREN ;
 
 fCall	   : ID LPAREN argList = listExp?  RPAREN ;
 
-listExp    :temp =  exp (COMMA temp1= exp)*;
+listExp    :exp (COMMA exp)*;
 
 ifExp 	   :i = IF cond= exp THEN e1=exp (ELSE e2=exp)? ;
 

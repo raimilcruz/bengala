@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Bengala.AST;
 
 namespace Bengala.Tests
@@ -126,7 +128,11 @@ namespace Bengala.Tests
 
         public override bool VisitNegExpression(NegExpressionAST negExpression)
         {
-            throw new NotImplementedException();
+            var other = _other as NegExpressionAST;
+            if (other == null)
+                return false;
+
+            return IsEqualNodes(other.Expression, negExpression.Expression);
         }
 
         public override bool VisitNilLiteral(NilLiteral nil)
@@ -152,7 +158,13 @@ namespace Bengala.Tests
 
         public override bool VisitFunctionInvocation(CallFunctionAST functionInvocation)
         {
-            throw new NotImplementedException();
+            var  fCall = _other as CallFunctionAST;
+            if (fCall == null)
+                return false;
+
+            return fCall.RealParam.Count == functionInvocation.RealParam.Count &&
+                   fCall.RealParam.Zip(functionInvocation.RealParam,IsEqualNodes).All(x=>x)
+                   && (fCall.FunctionId == functionInvocation.FunctionId);
         }
 
         public override bool VisitRecordAccess(RecordAccessAST recordAccess)

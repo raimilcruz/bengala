@@ -12,6 +12,10 @@ namespace Bengala.Tests
         protected IntLiteral Num(int n) {
             return new IntLiteral(n);
         }
+        protected ExpressionAst Neq(ExpressionAst expression)
+        {
+            return new NegExpressionAST(expression);
+        }
         protected StringLiteral Str(string s) {
             return new StringLiteral(s);
         }
@@ -57,6 +61,10 @@ namespace Bengala.Tests
         protected FunctionDeclarationAST Fun(string name, List<KeyValuePair<string, string>> parameters,ExpressionAst body,String retType)
         {
             return new FunctionDeclarationAST(name,parameters, body, retType);
+        }
+        protected ExpressionAst FCall(string function, params ExpressionAst[] args)
+        {
+            return new CallFunctionAST(function,new ArgumentList(args.ToList()));
         }
 
         protected List<KeyValuePair<string, string>> Parameters(params KeyValuePair<string, string>[] parameters)
