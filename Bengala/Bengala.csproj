@@ -86,6 +86,7 @@
     <Compile Include="AST\AstVisitor.cs" />
     <Compile Include="AST\BreakAST.cs" />
     <Compile Include="AST\Errors\ErrorListener.cs" />
+    <Compile Include="AST\FormalParameterList.cs" />
     <Compile Include="Compilation\Helpers\ILCode.cs" />
     <Compile Include="Compilation\Helpers\MethodCodeInfo.cs" />
     <Compile Include="Compilation\Helpers\TypeCodeInfo.cs" />

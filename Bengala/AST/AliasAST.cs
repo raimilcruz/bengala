@@ -14,8 +14,8 @@
         /// <param name="aliasToWho">nombre del tipo al cual se hace el Alias</param>
         /// <param name="line">Linea correspondiente en el codigo</param>
         /// <param name="col">Columna correspondiente en el codigo</param>
-        public AliasAST(string typeId, string aliasToWho, int line, int col)
-            : base(typeId, line, col)
+        public AliasAST(string typeId, string aliasToWho)
+            : base(typeId)
         {
             AliasToWho = aliasToWho;
         }

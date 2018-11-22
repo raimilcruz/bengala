@@ -1,12 +1,51 @@
-﻿namespace Bengala.AST.Errors
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Bengala.AST.Errors
 {
-    public abstract class ErrorListener {
-        public abstract void Add(ErrorMessage msg);
-        public abstract void Add(WarningMessage msg);
+    public interface IErrorListener {
+        void Add(ErrorMessage msg);
+        void Add(WarningMessage msg);
 
-        public abstract void Insert(int pos, ErrorMessage msg);
+        void Insert(int pos, ErrorMessage msg);
+        int Count { get;}
+    }
+    public class BengalaBaseErrorListener : IErrorListener
+    {
+        readonly List<Message> _errors = new List<Message>();
 
-        public abstract int Count { get;}
+        public IEnumerable<ErrorMessage> Errors
+        {
+            get
+            {
+                return _errors.Where(x => x is ErrorMessage).Cast<ErrorMessage>();
+            }
+        }
 
+        public IEnumerable<WarningMessage> Warnings
+        {
+            get
+            {
+                return _errors.Where(x => x is WarningMessage).Cast<WarningMessage>();
+            }
+
+        }
+
+        public void Add(WarningMessage msg)
+        {
+            _errors.Add(msg);
+        }
+
+        public void Insert(int pos, ErrorMessage msg)
+        {
+            _errors.Insert(pos, msg);
+        }
+
+        public int Count => _errors.Count;
+
+        public void Add(ErrorMessage msg)
+        {
+            _errors.Add(msg);
+        }
     }
 }

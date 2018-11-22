@@ -34,6 +34,10 @@ namespace Bengala.Tests
         {
             return new VarDeclarationAST(s,expr);
         }
+        protected AliasAST Alias(string id, string referTo)
+        {
+            return new AliasAST(id, referTo);
+        }
         protected SequenceExpressionAST Seq(params ExpressionAst[] expressions )
         {
             return new SequenceExpressionAST(expressions.ToList());
@@ -45,8 +49,18 @@ namespace Bengala.Tests
 
         protected ArrayDeclarationAST ArrayDecl(string arrayTypeId, string baseTypeId)
         {
-            return new ArrayDeclarationAST(arrayTypeId, baseTypeId,0,0);
+            return new ArrayDeclarationAST(arrayTypeId, baseTypeId);
         }
+        protected RecordDeclarationAST RecordType(string recordType, params FormalParameter[] parameters)
+        {
+            return new RecordDeclarationAST(recordType, 
+                new FormalParameterList(parameters.ToList()));
+        }
+        protected FormalParameter Fp(string name,string typeId)
+        {
+            return new FormalParameter(name,typeId);
+        }
+        
 
         protected ArrayInstatiationAST ArrayInst(string arrayTypeId, ExpressionAst sizeExpr,ExpressionAst initExpr)
         {

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using Bengala.AST.SemanticsUtils;
@@ -30,13 +31,12 @@ namespace Bengala.AST
         /// Inicializa una nueva instancia de record declaration
         /// </summary>
         /// <param name="typeID">Nombre del record que se declara</param>
-        /// <param name="fields">lista de campos de la forma [field:type]</param>
-        /// <param name="line">Linea correspondiente en el codigo</param>
-        /// <param name="col">Columna correspondiente en el codigo</param>
-        public RecordDeclarationAST(string typeID, List<KeyValuePair<string, string>> fields, int line, int col)
-            : base(typeID, line, col)
+        /// <param name="parameterList"></param>
+        public RecordDeclarationAST(string typeID, FormalParameterList parameterList)
+            : base(typeID)
         {
-            Fields = fields ?? new List<KeyValuePair<string, string>>();
+            Fields = (parameterList ?? new FormalParameterList()).Parameters
+                .Select(x=>new KeyValuePair<string,string>(x.Name,x.TypeIdentifier)).ToList();
         }
 
         #endregion

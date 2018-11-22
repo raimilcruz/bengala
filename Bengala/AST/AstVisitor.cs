@@ -52,5 +52,16 @@
         public abstract T VisitRecordDeclaration(RecordDeclarationAST recordDeclaration);
 
         public abstract T VisitArgumentList(ArgumentList argumentList);
+
+        //TODO: change to abstract
+        public virtual T VisitFormalParameterList(FormalParameterList formalParameterList)
+        {
+            return default(T);
+        }
+
+        public T VisitFormalParameter(FormalParameter formalParameter)
+        {
+            return default(T);
+        }
     }
 }

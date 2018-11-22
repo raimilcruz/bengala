@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using Antlr4.Runtime;
+using Bengala.Analysis;
 using Bengala.Antlr;
 using Bengala.AST;
 using Bengala.AST.Errors;
@@ -21,8 +23,8 @@ namespace Bengala
     /// </summary>
     public class BengalaCompiler
     {
+        public bool GenerateCode { get; set; }
         private const string MainFunction = "main$";
-        protected ExpressionAst exp;
         protected Inizializator<ILCode> init;
 
         private static TypeBuilder AddFunctionMainToCode(ILCode code, MethodBuilder main)
@@ -48,7 +50,7 @@ namespace Bengala
             return typeNested;
         }
 
-        private ILCode CreateCode(string moduleName, string typeName)
+        private ILCode CreateCode(string moduleName, string typeName, AstNode exp)
         {
             if (Path.GetFileName(moduleName) != moduleName)
                 throw new Exception("can only output into current directory!");
@@ -57,10 +59,10 @@ namespace Bengala
             AssemblyBuilder asmb = AppDomain.CurrentDomain.DefineDynamicAssembly(name, AssemblyBuilderAccess.Save);
             ModuleBuilder modb = asmb.DefineDynamicModule(moduleName);
             TypeBuilder typeBuilder = modb.DefineType(typeName);
-            MethodBuilder methMain = typeBuilder.DefineMethod("Main", MethodAttributes.Static, typeof (void),
+            MethodBuilder methMain = typeBuilder.DefineMethod("Main", MethodAttributes.Static, typeof(void),
                                                               Type.EmptyTypes);
 
-            var ilcode = new ILCode {Type = typeBuilder, Method = methMain, Module = modb};
+            var ilcode = new ILCode { Type = typeBuilder, Method = methMain, Module = modb };
 
             init.CodeInfo = ilcode;
             init.GeneratePredifinedCode();
@@ -87,24 +89,22 @@ namespace Bengala
 
         public List<Message> Compile(string filename)
         {
-            var errores = new List<Message>();
+            var errors = new List<Message>();
             if (File.Exists(filename))
             {
                 try
                 {
-                    errores = Compile(filename, " Bengala");
-                    return errores;
+                    errors.AddRange(Compile(filename, " Bengala"));
                 }
-                catch
+                catch (Exception e)
                 {
-                    errores.Clear();
-                    errores.Add(new ErrorMessage(
-                                    string.Format("El fichero \"{0}\" no es un fichero de texto", filename), 0, 0));
-                    return errores;
+                    errors.Add(new ErrorMessage(
+                        $"There was an internal error in the compiler: \"{e.Message}\"", 0, 0));
                 }
             }
-            errores.Add(new ErrorMessage(string.Format("El fichero \"{0}\" no existe", filename), 0, 0));
-            return errores;
+            else
+                errors.Add(new ErrorMessage($"El fichero \"{filename}\" no existe", 0, 0));
+            return errors;
         }
 
         private static string FileName(string filename)
@@ -119,45 +119,47 @@ namespace Bengala
         /// <param name="filename">El fichero a compilar</param>
         /// <param name="typeName">El nombre del tipo que contendra las funciones que se definan</param>
         /// <returns>Retorna una lista con los errores que se produjeron</returns>
-        private List<Message> Compile(string filename, string typeName)
+        private IEnumerable<Message> Compile(string filename, string typeName)
         {
-            //var reader = new ANTLRReaderStream(stm);
-            //var lexer = new BengalaLexer(reader);
-            //var cm = new CommonTokenStream(lexer);
-            //var parser = new BengalaParser(lexer.Errors, cm);
+            var s = new StreamReader(filename);
+            var stm = new AntlrInputStream(s); ;
+            var lexer = new TigerLexer(stm);
+            var tokenStream = new CommonTokenStream(lexer);
+            var parser = new BengalaParser(tokenStream);
+            parser.ConfigErrorListeners();
+            var expContext = parser.program();
 
-            //exp = parser.program();
+            var contextVisitor = new BuildAstVisitor();
 
-            //List<Message> erroresWarning = parser.Errors;
-            ////if (parser.NumberOfSyntaxErrors == 0)
-            //if (parser.Errors.Count == 0)
-            //{
-            //    var generalScope = new Scope(null);
-            //    init = new Inizializator<ILCode>(generalScope);
+            var errorsWarning = parser.Errors;
 
-            //    InitScope(generalScope);
+            if (parser.NumberOfSyntaxErrors != 0 || parser.Errors.Any())
+                return errorsWarning;
 
-            //    erroresWarning = new List<Message>();
-            //    exp.CheckSemantic(generalScope, erroresWarning);
+            var astRoot = expContext.Accept(contextVisitor);
 
-            //    var realErrores = from message in erroresWarning
-            //                      where message is ErrorMessage 
-            //                      select message;
-            //    if (realErrores.Count() == 0)
-            //        CreateCode(FileName(filename), typeName);
-            //}
-            //return erroresWarning ?? new List<Message>();
-            return new List<Message>();
+            var generalScope = new Scope(null);
+            init = new Inizializator<ILCode>(generalScope);
+            InitScope(generalScope);
+
+            var errorListener = new BengalaBaseErrorListener();
+            var staticAnalysisVisitor = new StaticChecker(errorListener, generalScope);
+            astRoot.Accept(staticAnalysisVisitor);
+
+            if (GenerateCode && !errorListener.Errors.Any()) 
+                CreateCode(FileName(filename), typeName, astRoot);
+
+            return errorListener.Errors;
         }
 
         private static void AddMainToScope(Scope scope)
         {
             //---> principal function
             var funInfo = new FunctionInfo(new List<KeyValuePair<string, TigerType>>(), TigerType.GetType<NoType>())
-                              {
-                                  FunctionName = MainFunction,
-                                  CodeName = MainFunction
-                              };
+            {
+                FunctionName = MainFunction,
+                CodeName = MainFunction
+            };
             scope.AddFunction(MainFunction, funInfo);
             //setear este funcion como la funcion actul.
             scope.CurrentFunction = funInfo;

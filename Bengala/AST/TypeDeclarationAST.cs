@@ -25,7 +25,7 @@ namespace Bengala.AST
         /// <param name="typeId"> Nombre del tipo q se declara</param>
         /// <param name="line">Linea correspondiente en el codigo</param>
         /// <param name="col">Columna correspondiente en el codigo</param>
-        protected TypeDeclarationAST(string typeId, int line, int col) : base(line, col)
+        protected TypeDeclarationAST(string typeId)
         {
             TypeId = typeId;
         }

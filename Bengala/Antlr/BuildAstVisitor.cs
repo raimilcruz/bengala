@@ -143,12 +143,15 @@ namespace Bengala.Antlr
 
         public override AstNode VisitInstructions([NotNull] TigerParser.InstructionsContext context)
         {
-            return base.VisitInstructions(context);
+            return new SequenceExpressionAST(context.exp().Select(x=> (ExpressionAst)x.Accept(this)).ToList());
         }
 
         public override AstNode VisitLetExp([NotNull] TigerParser.LetExpContext context)
         {
-            return base.VisitLetExp(context);
+            var body = context.insts == null
+                ? new SequenceExpressionAST(new List<ExpressionAst>())
+                : (SequenceExpressionAST) context.insts.Accept(this);
+            return new LetExpressionAST(context.decl().Select(x=>x.Accept(this)).Cast<Declaration>().ToList(), body);
         }
 
         public override AstNode VisitListExp([NotNull] TigerParser.ListExpContext context)
@@ -189,12 +192,42 @@ namespace Bengala.Antlr
 
         public override AstNode VisitTypeDecl([NotNull] TigerParser.TypeDeclContext context)
         {
-            return base.VisitTypeDecl(context);
+            var definition = (TypeDeclarationAST)context.typeDefinition().Accept(this);
+            definition.TypeId = context.id.Text;
+            return definition;
+        }
+
+        public override AstNode VisitTypeDefinition(TigerParser.TypeDefinitionContext context)
+        {
+            return context.GetChild(0).Accept(this);
+        }
+
+        public override AstNode VisitAliasType(TigerParser.AliasTypeContext context)
+        {
+           //TODO: refactor AST nodes for type definitions. They should not include the id.
+           return new AliasAST("it will be renamed",context.type_id.GetText());
+        }
+
+        public override AstNode VisitArrayType(TigerParser.ArrayTypeContext context)
+        {
+            //TODO: refactor AST nodes for type definitions. They should not include the id.
+            return new ArrayDeclarationAST("it will be renamed", context.typeOfArray.GetText());
+        }
+
+        public override AstNode VisitRecordDef(TigerParser.RecordDefContext context)
+        {
+            //TODO: refactor AST nodes for type definitions. They should not include the id.
+            return new RecordDeclarationAST("it will be renamed",(FormalParameterList)context.typeList.Accept(this));
         }
 
         public override AstNode VisitTypeFields([NotNull] TigerParser.TypeFieldsContext context)
         {
-            return base.VisitTypeFields(context);
+            return new FormalParameterList(context.formalParameter().Select(x=> (FormalParameter)x.Accept(this)).ToList());
+        }
+
+        public override AstNode VisitFormalParameter(TigerParser.FormalParameterContext context)
+        {
+            return new FormalParameter(context.id.Text,context.type.GetText());
         }
 
         public override AstNode VisitTypeId([NotNull] TigerParser.TypeIdContext context)
@@ -204,7 +237,9 @@ namespace Bengala.Antlr
 
         public override AstNode VisitVarDecl([NotNull] TigerParser.VarDeclContext context)
         {
-            return base.VisitVarDecl(context);
+            if(context.type_Id==null)
+                return new VarDeclarationAST(context.id.Text,(ExpressionAst)context.value.Accept(this));
+            return new VarDeclarationAST(context.id.Text,context.type_Id.GetText(), (ExpressionAst)context.value.Accept(this));
         }
 
         public override AstNode VisitWhileInstr([NotNull] TigerParser.WhileInstrContext context)

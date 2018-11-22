@@ -35,14 +35,14 @@ namespace Bengala
 
         private static void Compile(string fileName)
         {
-            Console.WriteLine("Compiling files ....");
+            Console.WriteLine("Analyzing files ....");
 
             var bengalaCompiler = new BengalaCompiler();
-            List<Message> erroresWarning = bengalaCompiler.Compile(fileName);
-            IEnumerable<Message> errores = from e in erroresWarning
+            var erroresWarning = bengalaCompiler.Compile(fileName);
+            var errores = from e in erroresWarning
                                            where e is ErrorMessage
                                            select e;
-            IEnumerable<Message> warning = from w in erroresWarning
+            var warning = from w in erroresWarning
                                            where w is WarningMessage
                                            select w;
             if (erroresWarning != null)

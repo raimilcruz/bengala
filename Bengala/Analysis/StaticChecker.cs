@@ -12,16 +12,16 @@ namespace Bengala.Analysis
     public class StaticChecker : AstVisitor<bool>
     {
         Scope _scope;
-        readonly ErrorListener _errorListener;
+        readonly IErrorListener _errorListener;
 
-        public StaticChecker(ErrorListener errorListener)
+        public StaticChecker(IErrorListener errorListener,Scope initialScope=null)
         {
-            _scope = new Scope(null);
+            _scope = initialScope ?? new Scope(null);
             _errorListener = errorListener;
 
             //TODO: move to another place
-            ScopeInitializator scopeInitializator = new ScopeInitializator();
-            scopeInitializator.InitScope(_scope);
+            //ScopeInitializator scopeInitializator = new ScopeInitializator();
+            //scopeInitializator.InitScope(_scope);
             
         }
 

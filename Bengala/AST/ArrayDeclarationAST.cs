@@ -21,8 +21,8 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public ArrayDeclarationAST(string typeId, string baseTypeID, int line, int col)
-            : base(typeId, line, col)
+        public ArrayDeclarationAST(string typeId, string baseTypeID)
+            : base(typeId)
         {
             BaseTypeID = baseTypeID;
             TypeId = typeId;

@@ -83,17 +83,34 @@ namespace Bengala.Tests
 
         public override bool VisitLetExpression(LetExpressionAST expr)
         {
-            throw new NotImplementedException();
+            var other = _other as LetExpressionAST;
+            if (other == null)
+                return false;
+
+            return IsEqualNodes(other.SequenceExpressionList, expr.SequenceExpressionList) &&
+                   other.DeclarationList.Count == expr.DeclarationList.Count &&
+                   other.DeclarationList.Zip(expr.DeclarationList,IsEqualNodes).All(x=>x);
         }
 
         public override bool VisitVarDeclaration(VarDeclarationAST expr)
         {
-            throw new NotImplementedException();
+            var other = _other as VarDeclarationAST;
+            if (other == null)
+                return false;
+
+            return IsEqualNodes(other.ExpressionValue, expr.ExpressionValue) &&
+                   other.TypeId == expr.TypeId &&
+                   other.Id == expr.Id;
         }
 
         public override bool VisitAlias(AliasAST alias)
         {
-            throw new NotImplementedException();
+            var other = _other as AliasAST;
+            if (other == null)
+                return false;
+
+            return other.TypeId == alias.TypeId &&
+                   other.AliasToWho == alias.AliasToWho;
         }
 
         public override bool VisitArrayAccess(ArrayAccessAST arrayAccess)
@@ -103,7 +120,12 @@ namespace Bengala.Tests
 
         public override bool VisitArrayDeclaration(ArrayDeclarationAST arrayDeclaration)
         {
-            throw new NotImplementedException();
+            var other = _other as ArrayDeclarationAST;
+            if (other == null)
+                return false;
+
+            return other.TypeId == arrayDeclaration.TypeId &&
+                   other.BaseTypeID == arrayDeclaration.BaseTypeID;
         }
 
         public override bool VisitArrayInstantiation(ArrayInstatiationAST arrayInstatiation)
@@ -142,7 +164,12 @@ namespace Bengala.Tests
 
         public override bool VisitSequence(SequenceExpressionAST sequenceExpression)
         {
-            throw new NotImplementedException();
+            var other = _other as SequenceExpressionAST;
+            if (other == null)
+                return false;
+
+            return other.ExpressionList.Count == sequenceExpression.ExpressionList.Count &&
+                   other.ExpressionList.Zip(sequenceExpression.ExpressionList, IsEqualNodes).All(x => x);
         }
      
 
@@ -179,7 +206,13 @@ namespace Bengala.Tests
 
         public override bool VisitRecordDeclaration(RecordDeclarationAST recordDeclaration)
         {
-            throw new NotImplementedException();
+            var other = _other as RecordDeclarationAST;
+            if (other == null)
+                return false;
+
+            return other.Fields.Count == recordDeclaration.Fields.Count &&
+                   other.Fields.Zip(recordDeclaration.Fields, (x,y)=> x.Key == y.Key && x.Value == y.Value).All(x => x)
+                   && (other.TypeId == recordDeclaration.TypeId);
         }
 
         public override bool VisitArgumentList(ArgumentList argumentList)

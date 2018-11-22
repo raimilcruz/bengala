@@ -1,5 +1,11 @@
 grammar Tiger;
 
+options
+{
+	k=2;
+}
+
+
 /*
  * Parser Rules
  */
@@ -13,13 +19,13 @@ program    /*returns [ExpressionAst res]	  */: e =exp //{$ctx.res = $e.res;}
 
 //expresiones de tiger
 exp      : ifExp 
-						| forExp 
+					//	| forExp 
 						| letExp 
 						//| (lvalue ASSIGN)=>lv= lvalue s = ASSIGN initExp = exp  {res = new AssignExpressionAst(lv,initExp, s.Line, s.CharPositionInLine);}
 						//| (ID LBRACKET exp? RBRACKET OF )=> id = ID LBRACKET  sizeExp = exp RBRACKET OF initExp= exp {res = new ArrayInstatiationAST(id.Text,sizeExp,initExp, id.Line, id.CharPositionInLine);}
-						| whileInstr 
-						| breakInstr 
-						| recordInstance 
+					//	| whileInstr 
+					//	| breakInstr 
+					//	| recordInstance 
 						| expOrAnd;
 						
 						
@@ -51,13 +57,14 @@ expPorDivList: (s = SLASH  | s = ASTER) e2 =expMod;
 									   
 expMod	   : f = factor    (s = MOD  e2 =factor)? ;	
 									   
-factor     :  negExpr | fExp | nilRule;
+factor     :  negExpr | fExp ;
 negExpr    : m = MINUS  f = fExp ;
 
 						
 fExp 	 : 
 			intRule  
-						| strRule  
+						| strRule 
+						| nilRule
 						| seqExp 
 						//llamada a funcion		 
 						| fCall 
@@ -71,7 +78,7 @@ intRule : i = INTCONST;
 
 strRule : s = STRINGCONST ;
 
-nilRule : n = NIL;
+nilRule : n = 'nil';
 
 seqExp 	 : LPAREN (exp (SEMICOLON exp)*)? RPAREN ;
 
@@ -79,17 +86,17 @@ fCall	   : ID LPAREN argList = listExp?  RPAREN ;
 
 listExp    :exp (COMMA exp)*;
 
-ifExp 	   :i = IF cond= exp THEN e1=exp (ELSE e2=exp)? ;
+ifExp 	   : 'if' cond= exp 'then' e1=exp ('else' e2=exp)? ;
 
 forExp 	   :f = FOR id =ID ASSIGN e1=exp  TO e2=exp DO e3=exp ;
 
-letExp 	   : l = LET   (d =decl)+  IN (insts = instructions)? END ;
+letExp 	   : 'let'   (d =decl)+  'in' (insts = instructions)? 'end' ;
 
 //conjunto de instrucciones que va dentro de un let
-instructions : e1 = exp (SEMICOLON e2=exp )*;						
+instructions : exp (SEMICOLON exp )*;
 
 
-whileInstr : id = WHILE cond = exp DO body= exp ;
+whileInstr : id = 'while' cond = exp 'do' body= exp ;
 
 /*
 example of matches: 
@@ -116,26 +123,24 @@ decl 	: t1 =  typeDecl
 						| f1 =  funDecl  ;
 
 //declaraciones de tipos  : Alias , Record ,Array
-typeDecl     : TYPE id = ID EQUAL (
-								       type_id = typeId              
-								       |LKEY (typeList =typeFields)?  RKEY
-								       |ARRAY OF typeOfArray=typeId  
-								      ) ;
+typeDecl     : 'type' id = ID EQUAL typeDefinition;
+typeDefinition : aliasType | recordDef | arrayType;
+aliasType	: type_id = typeId;
+recordDef   : LKEY (typeList =typeFields)?  RKEY;
+arrayType	: 'array' 'of' typeOfArray = typeId; 
 
 typeId 	     : id = ID        
 						| i  = INT       
 						| s  = STRING    ;
 
-varDecl      : VAR   id = ID (
-								  ASSIGN value1 = exp  
-						                 |COLON type_Id = typeId ASSIGN value2 =exp 
+varDecl      : /*VAR*/'var'   id = ID (
+								  ASSIGN value = exp  
+						                 |COLON type_Id = typeId ASSIGN value =exp 
 						                );
 
 //representa la declaracion tanto de parametros de una funcion como los campos de un record
-typeFields 	: id = ID COLON type_id = typeId  
-							( 
-							 COMMA      id1 = ID COLON typeId1 =typeId 
-							)* ;
+typeFields 	: formalParameter  (COMMA formalParameter)*;
+formalParameter : id = ID COLON type= typeId;
 
 //la declaracion de una funcion o un procedimiento
 funDecl : f  = FUNCTION     fId = ID LPAREN (pList = typeFields)? RPAREN  (COLON ret =typeId)?  
@@ -211,3 +216,4 @@ MULTILINECOMENTS				:'/*'(~('/'|'*')
 						|'*'~'/'
 						|MULTILINECOMENTS
 						)* '*/' -> channel (HIDDEN);
+

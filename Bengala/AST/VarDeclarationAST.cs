@@ -45,7 +45,7 @@ namespace Bengala.AST
         /// <param name="expValue">La expresion que define el valor de la variable</param>
         /// <param name="line">Linea correspondiente en el codigo</param>
         /// <param name="col">Columna correspondiente en el codigo</param>
-        public VarDeclarationAST(string id, string typeId, ExpressionAst expValue, int line, int col) : base(line, col)
+        public VarDeclarationAST(string id, string typeId, ExpressionAst expValue)
         {
             TypeId = typeId;
             Id = id;
