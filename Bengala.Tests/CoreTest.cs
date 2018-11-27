@@ -4,11 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Bengala.AST.SemanticsUtils;
+using Bengala.AST.Utils;
 
 namespace Bengala.Tests
 {
     public class CoreTest
     {
+        protected Scope InitialScope()
+        {
+            var scope = new Scope(null);
+            var scopeInitializator = new ScopeInitializator();
+            scopeInitializator.InitScope(scope);
+            return scope;
+        }
+
         protected IntLiteral Num(int n) {
             return new IntLiteral(n);
         }

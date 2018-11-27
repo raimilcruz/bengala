@@ -17,7 +17,7 @@ namespace Bengala.Tests.Static
                 Seq());
 
             var errors = new PrinterErrorListener();
-            var staticChecker = new StaticChecker(errors);
+            var staticChecker = new StaticChecker(errors, InitialScope());
 
             Assert.IsTrue(let.Accept(staticChecker));
             Assert.IsTrue(errors.Count == 0);
@@ -33,7 +33,7 @@ namespace Bengala.Tests.Static
                 Seq(Var("x")));
 
             var errors = new PrinterErrorListener();
-            var staticChecker = new StaticChecker(errors);
+            var staticChecker = new StaticChecker(errors, InitialScope());
 
             Assert.IsTrue(let.Accept(staticChecker) && errors.Count==0);
         }
@@ -47,7 +47,7 @@ namespace Bengala.Tests.Static
                 Seq(Var("y")));
 
             var errors = new PrinterErrorListener();
-            var staticChecker = new StaticChecker(errors);
+            var staticChecker = new StaticChecker(errors, InitialScope());
 
             Assert.IsFalse(let.Accept(staticChecker));
             Assert.IsFalse(errors.Count == 0);

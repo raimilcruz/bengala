@@ -25,7 +25,7 @@ namespace Bengala.Tests.Static
                       );
 
             var errorCollector = new PrinterErrorListener();
-            var staticChecker = new StaticChecker(errorCollector);
+            var staticChecker = new StaticChecker(errorCollector, InitialScope());
 
             Assert.IsTrue(let.Accept(staticChecker));
             Assert.IsTrue(errorCollector.Count ==0);
