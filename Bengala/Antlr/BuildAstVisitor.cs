@@ -133,7 +133,11 @@ namespace Bengala.Antlr
 
         public override AstNode VisitFunDecl([NotNull] TigerParser.FunDeclContext context)
         {
-            return base.VisitFunDecl(context);
+            return new FunctionDeclarationAST(
+                context.fId.Text,
+                (FormalParameterList)context.pList.Accept(this),
+                (ExpressionAst)context.body.Accept(this),
+                context.ret.GetText());
         }
 
         public override AstNode VisitIfExp([NotNull] TigerParser.IfExpContext context)

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using Bengala.AST.SemanticsUtils;
@@ -25,11 +26,13 @@ namespace Bengala.AST
         public ExpressionAst ExprInstructions { get; set; }
         public List<KeyValuePair<string, string>> ParameterList { get; private set; }
 
+        public FormalParameterList FormalParameterList { get; private set; }
+
         #endregion
 
         #region Constructors
 
-        public FunctionDeclarationAST(string id, List<KeyValuePair<string, string>> parameterList,
+        public FunctionDeclarationAST(string id, FormalParameterList parameterList,
                                       ExpressionAst exprInstructions,
                                       string retType)
             : this(id, parameterList, exprInstructions)
@@ -37,21 +40,14 @@ namespace Bengala.AST
             ReturnTypeId = retType;
         }
 
-        public FunctionDeclarationAST(string id, List<KeyValuePair<string, string>> parameterList,
-                                      ExpressionAst exprInstructions,
-                                      string retType, int line, int col)
-            : this(id, parameterList, exprInstructions)
-        {
-            Line = line;
-            Columns = col;
-            ReturnTypeId = retType;
-        }
-
-        private FunctionDeclarationAST(string id, List<KeyValuePair<string, string>> parameterList,
+        private FunctionDeclarationAST(string id, FormalParameterList parameterList,
                                       ExpressionAst exprInstructions)
         {
             FunctionId = id;
-            ParameterList = parameterList??new List<KeyValuePair<string, string>>();
+            FormalParameterList = parameterList;
+            ParameterList = (parameterList??new FormalParameterList())
+                            .Parameters
+                            .Select(x=> new KeyValuePair<string,string>(x.Name,x.TypeIdentifier)).ToList();
             ExprInstructions = exprInstructions;
             ReturnType = TigerType.GetType<NoType>();
         }

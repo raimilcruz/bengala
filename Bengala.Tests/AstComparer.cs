@@ -145,7 +145,14 @@ namespace Bengala.Tests
 
         public override bool VisitFunctionDeclaration(FunctionDeclarationAST functionDeclaration)
         {
-            throw new NotImplementedException();
+            var other = _other as FunctionDeclarationAST;
+            if (other == null)
+                return false;
+
+            return IsEqualNodes(other.FormalParameterList, functionDeclaration.FormalParameterList) &&
+                   other.FunctionId == functionDeclaration.FunctionId &&
+                    other.ReturnTypeId == functionDeclaration.ReturnTypeId &&
+                    IsEqualNodes(other.ExprInstructions,functionDeclaration.ExprInstructions);
         }
 
         public override bool VisitNegExpression(NegExpressionAST negExpression)
@@ -218,6 +225,24 @@ namespace Bengala.Tests
         public override bool VisitArgumentList(ArgumentList argumentList)
         {
             throw new NotImplementedException();
+        }
+        public override bool VisitFormalParameterList(FormalParameterList formalParameterList)
+        {
+            var other = _other as FormalParameterList;
+            if (other == null)
+                return false;
+
+            return other.Parameters.Count == formalParameterList.Parameters.Count &&
+                   other.Parameters.Zip(formalParameterList.Parameters,IsEqualNodes).All(x=>x);
+        }
+
+        public override bool VisitFormalParameter(FormalParameter formalParameter)
+        {
+            var other = _other as FormalParameter;
+            if (other == null)
+                return false;
+
+            return other.Name == formalParameter.Name && other.TypeIdentifier == formalParameter.TypeIdentifier;
         }
     }
 }

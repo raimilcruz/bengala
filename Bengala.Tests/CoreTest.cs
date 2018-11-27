@@ -60,7 +60,13 @@ namespace Bengala.Tests
         {
             return new FormalParameter(name,typeId);
         }
-        
+
+        protected FunctionDeclarationAST FDecl(string functionId, ExpressionAst body, string returnType,  
+            params FormalParameter [] parameters)
+        {
+            return new FunctionDeclarationAST(functionId, new FormalParameterList(parameters.ToList()), body,returnType);
+        }
+
 
         protected ArrayInstatiationAST ArrayInst(string arrayTypeId, ExpressionAst sizeExpr,ExpressionAst initExpr)
         {
@@ -72,9 +78,11 @@ namespace Bengala.Tests
             return new ArrayAccessAST(arrayExpr, indexExpr);
         }
 
-        protected FunctionDeclarationAST Fun(string name, List<KeyValuePair<string, string>> parameters,ExpressionAst body,String retType)
+        protected FunctionDeclarationAST Fun(string name, List<KeyValuePair<string, string>> parameters,ExpressionAst body,
+            string retType)
         {
-            return new FunctionDeclarationAST(name,parameters, body, retType);
+            return new FunctionDeclarationAST(name,
+                new FormalParameterList(parameters.Select(x=> new FormalParameter(x.Key,x.Value)).ToList()), body, retType);
         }
         protected ExpressionAst FCall(string function, params ExpressionAst[] args)
         {

@@ -55,5 +55,24 @@ namespace Bengala.Tests.Parser
 
             Assert.IsTrue(AstComparer.EqualNodes(ast, other));
         }
+        [TestMethod]
+        public void LetWithOneFunctionDeclaration()
+        {
+            var program = "let " +
+                            "function fakeSum(a: int, b:int) : int = 1" +
+                          "in 2 " +
+                          "end";
+            var ast = ParseText(program);
+
+            var other = Let(
+                Decls(FDecl("fakeSum",
+                       Num(1),
+                       "int",
+                        Fp("a", "int"),
+                        Fp("b", "int"))),
+                Seq(Num(2)));
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
     }
 }

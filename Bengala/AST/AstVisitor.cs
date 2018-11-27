@@ -59,7 +59,7 @@
             return default(T);
         }
 
-        public T VisitFormalParameter(FormalParameter formalParameter)
+        public virtual T VisitFormalParameter(FormalParameter formalParameter)
         {
             return default(T);
         }

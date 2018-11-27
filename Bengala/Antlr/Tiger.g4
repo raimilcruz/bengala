@@ -143,7 +143,7 @@ typeFields 	: formalParameter  (COMMA formalParameter)*;
 formalParameter : id = ID COLON type= typeId;
 
 //la declaracion de una funcion o un procedimiento
-funDecl : f  = FUNCTION     fId = ID LPAREN (pList = typeFields)? RPAREN  (COLON ret =typeId)?  
+funDecl : f  = 'function'   fId = ID LPAREN (pList = typeFields)? RPAREN  (COLON ret =typeId)?  
                                                           EQUAL    body = exp ;	
 
 
