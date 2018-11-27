@@ -123,7 +123,13 @@ namespace Bengala.Antlr
 
         public override AstNode VisitFieldList([NotNull] TigerParser.FieldListContext context)
         {
-            return base.VisitFieldList(context);
+            return new FieldInstanceList(context.fieldInstance()
+                .Select(x=> (FieldInstance)x.Accept(this)).ToList());
+        }
+
+        public override AstNode VisitFieldInstance(TigerParser.FieldInstanceContext context)
+        {
+            return new FieldInstance(context.id.Text, (ExpressionAst)context.e.Accept(this));
         }
 
         public override AstNode VisitForExp([NotNull] TigerParser.ForExpContext context)
@@ -186,7 +192,7 @@ namespace Bengala.Antlr
 
         public override AstNode VisitRecordInstance([NotNull] TigerParser.RecordInstanceContext context)
         {
-            return base.VisitRecordInstance(context);
+            return new RecordInstantiationAST(context.id.Text, (FieldInstanceList)context.fields.Accept(this));
         }
 
         public override AstNode VisitSeqExp([NotNull] TigerParser.SeqExpContext context)

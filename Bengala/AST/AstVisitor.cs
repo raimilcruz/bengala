@@ -63,5 +63,15 @@
         {
             return default(T);
         }
+
+        public virtual T VisitFieldInstanceList(FieldInstanceList fieldList)
+        {
+            return default(T);
+        }
+
+        public virtual T VisitFieldInstance(FieldInstance fieldInstance)
+        {
+            return default(T);
+        }
     }
 }

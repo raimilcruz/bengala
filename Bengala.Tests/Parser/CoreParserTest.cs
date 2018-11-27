@@ -7,7 +7,7 @@ namespace Bengala.Tests.Parser
 {
     public class CoreParserTest : CoreTest
     {
-        public AstNode ParseText(string text)
+        protected AstNode ParseText(string text)
         {
             var s = new StreamReader(GenerateStreamFromString(text));
             var stm = new AntlrInputStream(s); ;

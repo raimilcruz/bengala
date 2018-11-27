@@ -208,7 +208,12 @@ namespace Bengala.Tests
 
         public override bool VisitRecordInstantiation(RecordInstantiationAST recordInstantiation)
         {
-            throw new NotImplementedException();
+            var other = _other as RecordInstantiationAST;
+            if (other == null)
+                return false;
+
+            return other.Id == recordInstantiation.Id &&
+                   IsEqualNodes(other.Fields,recordInstantiation.Fields);
         }
 
         public override bool VisitRecordDeclaration(RecordDeclarationAST recordDeclaration)
@@ -243,6 +248,26 @@ namespace Bengala.Tests
                 return false;
 
             return other.Name == formalParameter.Name && other.TypeIdentifier == formalParameter.TypeIdentifier;
+        }
+
+        public override bool VisitFieldInstanceList(FieldInstanceList fieldList)
+        {
+            var other = _other as FieldInstanceList;
+            if (other == null)
+                return false;
+
+            return other.Fields.Count == fieldList.Fields.Count &&
+                   other.Fields.Zip(fieldList.Fields, IsEqualNodes).All(x => x);
+        }
+
+        public override bool VisitFieldInstance(FieldInstance fieldInstance)
+        {
+            var other = _other as FieldInstance;
+            if (other == null)
+                return false;
+
+            return other.Name == fieldInstance.Name && 
+                   IsEqualNodes(other.Value,fieldInstance.Value);
         }
     }
 }

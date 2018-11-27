@@ -25,7 +25,7 @@ exp      : ifExp
 						//| (ID LBRACKET exp? RBRACKET OF )=> id = ID LBRACKET  sizeExp = exp RBRACKET OF initExp= exp {res = new ArrayInstatiationAST(id.Text,sizeExp,initExp, id.Line, id.CharPositionInLine);}
 					//	| whileInstr 
 					//	| breakInstr 
-					//	| recordInstance 
+						| recordInstance 
 						| expOrAnd;
 						
 						
@@ -88,7 +88,7 @@ listExp    :exp (COMMA exp)*;
 
 ifExp 	   : 'if' cond= exp 'then' e1=exp ('else' e2=exp)? ;
 
-forExp 	   :f = FOR id =ID ASSIGN e1=exp  TO e2=exp DO e3=exp ;
+forExp 	   :f = 'for' id =ID ASSIGN e1=exp  'to' e2=exp 'do' e3=exp ;
 
 letExp 	   : 'let'   (d =decl)+  'in' (insts = instructions)? 'end' ;
 
@@ -110,12 +110,14 @@ prefixAccess: DOT ID |
 
 
 //assignacion de valores a los campos de un record
-fieldList : id =  ID EQUAL e1=exp (COMMA id2 =ID EQUAL e2= exp)*;//incompleta
+fieldList : fieldInstance (COMMA fieldInstance)*;
+fieldInstance : id =  ID EQUAL e=exp;
 
-breakInstr : id =  BREAK           ;
+
+breakInstr : 'break';
 	
 //la instanciacion de un record
-recordInstance : id =  ID LKEY   l=fieldList?  RKEY ;
+recordInstance : id =  ID LKEY   fields=fieldList?  RKEY ;
 	
 //las posibles declaraciones
 decl 	: t1 =  typeDecl 
@@ -129,9 +131,7 @@ aliasType	: type_id = typeId;
 recordDef   : LKEY (typeList =typeFields)?  RKEY;
 arrayType	: 'array' 'of' typeOfArray = typeId; 
 
-typeId 	     : id = ID        
-						| i  = INT       
-						| s  = STRING    ;
+typeId 	     : ID;
 
 varDecl      : /*VAR*/'var'   id = ID (
 								  ASSIGN value = exp  

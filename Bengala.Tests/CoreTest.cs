@@ -70,6 +70,15 @@ namespace Bengala.Tests
         {
             return new FormalParameter(name,typeId);
         }
+        protected RecordInstantiationAST Record(string recordType, params FieldInstance[] fields)
+        {
+            return new RecordInstantiationAST(recordType,
+                new FieldInstanceList(fields.ToList()));
+        }
+        protected FieldInstance FieldIns(string field, ExpressionAst value)
+        {
+            return new FieldInstance(field,value);
+        }
 
         protected FunctionDeclarationAST FDecl(string functionId, ExpressionAst body, string returnType,  
             params FormalParameter [] parameters)
