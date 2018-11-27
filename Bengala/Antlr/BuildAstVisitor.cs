@@ -282,6 +282,18 @@ namespace Bengala.Antlr
             return new CallFunctionAST(context.ID().GetText(), argumentList);
         }
 
+        public override AstNode VisitAssignment(TigerParser.AssignmentContext context)
+        {
+            return new AssignExpressionAST((LHSExpressionAST)context.prefixExpr().Accept(this),
+                (ExpressionAst)context.exp().Accept(this));
+        }
+
+        public override AstNode VisitArrayInstance(TigerParser.ArrayInstanceContext context)
+        {
+            return new ArrayInstatiationAST(context.id.Text,
+                (ExpressionAst)context.sizeExp.Accept(this),
+                (ExpressionAst)context.initExp.Accept(this));
+        }
     }
 
 }

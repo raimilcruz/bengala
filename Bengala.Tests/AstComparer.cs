@@ -130,12 +130,23 @@ namespace Bengala.Tests
 
         public override bool VisitArrayInstantiation(ArrayInstatiationAST arrayInstatiation)
         {
-            throw new NotImplementedException();
+            var other = _other as ArrayInstatiationAST;
+            if (other == null)
+                return false;
+
+            return other.ArrayTypeIdentifier == arrayInstatiation.ArrayTypeIdentifier &&
+                   IsEqualNodes(other.SizeExp, arrayInstatiation.SizeExp) &&
+                   IsEqualNodes(other.InitializationExp, arrayInstatiation.InitializationExp);
         }
 
         public override bool VisitAssignExpression(AssignExpressionAST assignExpression)
         {
-            throw new NotImplementedException();
+            var other = _other as AssignExpressionAST;
+            if (other == null)
+                return false;
+
+            return IsEqualNodes(other.LeftExpression, assignExpression.LeftExpression) &&
+                   IsEqualNodes(other.RightExpression, assignExpression.RightExpression);
         }
 
         public override bool VisitForExpression(ForExpressionAST forExpressionAst)

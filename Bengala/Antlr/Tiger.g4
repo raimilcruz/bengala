@@ -21,8 +21,8 @@ program    /*returns [ExpressionAst res]	  */: e =exp //{$ctx.res = $e.res;}
 exp      : ifExp 
 						| forExp 
 						| letExp 
-						//| (lvalue ASSIGN)=>lv= lvalue s = ASSIGN initExp = exp  {res = new AssignExpressionAst(lv,initExp, s.Line, s.CharPositionInLine);}
-						//| (ID LBRACKET exp? RBRACKET OF )=> id = ID LBRACKET  sizeExp = exp RBRACKET OF initExp= exp {res = new ArrayInstatiationAST(id.Text,sizeExp,initExp, id.Line, id.CharPositionInLine);}
+						| assignment 
+						| arrayInstance
 						| whileInstr 
 						| breakInstr 
 						| recordInstance 
@@ -94,6 +94,9 @@ letExp 	   : 'let'   (d =decl)+  'in' (insts = instructions)? 'end' ;
 //conjunto de instrucciones que va dentro de un let
 instructions : exp (SEMICOLON exp )*;
 
+assignment  : prefixExpr ASSIGN exp;
+
+arrayInstance : id = ID LBRACKET sizeExp = exp RBRACKET 'of' initExp= exp;
 
 whileInstr : 'while' cond = exp 'do' body= exp ;
 

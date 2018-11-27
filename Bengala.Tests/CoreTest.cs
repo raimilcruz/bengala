@@ -95,7 +95,7 @@ namespace Bengala.Tests
 
         protected ArrayInstatiationAST ArrayInst(string arrayTypeId, ExpressionAst sizeExpr, ExpressionAst initExpr)
         {
-            return new ArrayInstatiationAST(arrayTypeId, sizeExpr, initExpr, 0, 0);
+            return new ArrayInstatiationAST(arrayTypeId, sizeExpr, initExpr);
         }
 
         protected ArrayAccessAST ArrayAccess(ExpressionAst arrayExpr, ExpressionAst indexExpr)
@@ -145,6 +145,11 @@ namespace Bengala.Tests
         protected BreakAST Break()
         {
             return new BreakAST();
+        }
+
+        protected AssignExpressionAST Assign(LHSExpressionAST left, ExpressionAst right)
+        {
+            return new AssignExpressionAST(left,right);
         }
     }
 }

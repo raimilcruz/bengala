@@ -1,10 +1,5 @@
 ﻿#region Usings
 
-using System;
-using System.Collections.Generic;
-using System.Reflection.Emit;
-using Bengala.AST.SemanticsUtils;
-
 #endregion
 
 namespace Bengala.AST
@@ -27,18 +22,9 @@ namespace Bengala.AST
         public ArrayInstatiationAST(string arrayType, ExpressionAst sizeExp, ExpressionAst initializationExp)
         {
             ArrayTypeIdentifier = arrayType;
-            this.SizeExp = sizeExp;
-            this.InitializationExp = initializationExp;
+            SizeExp = sizeExp;
+            InitializationExp = initializationExp;
         }
-
-        public ArrayInstatiationAST(string arrayType, ExpressionAst sizeExp, ExpressionAst initializationExp, int line, int col)
-            : base(line, col)
-        {
-            this.ArrayTypeIdentifier = arrayType;
-            this.SizeExp = sizeExp;
-            this.InitializationExp = initializationExp;
-        }
-
         #endregion
 
 

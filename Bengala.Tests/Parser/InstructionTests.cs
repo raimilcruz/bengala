@@ -43,6 +43,27 @@ namespace Bengala.Tests.Parser
 
             Assert.IsTrue(AstComparer.EqualNodes(ast, other));
         }
+        [TestMethod]
+        public void Assignment()
+        {
+            var program = "i := 1";
+            var ast = ParseText(program);
 
+            var other = Assign(Var("i"),Num(1));
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
+
+        [TestMethod]
+        public void ArrayInstance()
+        {
+            //arrays are second-citizens
+            var program = "nums[4] of 0";
+            var ast = ParseText(program);
+
+            var other = ArrayInst("nums",Num(4),Num(0));
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
     }
 }
