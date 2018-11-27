@@ -14,7 +14,7 @@ namespace Bengala.Antlr
     {
         public override AstNode VisitBreakInstr([NotNull] TigerParser.BreakInstrContext context)
         {
-            return base.VisitBreakInstr(context);
+            return new BreakAST();
         }
 
         public override AstNode VisitDecl([NotNull] TigerParser.DeclContext context)
@@ -36,7 +36,7 @@ namespace Bengala.Antlr
             //2
             return new BinaryExpressionAst(
                 (ExpressionAst)context.GetChild(0).Accept(this),
-                (ExpressionAst)context.e2.Accept(this),context.s.Text);
+                (ExpressionAst)context.e2.Accept(this), context.s.Text);
         }
 
         public override AstNode VisitExpEQ([NotNull] TigerParser.ExpEQContext context)
@@ -55,8 +55,8 @@ namespace Bengala.Antlr
             if (context.ChildCount == 1)
                 return context.GetChild(0).Accept(this);
             return new BinaryExpressionAst(
-                (ExpressionAst) context.GetChild(0).Accept(this),
-                (ExpressionAst) context.e2.Accept(this), context.s.Text);
+                (ExpressionAst)context.GetChild(0).Accept(this),
+                (ExpressionAst)context.e2.Accept(this), context.s.Text);
         }
 
         public override AstNode VisitExpNE([NotNull] TigerParser.ExpNEContext context)
@@ -100,9 +100,9 @@ namespace Bengala.Antlr
             if (context.ChildCount == 1)
                 return context.GetChild(0).Accept(this);
 
-            return context.sumResList().Aggregate(context.e1.Accept(this), 
-                (acc, x) => 
-                    new BinaryExpressionAst((ExpressionAst)acc, 
+            return context.sumResList().Aggregate(context.e1.Accept(this),
+                (acc, x) =>
+                    new BinaryExpressionAst((ExpressionAst)acc,
                     (ExpressionAst)x.e2.Accept(this), x.s.Text));
         }
 
@@ -118,13 +118,13 @@ namespace Bengala.Antlr
 
         public override AstNode VisitFExp([NotNull] TigerParser.FExpContext context)
         {
-            return base.VisitFExp(context);
+            return context.GetChild(0).Accept(this);
         }
 
         public override AstNode VisitFieldList([NotNull] TigerParser.FieldListContext context)
         {
             return new FieldInstanceList(context.fieldInstance()
-                .Select(x=> (FieldInstance)x.Accept(this)).ToList());
+                .Select(x => (FieldInstance)x.Accept(this)).ToList());
         }
 
         public override AstNode VisitFieldInstance(TigerParser.FieldInstanceContext context)
@@ -134,7 +134,10 @@ namespace Bengala.Antlr
 
         public override AstNode VisitForExp([NotNull] TigerParser.ForExpContext context)
         {
-            return base.VisitForExp(context);
+            return new ForExpressionAST(context.id.Text,
+                (ExpressionAst)context.e1.Accept(this),
+                (ExpressionAst)context.e2.Accept(this),
+                (ExpressionAst)context.e3.Accept(this));
         }
 
         public override AstNode VisitFunDecl([NotNull] TigerParser.FunDeclContext context)
@@ -153,33 +156,33 @@ namespace Bengala.Antlr
 
         public override AstNode VisitInstructions([NotNull] TigerParser.InstructionsContext context)
         {
-            return new SequenceExpressionAST(context.exp().Select(x=> (ExpressionAst)x.Accept(this)).ToList());
+            return new SequenceExpressionAST(context.exp().Select(x => (ExpressionAst)x.Accept(this)).ToList());
         }
 
         public override AstNode VisitLetExp([NotNull] TigerParser.LetExpContext context)
         {
             var body = context.insts == null
                 ? new SequenceExpressionAST(new List<ExpressionAst>())
-                : (SequenceExpressionAST) context.insts.Accept(this);
-            return new LetExpressionAST(context.decl().Select(x=>x.Accept(this)).Cast<Declaration>().ToList(), body);
+                : (SequenceExpressionAST)context.insts.Accept(this);
+            return new LetExpressionAST(context.decl().Select(x => x.Accept(this)).Cast<Declaration>().ToList(), body);
         }
 
         public override AstNode VisitListExp([NotNull] TigerParser.ListExpContext context)
         {
-            return new ArgumentList(context.exp().Select(x=> (ExpressionAst)x.Accept(this)).ToList());
+            return new ArgumentList(context.exp().Select(x => (ExpressionAst)x.Accept(this)).ToList());
         }
 
         public override AstNode VisitPrefixExpr(TigerParser.PrefixExprContext context)
-        {       
-            LHSExpressionAST res = new VarAST(context.id.Text);;
+        {
+            LHSExpressionAST res = new VarAST(context.id.Text); ;
             if (context.prefixAccess() != null)
             {
                 foreach (var prefixAccess in context.prefixAccess())
                 {
-                    if (prefixAccess.ID() == null)
-                        res = new RecordAccessAST(prefixAccess.ID().GetText(),res);
-                    else if(prefixAccess.exp() == null)
-                        res = new ArrayAccessAST(res,(ExpressionAst)prefixAccess.exp().Accept(this));
+                    if (prefixAccess.ID() != null)
+                        res = new RecordAccessAST(prefixAccess.ID().GetText(), res);
+                    else if (prefixAccess.exp() != null)
+                        res = new ArrayAccessAST(res, (ExpressionAst)prefixAccess.exp().Accept(this));
                 }
             }
             return res;
@@ -197,7 +200,7 @@ namespace Bengala.Antlr
 
         public override AstNode VisitSeqExp([NotNull] TigerParser.SeqExpContext context)
         {
-            return new SequenceExpressionAST(context.exp().Select(x=> (ExpressionAst)x.Accept(this)).ToList());
+            return new SequenceExpressionAST(context.exp().Select(x => (ExpressionAst)x.Accept(this)).ToList());
         }
 
         public override AstNode VisitTypeDecl([NotNull] TigerParser.TypeDeclContext context)
@@ -214,8 +217,8 @@ namespace Bengala.Antlr
 
         public override AstNode VisitAliasType(TigerParser.AliasTypeContext context)
         {
-           //TODO: refactor AST nodes for type definitions. They should not include the id.
-           return new AliasAST("it will be renamed",context.type_id.GetText());
+            //TODO: refactor AST nodes for type definitions. They should not include the id.
+            return new AliasAST("it will be renamed", context.type_id.GetText());
         }
 
         public override AstNode VisitArrayType(TigerParser.ArrayTypeContext context)
@@ -227,17 +230,17 @@ namespace Bengala.Antlr
         public override AstNode VisitRecordDef(TigerParser.RecordDefContext context)
         {
             //TODO: refactor AST nodes for type definitions. They should not include the id.
-            return new RecordDeclarationAST("it will be renamed",(FormalParameterList)context.typeList.Accept(this));
+            return new RecordDeclarationAST("it will be renamed", (FormalParameterList)context.typeList.Accept(this));
         }
 
         public override AstNode VisitTypeFields([NotNull] TigerParser.TypeFieldsContext context)
         {
-            return new FormalParameterList(context.formalParameter().Select(x=> (FormalParameter)x.Accept(this)).ToList());
+            return new FormalParameterList(context.formalParameter().Select(x => (FormalParameter)x.Accept(this)).ToList());
         }
 
         public override AstNode VisitFormalParameter(TigerParser.FormalParameterContext context)
         {
-            return new FormalParameter(context.id.Text,context.type.GetText());
+            return new FormalParameter(context.id.Text, context.type.GetText());
         }
 
         public override AstNode VisitTypeId([NotNull] TigerParser.TypeIdContext context)
@@ -247,14 +250,15 @@ namespace Bengala.Antlr
 
         public override AstNode VisitVarDecl([NotNull] TigerParser.VarDeclContext context)
         {
-            if(context.type_Id==null)
-                return new VarDeclarationAST(context.id.Text,(ExpressionAst)context.value.Accept(this));
-            return new VarDeclarationAST(context.id.Text,context.type_Id.GetText(), (ExpressionAst)context.value.Accept(this));
+            if (context.type_Id == null)
+                return new VarDeclarationAST(context.id.Text, (ExpressionAst)context.value.Accept(this));
+            return new VarDeclarationAST(context.id.Text, context.type_Id.GetText(), (ExpressionAst)context.value.Accept(this));
         }
 
         public override AstNode VisitWhileInstr([NotNull] TigerParser.WhileInstrContext context)
         {
-            return base.VisitWhileInstr(context);
+            return new WhileExpressionAST((ExpressionAst)context.cond.Accept(this),
+                (ExpressionAst)context.body.Accept(this));
         }
 
         public override AstNode VisitIntRule(TigerParser.IntRuleContext context)
@@ -274,10 +278,10 @@ namespace Bengala.Antlr
 
         public override AstNode VisitFCall(TigerParser.FCallContext context)
         {
-            var argumentList = (ArgumentList) context.argList?.Accept(this)?? new ArgumentList(new List<ExpressionAst>());
+            var argumentList = (ArgumentList)context.argList?.Accept(this) ?? new ArgumentList(new List<ExpressionAst>());
             return new CallFunctionAST(context.ID().GetText(), argumentList);
         }
-        
+
     }
 
 }

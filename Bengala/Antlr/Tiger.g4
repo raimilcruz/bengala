@@ -19,12 +19,12 @@ program    /*returns [ExpressionAst res]	  */: e =exp //{$ctx.res = $e.res;}
 
 //expresiones de tiger
 exp      : ifExp 
-					//	| forExp 
+						| forExp 
 						| letExp 
 						//| (lvalue ASSIGN)=>lv= lvalue s = ASSIGN initExp = exp  {res = new AssignExpressionAst(lv,initExp, s.Line, s.CharPositionInLine);}
 						//| (ID LBRACKET exp? RBRACKET OF )=> id = ID LBRACKET  sizeExp = exp RBRACKET OF initExp= exp {res = new ArrayInstatiationAST(id.Text,sizeExp,initExp, id.Line, id.CharPositionInLine);}
-					//	| whileInstr 
-					//	| breakInstr 
+						| whileInstr 
+						| breakInstr 
 						| recordInstance 
 						| expOrAnd;
 						
@@ -67,8 +67,7 @@ fExp 	 :
 						| nilRule
 						| seqExp 
 						//llamada a funcion		 
-						| fCall 
-			
+						| fCall 			
 						| prefixExpr 
 						;
 			
@@ -96,7 +95,7 @@ letExp 	   : 'let'   (d =decl)+  'in' (insts = instructions)? 'end' ;
 instructions : exp (SEMICOLON exp )*;
 
 
-whileInstr : id = 'while' cond = exp 'do' body= exp ;
+whileInstr : 'while' cond = exp 'do' body= exp ;
 
 /*
 example of matches: 

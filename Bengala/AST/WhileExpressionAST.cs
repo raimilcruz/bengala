@@ -22,8 +22,8 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public WhileExpressionAST(ExpressionAst expCondition, ExpressionAst expInstruction, int line, int col) :
-            base(expInstruction, line, col)
+        public WhileExpressionAST(ExpressionAst expCondition, ExpressionAst expInstruction) :
+            base(expInstruction)
         {
             ExpressionConditional = expCondition;
         }

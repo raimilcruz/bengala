@@ -140,7 +140,14 @@ namespace Bengala.Tests
 
         public override bool VisitForExpression(ForExpressionAST forExpressionAst)
         {
-            throw new NotImplementedException();
+            var other = _other as ForExpressionAST;
+            if (other == null)
+                return false;
+
+            return other.VarId == forExpressionAst.VarId &&
+                   IsEqualNodes(other.ExpressionTo,forExpressionAst.ExpressionTo) &&
+                   IsEqualNodes(other.ExpressionFrom, forExpressionAst.ExpressionFrom) &&
+                   IsEqualNodes(other.BodyExpressions, forExpressionAst.BodyExpressions);
         }
 
         public override bool VisitFunctionDeclaration(FunctionDeclarationAST functionDeclaration)
@@ -182,12 +189,20 @@ namespace Bengala.Tests
 
         public override bool VisitWhileExpression(WhileExpressionAST whileExpression)
         {
-            throw new NotImplementedException();
+            var other = _other as WhileExpressionAST;
+            if (other == null)
+                return false;
+
+            return IsEqualNodes(other.ExpressionConditional,whileExpression.ExpressionConditional) &&
+                   IsEqualNodes(other.BodyExpressions,whileExpression.BodyExpressions);
         }
 
         public override bool VisitBreakStatement(BreakAST breakStm)
         {
-            throw new NotImplementedException();
+            var other = _other as BreakAST;
+            if (other == null)
+                return false;
+            return true;
         }
 
         public override bool VisitFunctionInvocation(CallFunctionAST functionInvocation)
@@ -203,7 +218,12 @@ namespace Bengala.Tests
 
         public override bool VisitRecordAccess(RecordAccessAST recordAccess)
         {
-            throw new NotImplementedException();
+            var other = _other as RecordAccessAST;
+            if (other == null)
+                return false;
+
+            return other.FieldId == recordAccess.FieldId &&
+                   IsEqualNodes(other.ExpressionRecord, recordAccess.ExpressionRecord);
         }
 
         public override bool VisitRecordInstantiation(RecordInstantiationAST recordInstantiation)

@@ -54,6 +54,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AstComparer.cs" />
+    <Compile Include="Parser\InstructionTests.cs" />
     <Compile Include="Parser\ExpressionTests.cs" />
     <Compile Include="Parser\DeclarationsParserTests.cs" />
     <Compile Include="Parser\BinaryExpressionParserTest.cs" />

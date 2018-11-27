@@ -19,14 +19,16 @@ namespace Bengala.Tests
             return scope;
         }
 
-        protected IntLiteral Num(int n) {
+        protected IntLiteral Num(int n)
+        {
             return new IntLiteral(n);
         }
         protected ExpressionAst Neq(ExpressionAst expression)
         {
             return new NegExpressionAST(expression);
         }
-        protected StringLiteral Str(string s) {
+        protected StringLiteral Str(string s)
+        {
             return new StringLiteral(s);
         }
 
@@ -42,19 +44,19 @@ namespace Bengala.Tests
 
         protected VarDeclarationAST VarDecl(String s, ExpressionAst expr)
         {
-            return new VarDeclarationAST(s,expr);
+            return new VarDeclarationAST(s, expr);
         }
         protected AliasAST Alias(string id, string referTo)
         {
             return new AliasAST(id, referTo);
         }
-        protected SequenceExpressionAST Seq(params ExpressionAst[] expressions )
+        protected SequenceExpressionAST Seq(params ExpressionAst[] expressions)
         {
             return new SequenceExpressionAST(expressions.ToList());
         }
         protected LetExpressionAST Let(List<Declaration> declarations, SequenceExpressionAST body)
         {
-            return new LetExpressionAST(declarations,body);
+            return new LetExpressionAST(declarations, body);
         }
 
         protected ArrayDeclarationAST ArrayDecl(string arrayTypeId, string baseTypeId)
@@ -63,12 +65,12 @@ namespace Bengala.Tests
         }
         protected RecordDeclarationAST RecordType(string recordType, params FormalParameter[] parameters)
         {
-            return new RecordDeclarationAST(recordType, 
+            return new RecordDeclarationAST(recordType,
                 new FormalParameterList(parameters.ToList()));
         }
-        protected FormalParameter Fp(string name,string typeId)
+        protected FormalParameter Fp(string name, string typeId)
         {
-            return new FormalParameter(name,typeId);
+            return new FormalParameter(name, typeId);
         }
         protected RecordInstantiationAST Record(string recordType, params FieldInstance[] fields)
         {
@@ -77,17 +79,21 @@ namespace Bengala.Tests
         }
         protected FieldInstance FieldIns(string field, ExpressionAst value)
         {
-            return new FieldInstance(field,value);
+            return new FieldInstance(field, value);
         }
-
-        protected FunctionDeclarationAST FDecl(string functionId, ExpressionAst body, string returnType,  
-            params FormalParameter [] parameters)
+        protected RecordAccessAST RecordAccess(ExpressionAst recordExpression, string field)
         {
-            return new FunctionDeclarationAST(functionId, new FormalParameterList(parameters.ToList()), body,returnType);
+            return new RecordAccessAST(field, recordExpression);
+        }
+
+        protected FunctionDeclarationAST FDecl(string functionId, ExpressionAst body, string returnType,
+            params FormalParameter[] parameters)
+        {
+            return new FunctionDeclarationAST(functionId, new FormalParameterList(parameters.ToList()), body, returnType);
         }
 
 
-        protected ArrayInstatiationAST ArrayInst(string arrayTypeId, ExpressionAst sizeExpr,ExpressionAst initExpr)
+        protected ArrayInstatiationAST ArrayInst(string arrayTypeId, ExpressionAst sizeExpr, ExpressionAst initExpr)
         {
             return new ArrayInstatiationAST(arrayTypeId, sizeExpr, initExpr, 0, 0);
         }
@@ -97,15 +103,15 @@ namespace Bengala.Tests
             return new ArrayAccessAST(arrayExpr, indexExpr);
         }
 
-        protected FunctionDeclarationAST Fun(string name, List<KeyValuePair<string, string>> parameters,ExpressionAst body,
+        protected FunctionDeclarationAST Fun(string name, List<KeyValuePair<string, string>> parameters, ExpressionAst body,
             string retType)
         {
             return new FunctionDeclarationAST(name,
-                new FormalParameterList(parameters.Select(x=> new FormalParameter(x.Key,x.Value)).ToList()), body, retType);
+                new FormalParameterList(parameters.Select(x => new FormalParameter(x.Key, x.Value)).ToList()), body, retType);
         }
         protected ExpressionAst FCall(string function, params ExpressionAst[] args)
         {
-            return new CallFunctionAST(function,new ArgumentList(args.ToList()));
+            return new CallFunctionAST(function, new ArgumentList(args.ToList()));
         }
 
         protected List<KeyValuePair<string, string>> Parameters(params KeyValuePair<string, string>[] parameters)
@@ -118,13 +124,27 @@ namespace Bengala.Tests
             return new KeyValuePair<string, string>(name, type);
         }
 
-        protected BinaryExpressionAst BinExpr(ExpressionAst l,ExpressionAst r,string op) {
-            return new BinaryExpressionAst(l,r,op);
+        protected BinaryExpressionAst BinExpr(ExpressionAst l, ExpressionAst r, string op)
+        {
+            return new BinaryExpressionAst(l, r, op);
         }
 
         protected IfExpressionAST If(ExpressionAst c, ExpressionAst l, ExpressionAst r)
         {
             return new IfExpressionAST(c, l, r);
+        }
+
+        protected ForExpressionAST For(string forVariable, ExpressionAst initExpr, ExpressionAst toExpr, ExpressionAst body)
+        {
+            return new ForExpressionAST(forVariable, initExpr, toExpr, body);
+        }
+        protected WhileExpressionAST While(ExpressionAst condition, ExpressionAst body)
+        {
+            return new WhileExpressionAST(condition,body);
+        }
+        protected BreakAST Break()
+        {
+            return new BreakAST();
         }
     }
 }

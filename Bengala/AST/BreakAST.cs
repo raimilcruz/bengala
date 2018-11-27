@@ -19,16 +19,8 @@ namespace Bengala.AST
         public LoopAST BreakeableLoop { get; set; }
 
         #endregion
-
-        #region Constructors
-
-        public BreakAST(int line, int col) : base(line, col)
-        {
-        }
-
-        #endregion
-
-
+        
+        
         public override T Accept<T>(AstVisitor<T> visitor)
         {
             return visitor.VisitBreakStatement(this);

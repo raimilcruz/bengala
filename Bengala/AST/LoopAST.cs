@@ -27,7 +27,7 @@ namespace Bengala.AST
         /// <param name="bodyExpressions">La expression del cuerpo del ciclo</param>
         /// <param name="line">Linea correspondiente en el codigo</param>
         /// <param name="col">Columna correspondiente en el codigo</param>
-        protected LoopAST(ExpressionAst bodyExpressions, int line, int col) : base(line, col)
+        protected LoopAST(ExpressionAst bodyExpressions)
         {
             BreakPos = new List<int>();
             BodyExpressions = bodyExpressions;

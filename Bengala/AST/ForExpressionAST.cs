@@ -25,9 +25,8 @@ namespace Bengala.AST
 
         #region Constructors
 
-        public ForExpressionAST(string id, ExpressionAst expFrom, ExpressionAst expTo, ExpressionAst expInstruction,
-                                int line, int col)
-            : base(expInstruction, line, col)
+        public ForExpressionAST(string id, ExpressionAst expFrom, ExpressionAst expTo, ExpressionAst expInstruction)
+            : base(expInstruction)
         {
             VarId = id;
             ExpressionFrom = expFrom;

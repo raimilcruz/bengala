@@ -24,5 +24,37 @@ namespace Bengala.Tests.Parser
 
             Assert.IsTrue(AstComparer.EqualNodes(ast, other));
         }
+
+        [TestMethod]
+        public void FunctionCall()
+        {
+            var program = "f(3)";
+            var ast = ParseText(program);
+
+            var other = FCall("f",Num(3));
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
+
+        [TestMethod]
+        public void RecordAccess()
+        {
+            var program = "p.age";
+            var ast = ParseText(program);
+
+            var other = RecordAccess(Var("p"),"age");
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
+        [TestMethod]
+        public void SequenceExpression()
+        {
+            var program = "(p;2)";
+            var ast = ParseText(program);
+
+            var other = Seq(Var("p"), Num(2));
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
     }
 }
