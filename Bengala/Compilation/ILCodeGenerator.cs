@@ -196,7 +196,7 @@ namespace Bengala.Compilation
             return Unit.Create();
         }
 
-        public override Unit VisitAlias(AliasAST alias)
+        public override Unit VisitAlias(TypeAliasAST alias)
         {
             throw new System.NotImplementedException();
         }

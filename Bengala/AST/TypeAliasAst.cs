@@ -4,7 +4,7 @@
     ///     Represents an alias declaration :
     ///     type t = [TypeIdentifierAlreadyDefined]
     /// </summary>
-    public class AliasAST : TypeDeclarationAST
+    public class TypeAliasAST : TypeDeclarationAST
     {
         #region  Constructors
 
@@ -14,7 +14,7 @@
         /// <param name="aliasToWho">nombre del tipo al cual se hace el Alias</param>
         /// <param name="line">Linea correspondiente en el codigo</param>
         /// <param name="col">Columna correspondiente en el codigo</param>
-        public AliasAST(string typeId, string aliasToWho)
+        public TypeAliasAST(string typeId, string aliasToWho)
             : base(typeId)
         {
             AliasToWho = aliasToWho;

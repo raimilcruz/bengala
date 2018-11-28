@@ -24,6 +24,13 @@ namespace Bengala
     public class BengalaCompiler
     {
         public bool GenerateCode { get; set; }
+
+        public BengalaCompiler()
+        {
+            GenerateCode = true;
+        }
+
+
         private const string MainFunction = "main$";
         protected Inizializator<ILCode> init;
 

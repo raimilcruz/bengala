@@ -46,9 +46,9 @@ namespace Bengala.Tests
         {
             return new VarDeclarationAST(s, expr);
         }
-        protected AliasAST Alias(string id, string referTo)
+        protected TypeAliasAST Alias(string id, string referTo)
         {
-            return new AliasAST(id, referTo);
+            return new TypeAliasAST(id, referTo);
         }
         protected SequenceExpressionAST Seq(params ExpressionAst[] expressions)
         {

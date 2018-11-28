@@ -77,7 +77,7 @@
     <Compile Include="Antlr\Tiger.g4.parser.cs">
       <DependentUpon>Tiger.g4</DependentUpon>
     </Compile>
-    <Compile Include="AST\AliasAST.cs" />
+    <Compile Include="AST\TypeAliasAst.cs" />
     <Compile Include="AST\ArgumentList.cs" />
     <Compile Include="AST\ArrayAccessAST.cs" />
     <Compile Include="AST\ArrayDeclarationAST.cs" />

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Reflection.Emit;
+using Antlr4.Runtime.Atn;
 using Bengala.AST;
 using Bengala.AST.SemanticsUtils;
+using Bengala.AST.Utils;
 using Bengala.Compilation.Helpers;
 
 namespace Bengala.Compilation
@@ -36,7 +38,7 @@ namespace Bengala.Compilation
             code.PushOnStack = true;
             _binaryExpression.RightExp.Accept(_codeGenerator);
             //aplicar el operador correspondient
-            PushResult(code);
+            DoOperation(code);
 
             if (!pushOnStack)
                 il.Emit(OpCodes.Pop);
@@ -124,6 +126,15 @@ namespace Bengala.Compilation
                 default:
                     throw new NotSupportedException("This kind of binary expression is not supported");
             }
+        }
+        void DoOperation(ILCode code)
+        {
+            GenOperation g = _binaryExpression.LeftExp.ReturnType.GetOperationGenerator(_binaryExpression.LeftExp.ReturnType, _binaryExpression.Operator) ??
+                             _binaryExpression.RightExp.ReturnType.GetOperationGenerator(_binaryExpression.RightExp.ReturnType, _binaryExpression.Operator);
+            if (g != null)
+                g(code);
+            else
+                throw new InvalidOperationException("The operation is not supported");
         }
     }
 }

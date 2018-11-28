@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Antlr4.Runtime.Misc;
-using Antlr4.Runtime.Tree;
 using Bengala.AST;
 
 namespace Bengala.Antlr
@@ -220,7 +218,7 @@ namespace Bengala.Antlr
         public override AstNode VisitAliasType(TigerParser.AliasTypeContext context)
         {
             //TODO: refactor AST nodes for type definitions. They should not include the id.
-            return new AliasAST("it will be renamed", context.type_id.GetText());
+            return new TypeAliasAST("it will be renamed", context.type_id.GetText());
         }
 
         public override AstNode VisitArrayType(TigerParser.ArrayTypeContext context)

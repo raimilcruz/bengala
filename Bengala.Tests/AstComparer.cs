@@ -103,9 +103,9 @@ namespace Bengala.Tests
                    other.Id == expr.Id;
         }
 
-        public override bool VisitAlias(AliasAST alias)
+        public override bool VisitAlias(TypeAliasAST alias)
         {
-            var other = _other as AliasAST;
+            var other = _other as TypeAliasAST;
             if (other == null)
                 return false;
 

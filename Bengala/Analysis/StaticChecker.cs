@@ -179,7 +179,7 @@ namespace Bengala.Analysis
             return true;
         }
 
-        public override bool VisitAlias(AliasAST alias)
+        public override bool VisitAlias(TypeAliasAST alias)
         {
             //se asume que no habra problema
             alias.ReturnType = TigerType.GetType<NoType>();

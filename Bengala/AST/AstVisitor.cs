@@ -19,7 +19,7 @@
 
         public abstract T VisitVarDeclaration(VarDeclarationAST expr);
 
-        public abstract T VisitAlias(AliasAST alias);
+        public abstract T VisitAlias(TypeAliasAST alias);
 
         public abstract T VisitArrayAccess(ArrayAccessAST arrayAccess);
 
