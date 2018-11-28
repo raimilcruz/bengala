@@ -151,7 +151,9 @@ namespace Bengala.Antlr
 
         public override AstNode VisitIfExp([NotNull] TigerParser.IfExpContext context)
         {
-            return base.VisitIfExp(context);
+            return new IfExpressionAST((ExpressionAst)context.cond.Accept(this),
+                (ExpressionAst)context.e1.Accept(this),
+                (ExpressionAst) context.e2?.Accept(this));
         }
 
         public override AstNode VisitInstructions([NotNull] TigerParser.InstructionsContext context)

@@ -17,9 +17,9 @@ namespace Bengala.AST
     {
         #region Fields and Properties
 
-        public ExpressionAst ExpConditional { get; private set; }
-        public ExpressionAst ExpressionElse { get; private set; }
-        public ExpressionAst ExpressionThen { get; private set; }
+        public ExpressionAst ExpConditional { get; }
+        public ExpressionAst ExpressionElse { get; }
+        public ExpressionAst ExpressionThen { get; }
 
         #endregion
 
@@ -36,22 +36,10 @@ namespace Bengala.AST
             : this(expCondition, expThen)
         {
             ExpressionElse = expElse;
-        }
-
-        public IfExpressionAST(ExpressionAst expCondition, ExpressionAst expThen, int line, int col) : base(line, col)
-        {
             ExpConditional = expCondition;
             ExpressionThen = expThen;
         }
-
-        public IfExpressionAST(ExpressionAst expCondition, ExpressionAst expThen,
-                               ExpressionAst expElse, int line, int col)
-            : this(expCondition, expThen)
-        {
-            Line = line;
-            Columns = col + 1;
-            ExpressionElse = expElse;
-        }
+        
 
         #endregion
 

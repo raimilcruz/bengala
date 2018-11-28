@@ -65,5 +65,27 @@ namespace Bengala.Tests.Parser
 
             Assert.IsTrue(AstComparer.EqualNodes(ast, other));
         }
+        [TestMethod]
+        public void If()
+        {
+            //arrays are second-citizens
+            var program = "if 1 then 2 else 3";
+            var ast = ParseText(program);
+
+            var other = If(Num(1),Num(2),Num(3));
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
+        [TestMethod]
+        public void If_DanglingElse()
+        {
+            //arrays are second-citizens
+            var program = "if 1 then if 2 then 3 else 4";
+            var ast = ParseText(program);
+
+            var other = If(Num(1), If(Num(2), Num(3),Num(4)),null);
+
+            Assert.IsTrue(AstComparer.EqualNodes(ast, other));
+        }
     }
 }
