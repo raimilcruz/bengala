@@ -54,7 +54,7 @@ namespace Bengala.AST
         #endregion
 
 
-
+        public override IEnumerable<AstNode> Children => throw new NotImplementedException();
     }
 
     public abstract class Declaration : ExpressionAst

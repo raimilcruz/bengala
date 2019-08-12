@@ -15,5 +15,7 @@ namespace Bengala.AST
         {
             return visitor.VisitArgumentList(this);
         }
+
+        public override IEnumerable<AstNode> Children => Arguments;
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Bengala.AST
+﻿using System.Collections.Generic;
+
+namespace Bengala.AST
 {
     public abstract class AstNode
     {
@@ -15,6 +17,8 @@
         public int CodeOffSet { get; set; }
 
         public abstract T Accept<T>(AstVisitor<T> visitor);
+
+        public abstract IEnumerable<AstNode> Children { get; }
     }
 
     public class CodeOffSet

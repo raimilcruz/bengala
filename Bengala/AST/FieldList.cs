@@ -19,6 +19,8 @@ namespace Bengala.AST
         {
             return visitor.VisitFieldInstanceList(this);
         }
+
+        public override IEnumerable<AstNode> Children => Fields;
     }
 
     public class FieldInstance:AstNode
@@ -36,5 +38,7 @@ namespace Bengala.AST
         {
             return visitor.VisitFieldInstance(this);
         }
+
+        public override IEnumerable<AstNode> Children => new []{Value};
     }
 }
