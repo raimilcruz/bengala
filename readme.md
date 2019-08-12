@@ -1,5 +1,7 @@
 # Bengala compiler
 
+[![Build Status](https://racruz.visualstudio.com/Bengala_GitHub/_apis/build/status/raimilcruz.bengala?branchName=master)](https://racruz.visualstudio.com/Bengala_GitHub/_build/latest?definitionId=8&branchName=master)
+
 Bengala is a compiler for the Tiger language.
 
 ## Usage
