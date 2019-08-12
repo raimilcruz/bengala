@@ -1,10 +1,10 @@
 # Bengala compiler
 
-Bengala is compiler for the Tiger language.
+Bengala is a compiler for the Tiger language.
 
 ## Usage
 
-The compiler accepts a text file as input and generates a .NET framework executable
+The compiler accepts a text file as input and generates a .NET (Standard) framework executable
 
 ```bash
 Bengala.exe test.tiger
