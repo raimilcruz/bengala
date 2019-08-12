@@ -22,7 +22,7 @@ namespace Bengala
             AddErrorListener(_errorListener);
         }
 
-        public IEnumerable<Message> Errors
+        public IEnumerable<ErrorMessage> Errors
         {
             get { return _errorListener.Errors.Select(x=> new ErrorMessage(x,0,0)).ToList(); }
         }
@@ -38,13 +38,13 @@ namespace Bengala
         //         if (ute.Expecting == Token.EOF)
         //         {
         //             tokenName = "EOF";
-        //             msg = string.Format(Message.LoadMessage("AntlrNoMatch_1"),
+        //             msg = string.Format(ErrorMessage.LoadMessage("AntlrNoMatch_1"),
         //                                 GetTokenErrorDisplay(ute.UnexpectedToken));
         //         }
         //         else
         //         {
         //             tokenName = tokenNames[ute.Expecting];
-        //             msg = string.Format(Message.LoadMessage("AntlrNoMatch_2"),
+        //             msg = string.Format(ErrorMessage.LoadMessage("AntlrNoMatch_2"),
         //                                 GetTokenErrorDisplay(ute.UnexpectedToken),
         //                                 tokenName);
         //         }
@@ -57,13 +57,13 @@ namespace Bengala
         //         if (mte.Expecting == Token.EOF)
         //         {
         //             tokenName = "EOF";
-        //             msg = string.Format(Message.LoadMessage("AntlrUnexpect_1"),
+        //             msg = string.Format(ErrorMessage.LoadMessage("AntlrUnexpect_1"),
         //                                 GetTokenErrorDisplay(e.Token));
         //         }
         //         else
         //         {
         //             tokenName = tokenNames[mte.Expecting];
-        //             msg = string.Format(Message.LoadMessage("AntlrUnexpect_2"),
+        //             msg = string.Format(ErrorMessage.LoadMessage("AntlrUnexpect_2"),
         //                                 tokenName, GetTokenErrorDisplay(e.Token));
         //         }
         //     }
@@ -75,19 +75,19 @@ namespace Bengala
         //         if (mte.Expecting == Token.EOF)
         //         {
         //             tokenName = "EOF";
-        //             msg = string.Format(Message.LoadMessage("AntlrNoMatch_1"),
+        //             msg = string.Format(ErrorMessage.LoadMessage("AntlrNoMatch_1"),
         //                                 GetTokenErrorDisplay(e.Token));
         //         }
         //         else if (e.Token.TokenIndex != Token.EOF)
         //         {
         //             tokenName = tokenNames[mte.Expecting];
-        //             msg = string.Format(Message.LoadMessage("AntlrNoMatch_2"),
+        //             msg = string.Format(ErrorMessage.LoadMessage("AntlrNoMatch_2"),
         //                                 GetTokenErrorDisplay(e.Token), tokenName);
         //         }
         //         else
         //         {
         //             tokenName = tokenNames[mte.Expecting];
-        //             msg = string.Format(Message.LoadMessage("AntlrNoMatch_3"),
+        //             msg = string.Format(ErrorMessage.LoadMessage("AntlrNoMatch_3"),
         //                                 tokenName);
         //             e.CharPositionInLine = 0;
         //             e.Line = 1;
@@ -103,7 +103,7 @@ namespace Bengala
         //         else
         //             tokenName = tokenNames[mtne.expecting];
         //         The ternary operator is only necessary because of a bug in the.NET framework
-        //         msg = string.Format(Message.LoadMessage("AntlrDesconocida_1"),
+        //         msg = string.Format(ErrorMessage.LoadMessage("AntlrDesconocida_1"),
         //                             ((mtne.Node != null && mtne.Node.ToString() != null)
         //                                  ?
         //                                      mtne.Node
@@ -126,7 +126,7 @@ namespace Bengala
         //                 msg = Message.LoadMessage("AntlrMissing");
         //             }
         //             else
-        //                 msg = string.Format(Message.LoadMessage("AntlrNoMatch_1")
+        //                 msg = string.Format(ErrorMessage.LoadMessage("AntlrNoMatch_1")
         //                                     , GetTokenErrorDisplay(e.Token));
         //     }
         //     Cuando se tiene la seccion de decl del let vacia.
@@ -139,21 +139,21 @@ namespace Bengala
         //     else if (e is MismatchedSetException)
         //         {
         //             var mse = (MismatchedSetException)e;
-        //             msg = string.Format(Message.LoadMessage("AntlrDesconocida_2"), GetTokenErrorDisplay(e.Token),
+        //             msg = string.Format(ErrorMessage.LoadMessage("AntlrDesconocida_2"), GetTokenErrorDisplay(e.Token),
         //                                 mse.expecting);
         //         }
         //     Desconozco..
         //     else if (e is MismatchedNotSetException)
         //     {
         //         var mse = (MismatchedNotSetException)e;
-        //         msg = string.Format(Message.LoadMessage("AntlrDesconocida_2"), GetTokenErrorDisplay(e.Token),
+        //         msg = string.Format(ErrorMessage.LoadMessage("AntlrDesconocida_2"), GetTokenErrorDisplay(e.Token),
         //                             mse.expecting);
         //     }
         //     Desconozco...
         //     else if (e is FailedPredicateException)
         //     {
         //         var fpe = (FailedPredicateException)e;
-        //         msg = string.Format(Message.LoadMessage("AntlrDesconocida_3"), fpe.ruleName, fpe.predicateText);
+        //         msg = string.Format(ErrorMessage.LoadMessage("AntlrDesconocida_3"), fpe.ruleName, fpe.predicateText);
         //     }
         //     return msg;
         // }

@@ -18,6 +18,8 @@ namespace Bengala.AST
         /// </summary>
         public string TypeId { get; set; }
 
+        public override string Id => TypeId;
+
         #region Constructors
 
         /// <summary>

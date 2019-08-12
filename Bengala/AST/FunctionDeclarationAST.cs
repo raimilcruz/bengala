@@ -21,6 +21,8 @@ namespace Bengala.AST
     {
         #region Fields and Properties
 
+        public override string Id => FunctionId;
+
         public string FunctionId { get; private set; }
         public string ReturnTypeId { get; private set; }
         public ExpressionAst ExprInstructions { get; set; }

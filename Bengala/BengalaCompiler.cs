@@ -94,9 +94,9 @@ namespace Bengala
             return ilcode;
         }
 
-        public List<Message> Compile(string filename)
+        public List<ErrorMessage> Compile(string filename)
         {
-            var errors = new List<Message>();
+            var errors = new List<ErrorMessage>();
             if (File.Exists(filename))
             {
                 try
@@ -126,7 +126,7 @@ namespace Bengala
         /// <param name="filename">El fichero a compilar</param>
         /// <param name="typeName">El nombre del tipo que contendra las funciones que se definan</param>
         /// <returns>Retorna una lista con los errores que se produjeron</returns>
-        private IEnumerable<Message> Compile(string filename, string typeName)
+        private IEnumerable<ErrorMessage> Compile(string filename, string typeName)
         {
             var s = new StreamReader(filename);
             var stm = new AntlrInputStream(s); ;

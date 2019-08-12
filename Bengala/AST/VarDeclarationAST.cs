@@ -27,7 +27,7 @@ namespace Bengala.AST
         /// <summary>
         /// El identificador de la variable
         /// </summary>
-        public string Id { get; private set; }
+        public override string Id { get;}
 
         /// <summary>
         /// El nombre del tipo de la variable
