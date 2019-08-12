@@ -22,9 +22,9 @@ namespace Bengala
             AddErrorListener(_errorListener);
         }
 
-        public IEnumerable<ErrorMessage> Errors
+        public IEnumerable<AnalysisError> Errors
         {
-            get { return _errorListener.Errors.Select(x=> new ErrorMessage(x,0,0)).ToList(); }
+            get { return _errorListener.Errors.Select(x=> new AnalysisError(x,0,0)).ToList(); }
         }
 
         // public override string GetErrorMessage(RecognitionException e, string[] tokenNames)

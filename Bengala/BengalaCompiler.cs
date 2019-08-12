@@ -94,9 +94,9 @@ namespace Bengala
             return ilcode;
         }
 
-        public List<ErrorMessage> Compile(string filename)
+        public List<AnalysisError> Compile(string filename)
         {
-            var errors = new List<ErrorMessage>();
+            var errors = new List<AnalysisError>();
             if (File.Exists(filename))
             {
                 try
@@ -105,12 +105,12 @@ namespace Bengala
                 }
                 catch (Exception e)
                 {
-                    errors.Add(new ErrorMessage(
+                    errors.Add(new AnalysisError(
                         $"There was an internal error in the compiler: \"{e.Message}\"", 0, 0));
                 }
             }
             else
-                errors.Add(new ErrorMessage($"El fichero \"{filename}\" no existe", 0, 0));
+                errors.Add(new AnalysisError($"El fichero \"{filename}\" no existe", 0, 0));
             return errors;
         }
 
@@ -126,7 +126,7 @@ namespace Bengala
         /// <param name="filename">El fichero a compilar</param>
         /// <param name="typeName">El nombre del tipo que contendra las funciones que se definan</param>
         /// <returns>Retorna una lista con los errores que se produjeron</returns>
-        private IEnumerable<ErrorMessage> Compile(string filename, string typeName)
+        private IEnumerable<AnalysisError> Compile(string filename, string typeName)
         {
             var s = new StreamReader(filename);
             var stm = new AntlrInputStream(s); ;

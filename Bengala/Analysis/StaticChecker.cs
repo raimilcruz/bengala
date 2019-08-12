@@ -59,7 +59,7 @@ namespace Bengala.Analysis
                 return true;
             }
             //error en caso q la variable no este definida
-            _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("VarUndecl"), ast.VarId), ast.Line, ast.Columns));
+            _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("VarUndecl"), ast.VarId), ast.Line, ast.Columns));
             ast.ReturnType = TigerType.GetType<ErrorType>();
             return false;
         }
@@ -78,7 +78,7 @@ namespace Bengala.Analysis
                 return true;
             }
             _errorListener.Add(
-                new ErrorMessage(string.Format(ErrorMessage.LoadMessage("SupportOp"), expr.Operator, leftType, rightType), expr.Line,
+                new AnalysisError(string.Format(AnalysisError.LoadMessage("SupportOp"), expr.Operator, leftType, rightType), expr.Line,
                     expr.Columns));
             expr.ReturnType = TigerType.GetType<ErrorType>();
             return false;
@@ -89,7 +89,7 @@ namespace Bengala.Analysis
             ifExpr.ExpConditional.Accept(this);
             ifExpr.ReturnType = TigerType.GetType<ErrorType>();
             if (ifExpr.ExpConditional.ReturnType != TigerType.GetType<IntType>())
-                _errorListener.Add(new ErrorMessage(ErrorMessage.LoadMessage("IfCond"), ifExpr.Line, ifExpr.Columns));
+                _errorListener.Add(new AnalysisError(AnalysisError.LoadMessage("IfCond"), ifExpr.Line, ifExpr.Columns));
             else if (ifExpr.ExpressionThen.Accept(this))
             {
                 if (ifExpr.ExpressionElse != null)
@@ -107,8 +107,8 @@ namespace Bengala.Analysis
                         return ifExpr.AlwaysReturn = true;
 
                     _errorListener.Add(
-                        new ErrorMessage(
-                            string.Format(ErrorMessage.LoadMessage("Match"), ifExpr.ExpressionThen.ReturnType,
+                        new AnalysisError(
+                            string.Format(AnalysisError.LoadMessage("Match"), ifExpr.ExpressionThen.ReturnType,
                                           ifExpr.ExpressionElse.ReturnType), ifExpr.Line, ifExpr.Columns));
                 }
                 ifExpr.AlwaysReturn = false;
@@ -125,12 +125,12 @@ namespace Bengala.Analysis
             ScopeLocation idLocation = _scope.HasVar(expr.Id);
             if (idLocation == ScopeLocation.DeclaredLocal)
             {
-                _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("VarDecl"), expr.Id), expr.Line, expr.Columns));
+                _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("VarDecl"), expr.Id), expr.Line, expr.Columns));
                 expr.ReturnType = TigerType.GetType<ErrorType>();
                 return false;
             }
             if (idLocation != ScopeLocation.NotDeclared)
-                _errorListener.Add(ErrorMessage.VariableHidesAnotherOne(expr));
+                _errorListener.Add(AnalysisError.VariableHidesAnotherOne(expr));
 
             //TODO: Rename ExpressionValue to NamedExpression
             expr.ExpressionValue.Accept(this);
@@ -150,8 +150,8 @@ namespace Bengala.Analysis
                     if (!expr.ExpressionValue.ReturnType.CanConvertTo(tt))
                     {
                         _errorListener.Add(
-                            new ErrorMessage(
-                                string.Format(ErrorMessage.LoadMessage("Match"), expr.TypeId, expr.ExpressionValue.ReturnType.TypeID),
+                            new AnalysisError(
+                                string.Format(AnalysisError.LoadMessage("Match"), expr.TypeId, expr.ExpressionValue.ReturnType.TypeID),
                                 expr.Line, expr.Columns));
                         expr.ReturnType = TigerType.GetType<ErrorType>();
                         _scope.AddVar(expr.Id, TigerType.GetType<ErrorType>().TypeID);
@@ -163,14 +163,14 @@ namespace Bengala.Analysis
                     return true;
                 }
                 // no existe el tipo de la variable
-                _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("TypeUndecl"), expr.TypeId), expr.Line, expr.Columns));
+                _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("TypeUndecl"), expr.TypeId), expr.Line, expr.Columns));
                 expr.ReturnType = TigerType.GetType<ErrorType>();
                 _scope.AddVar(expr.Id, TigerType.GetType<ErrorType>().TypeID);
                 return false;
             }
             if (!expr.ExpressionValue.ReturnType.IsLegalType)
             {
-                _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("InferType"), expr.Id), expr.Line, expr.Columns));
+                _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("InferType"), expr.Id), expr.Line, expr.Columns));
                 expr.ReturnType = TigerType.GetType<ErrorType>();
                 _scope.AddVar(expr.Id, TigerType.GetType<ErrorType>().TypeID);
                 return false;
@@ -209,9 +209,9 @@ namespace Bengala.Analysis
                     if (sender.HasType(alias.AliasToWho) == ScopeLocation.NotDeclared)
                     {
                         _errorListener.Insert(savedErrorPos,
-                                         new ErrorMessage(
+                                         new AnalysisError(
                                              string.Format(
-                                                 ErrorMessage.LoadMessage("TypeUndecl"),
+                                                 AnalysisError.LoadMessage("TypeUndecl"),
                                                  alias.AliasToWho), alias.Line, alias.Columns));
                         alias.ReturnType = TigerType.GetType<ErrorType>();
                     }
@@ -242,10 +242,10 @@ namespace Bengala.Analysis
                     arrayAccess.ReturnType = arrayType.BaseType;
                     return arrayAccess.AlwaysReturn = true;
                 }
-                _errorListener.Add(new ErrorMessage(ErrorMessage.LoadMessage("ArrayIndex"), arrayAccess.Line, arrayAccess.Columns));
+                _errorListener.Add(new AnalysisError(AnalysisError.LoadMessage("ArrayIndex"), arrayAccess.Line, arrayAccess.Columns));
                 return false;
             }
-            _errorListener.Add(new ErrorMessage(ErrorMessage.LoadMessage("Index"), arrayAccess.Line, arrayAccess.Columns));
+            _errorListener.Add(new AnalysisError(AnalysisError.LoadMessage("Index"), arrayAccess.Line, arrayAccess.Columns));
             return false;
         }
 
@@ -274,9 +274,9 @@ namespace Bengala.Analysis
                     if (sender.HasType(arrayDeclaration.BaseTypeID) == ScopeLocation.NotDeclared)
                     {
                         _errorListener.Insert(savedErrorPos,
-                                         new ErrorMessage(
+                                         new AnalysisError(
                                              string.Format(
-                                                 ErrorMessage.LoadMessage("TypeUndecl"),
+                                                 AnalysisError.LoadMessage("TypeUndecl"),
                                                  arrayDeclaration.BaseTypeID), arrayDeclaration.Line, arrayDeclaration.Columns));
                         arrayDeclaration.ReturnType = TigerType.GetType<ErrorType>();
                     }
@@ -301,14 +301,14 @@ namespace Bengala.Analysis
                     arrayInstatiation.SizeExp.Accept(this);
                     if (arrayInstatiation.SizeExp.ReturnType != TigerType.GetType<IntType>())
                         //Chequeo que el length del array sea un entero                   
-                        _errorListener.Add(new ErrorMessage(ErrorMessage.LoadMessage("ArrayIndex"), arrayInstatiation.Line, arrayInstatiation.Columns));
+                        _errorListener.Add(new AnalysisError(AnalysisError.LoadMessage("ArrayIndex"), arrayInstatiation.Line, arrayInstatiation.Columns));
                     else
                     {
                         arrayInstatiation.InitializationExp.Accept(this);
                         if (!arrayInstatiation.InitializationExp.ReturnType.CanConvertTo(typeArray.BaseType))
                             _errorListener.Add(
-                                new ErrorMessage(
-                                    string.Format(ErrorMessage.LoadMessage("Match"), arrayInstatiation.InitializationExp.ReturnType,
+                                new AnalysisError(
+                                    string.Format(AnalysisError.LoadMessage("Match"), arrayInstatiation.InitializationExp.ReturnType,
                                                   typeArray.BaseType), arrayInstatiation.Line, arrayInstatiation.Columns));
                         else
                         {
@@ -319,7 +319,7 @@ namespace Bengala.Analysis
                     return false;
                 }
             }
-            _errorListener.Add(new ErrorMessage(ErrorMessage.LoadMessage("TypeUndecl"), arrayInstatiation.Line, arrayInstatiation.Columns));
+            _errorListener.Add(new AnalysisError(AnalysisError.LoadMessage("TypeUndecl"), arrayInstatiation.Line, arrayInstatiation.Columns));
             return false;
         }
 
@@ -336,8 +336,8 @@ namespace Bengala.Analysis
                 return true;
             }
             _errorListener.Add(
-                new ErrorMessage(
-                    string.Format(ErrorMessage.LoadMessage("Match"), assignExpression.LeftExpression.ReturnType, assignExpression.RightExpression.ReturnType),
+                new AnalysisError(
+                    string.Format(AnalysisError.LoadMessage("Match"), assignExpression.LeftExpression.ReturnType, assignExpression.RightExpression.ReturnType),
                     assignExpression.Line, assignExpression.Columns));
             return false;
         }
@@ -348,14 +348,14 @@ namespace Bengala.Analysis
             forExpression.ReturnType = TigerType.GetType<ErrorType>();
             //si la expresion "from" no es de tipo entero.
             if (forExpression.ExpressionFrom.ReturnType != TigerType.GetType<IntType>())
-                _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("ForInit"), forExpression.VarId), forExpression.Line,
+                _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("ForInit"), forExpression.VarId), forExpression.Line,
                     forExpression.Columns));
             else
             {
                 forExpression.ExpressionTo.Accept(this);
                 // si la expresion "to" no es tipo entero.
                 if (forExpression.ExpressionTo.ReturnType != TigerType.GetType<IntType>())
-                    _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("ForStop"), forExpression.VarId),
+                    _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("ForStop"), forExpression.VarId),
                         forExpression.Line, forExpression.Columns));
                 else
                 {
@@ -363,7 +363,7 @@ namespace Bengala.Analysis
                     forExpression.CurrentScope = sc;
                     if (_scope.HasVar(forExpression.VarId) != ScopeLocation.NotDeclared)
                     {
-                        _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("VarDecl"), forExpression.VarId),
+                        _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("VarDecl"), forExpression.VarId),
                             forExpression.Line, forExpression.Columns));
                         forExpression.ReturnType = TigerType.GetType<ErrorType>();
                         return false;
@@ -410,7 +410,7 @@ namespace Bengala.Analysis
             _scope.CurrentFunction = temp;
 
             if (!functionDeclaration.ExprInstructions.AlwaysReturn && retType != TigerType.GetType<NoType>())
-                _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("FuncDeclRet"), functionDeclaration.FunctionId),
+                _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("FuncDeclRet"), functionDeclaration.FunctionId),
                     functionDeclaration.Line, functionDeclaration.Columns));
             else if (string.IsNullOrEmpty(functionDeclaration.ReturnTypeId) ||
                      functionDeclaration.ExprInstructions.ReturnType.CanConvertTo(
@@ -421,8 +421,8 @@ namespace Bengala.Analysis
             }
             else
                 _errorListener.Add(
-                    new ErrorMessage(
-                        string.Format(ErrorMessage.LoadMessage("Match"), functionDeclaration.ReturnTypeId,
+                    new AnalysisError(
+                        string.Format(AnalysisError.LoadMessage("Match"), functionDeclaration.ReturnTypeId,
                             functionDeclaration.ExprInstructions.ReturnType), functionDeclaration.Line,
                         functionDeclaration.Columns));
             functionDeclaration.ReturnType = TigerType.GetType<ErrorType>();
@@ -441,7 +441,7 @@ namespace Bengala.Analysis
                     negExpression.ReturnType = TigerType.GetType<IntType>();
                     return true;
                 }
-                _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("NegExp"), negExpression.Expression.ReturnType), negExpression.Line,
+                _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("NegExp"), negExpression.Expression.ReturnType), negExpression.Line,
                                                negExpression.Columns));
             }
             negExpression.ReturnType = TigerType.GetType<ErrorType>();
@@ -479,7 +479,7 @@ namespace Bengala.Analysis
         {
             if (_scope.HasType(typeDeclaration.TypeId, out _) != ScopeLocation.NotDeclared)
             {
-                _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("TypeDecl"), typeDeclaration.TypeId), typeDeclaration.Line, typeDeclaration.Columns));
+                _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("TypeDecl"), typeDeclaration.TypeId), typeDeclaration.Line, typeDeclaration.Columns));
                 typeDeclaration.ReturnType = TigerType.GetType<ErrorType>();
                 return false;
             }
@@ -492,7 +492,7 @@ namespace Bengala.Analysis
             whileExpression.ExpressionConditional.Accept(this);
             whileExpression.ReturnType = TigerType.GetType<ErrorType>();
             if (whileExpression.ExpressionConditional.ReturnType != TigerType.GetType<IntType>())
-                _errorListener.Add(new ErrorMessage(ErrorMessage.LoadMessage("IfCond"), whileExpression.Line, whileExpression.Columns));
+                _errorListener.Add(new AnalysisError(AnalysisError.LoadMessage("IfCond"), whileExpression.Line, whileExpression.Columns));
             else
             {
                 //guardo, si hay, el ciclo previo
@@ -515,7 +515,7 @@ namespace Bengala.Analysis
 
             if (!_scope.IsInLoop)
             {
-                _errorListener.Add(new ErrorMessage(ErrorMessage.LoadMessage("Break"),breakStm.Line, breakStm.Columns));
+                _errorListener.Add(new AnalysisError(AnalysisError.LoadMessage("Break"),breakStm.Line, breakStm.Columns));
                 breakStm.ReturnType = TigerType.GetType<ErrorType>();
                 return false;
             }
@@ -551,14 +551,14 @@ namespace Bengala.Analysis
                         functionInvocation.ReturnType = functionInfo.FunctionReturnType;
                         return true;
                     }
-                    message = string.Format(ErrorMessage.LoadMessage("FuncParams"), functionInvocation.FunctionId);
+                    message = string.Format(AnalysisError.LoadMessage("FuncParams"), functionInvocation.FunctionId);
                 }
                 else
-                    message = string.Format(ErrorMessage.LoadMessage("FuncParamsCount"), functionInvocation.FunctionId, functionInvocation.RealParam.Count);
+                    message = string.Format(AnalysisError.LoadMessage("FuncParamsCount"), functionInvocation.FunctionId, functionInvocation.RealParam.Count);
             }
             else
-                message = string.Format(ErrorMessage.LoadMessage("FuncUndecl"), functionInvocation.FunctionId);
-            _errorListener.Add(new ErrorMessage(message, functionInvocation.Line, functionInvocation.Columns));
+                message = string.Format(AnalysisError.LoadMessage("FuncUndecl"), functionInvocation.FunctionId);
+            _errorListener.Add(new AnalysisError(message, functionInvocation.Line, functionInvocation.Columns));
             functionInvocation.ReturnType = TigerType.GetType<ErrorType>();
             return false;
         }
@@ -577,14 +577,14 @@ namespace Bengala.Analysis
                     recordAccess.ReturnType = r[recordAccess.FieldId];
                     return recordAccess.AlwaysReturn = true;
                 }
-                _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("RecField"), r.TypeID, recordAccess.FieldId), recordAccess.Line,
+                _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("RecField"), r.TypeID, recordAccess.FieldId), recordAccess.Line,
                                                recordAccess.Columns));
                 recordAccess.ReturnType = TigerType.GetType<ErrorType>();
                 return false;
             }
             //la expresion no es un record
             recordAccess.ReturnType = TigerType.GetType<ErrorType>();
-            _errorListener.Add(new ErrorMessage(ErrorMessage.LoadMessage("RecAccess"), recordAccess.Line, recordAccess.Columns));
+            _errorListener.Add(new AnalysisError(AnalysisError.LoadMessage("RecAccess"), recordAccess.Line, recordAccess.Columns));
             return false;
         }
 
@@ -609,19 +609,19 @@ namespace Bengala.Analysis
                         if (kvp.Value.ReturnType.CanConvertTo(rt[kvp.Key]))
                             continue;
                         _errorListener.Add(
-                            new ErrorMessage(
-                                string.Format(ErrorMessage.LoadMessage("Match"), kvp.Value.ReturnType, rt[kvp.Key].TypeID),
+                            new AnalysisError(
+                                string.Format(AnalysisError.LoadMessage("Match"), kvp.Value.ReturnType, rt[kvp.Key].TypeID),
                                 recordInstantiation.Line, recordInstantiation.Columns));
                     }
                     else
-                        _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("RecField"), recordInstantiation.Id, kvp.Key), recordInstantiation.Line,
+                        _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("RecField"), recordInstantiation.Id, kvp.Key), recordInstantiation.Line,
                                                        recordInstantiation.Columns));
                     recordInstantiation.ReturnType = TigerType.GetType<ErrorType>();
                 }
                 return recordInstantiation.ReturnType != TigerType.GetType<ErrorType>();
             }
             recordInstantiation.ReturnType = TigerType.GetType<ErrorType>();
-            _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("TypeUndecl"), recordInstantiation.Id), recordInstantiation.Line, recordInstantiation.Columns));
+            _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("TypeUndecl"), recordInstantiation.Id), recordInstantiation.Line, recordInstantiation.Columns));
             return false;
         }
 
@@ -658,9 +658,9 @@ namespace Bengala.Analysis
                                     ScopeLocation.NotDeclared)
                                 {
                                     _errorListener.Insert(savedErrorPos,
-                                                     new ErrorMessage(
+                                                     new AnalysisError(
                                                          string.Format(
-                                                             ErrorMessage.LoadMessage("TypeUndecl"),
+                                                             AnalysisError.LoadMessage("TypeUndecl"),
                                                              savedKvp.Value), recordDeclaration.Line, recordDeclaration.Columns));
                                     recordDeclaration.ReturnType = TigerType.GetType<ErrorType>();
                                 }
@@ -673,7 +673,7 @@ namespace Bengala.Analysis
                     }
                     else
                     {
-                        _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("RecDecl"), kvp.Key, recordDeclaration.TypeId),
+                        _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("RecDecl"), kvp.Key, recordDeclaration.TypeId),
                                                        recordDeclaration.Line, recordDeclaration.Columns));
                     }
                 }
@@ -807,8 +807,8 @@ namespace Bengala.Analysis
                 //esto lo garantiza haber organizado las declaraciones
                 if (_scope.HasType(fDecl.ReturnTypeId, out ret) == ScopeLocation.NotDeclared)
                 {
-                    _errorListener.Add(new ErrorMessage(
-                                      string.Format(ErrorMessage.LoadMessage("TypeUndecl"), fDecl.ReturnTypeId), fDecl.Line,
+                    _errorListener.Add(new AnalysisError(
+                                      string.Format(AnalysisError.LoadMessage("TypeUndecl"), fDecl.ReturnTypeId), fDecl.Line,
                                       fDecl.Columns));
                     fDecl.ReturnType = TigerType.GetType<ErrorType>();
                     return false;
@@ -816,8 +816,8 @@ namespace Bengala.Analysis
                 if (!ret.IsLegalType)
                 {
                     //TODO: Hasta que punto interesa lanzar este error??
-                    _errorListener.Add(new ErrorMessage(
-                                      string.Format(ErrorMessage.LoadMessage("InavalidRet"), fDecl.ReturnTypeId), fDecl.Line,
+                    _errorListener.Add(new AnalysisError(
+                                      string.Format(AnalysisError.LoadMessage("InavalidRet"), fDecl.ReturnTypeId), fDecl.Line,
                                       fDecl.Columns));
                     fDecl.ReturnType = TigerType.GetType<ErrorType>();
                     return false;
@@ -834,7 +834,7 @@ namespace Bengala.Analysis
                     //verificar si existe el tipo del parametro.
                     if (_scope.HasType(nameType.Value, out t) == ScopeLocation.NotDeclared)
                     {
-                        _errorListener.Add(new ErrorMessage(
+                        _errorListener.Add(new AnalysisError(
                             $"Type {nameType.Value} in parameter {fDecl.FunctionId} is not defined", fDecl.Line, fDecl.Columns));
                         fDecl.ReturnType = TigerType.GetType<ErrorType>();
                         return false;
@@ -852,7 +852,7 @@ namespace Bengala.Analysis
             }
 
             //ya habia una funcion con ese nombre
-            _errorListener.Add(new ErrorMessage(string.Format(ErrorMessage.LoadMessage("FuncDecl"), fDecl.FunctionId), fDecl.Line,
+            _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("FuncDecl"), fDecl.FunctionId), fDecl.Line,
                                            fDecl.Columns));
             return false;
         }
@@ -863,7 +863,7 @@ namespace Bengala.Analysis
             //get from the scope the function signature.
             if (_scope.HasFunction(fDecl.FunctionId) == ScopeLocation.NotDeclared)
             {
-                _errorListener.Add(ErrorMessage.FunctionNotDeclared(fDecl));
+                _errorListener.Add(AnalysisError.FunctionNotDeclared(fDecl));
                 return false;
             }
             var funInfo = _scope.GetFunction(fDecl.FunctionId);
@@ -872,14 +872,14 @@ namespace Bengala.Analysis
                 //existen dos parametros con el mismo nombre.
                 if (_scope.HasVar(parameter.Key) == ScopeLocation.DeclaredLocal)
                 {
-                    _errorListener.Add(ErrorMessage.FunctionParameterAlreadyExists(fDecl, parameter));
+                    _errorListener.Add(AnalysisError.FunctionParameterAlreadyExists(fDecl, parameter));
                     fDecl.ReturnType = TigerType.GetType<ErrorType>();
                     return false;
                 }
                 //existe una variable con el mismo nombre que este parametro en un ambito mas externo
                 if (_scope.HasVar(parameter.Key) != ScopeLocation.NotDeclared)
                 {
-                    _errorListener.Add(ErrorMessage.VariableHidesAnotherOne(fDecl));
+                    _errorListener.Add(AnalysisError.VariableHidesAnotherOne(fDecl));
                 }
                 //se anade este valor al scope de la funcion
                 var parameterTypeId = fDecl.ParameterList.First(x => x.Key == parameter.Key).Value;

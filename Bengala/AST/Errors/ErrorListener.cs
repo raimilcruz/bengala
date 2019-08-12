@@ -3,25 +3,25 @@
 namespace Bengala.AST.Errors
 {
     public interface IErrorListener {
-        void Add(ErrorMessage msg);
-        void Insert(int pos, ErrorMessage msg);
+        void Add(AnalysisError msg);
+        void Insert(int pos, AnalysisError msg);
         int Count { get;}
     }
 
     public class BengalaBaseErrorListener : IErrorListener
     {
-        readonly List<ErrorMessage> _errors = new List<ErrorMessage>();
+        readonly List<AnalysisError> _errors = new List<AnalysisError>();
 
-        public IEnumerable<ErrorMessage> Errors => _errors;
+        public IEnumerable<AnalysisError> Errors => _errors;
 
-        public void Insert(int pos, ErrorMessage msg)
+        public void Insert(int pos, AnalysisError msg)
         {
             _errors.Insert(pos, msg);
         }
 
         public int Count => _errors.Count;
 
-        public void Add(ErrorMessage msg)
+        public void Add(AnalysisError msg)
         {
             _errors.Add(msg);
         }

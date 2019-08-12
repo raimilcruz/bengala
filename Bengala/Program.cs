@@ -49,7 +49,7 @@ namespace Bengala
                     Console.WriteLine("{0} issues",erroresWarning.Count);
                 foreach (var item in erroresWarning)
                     Console.Error.WriteLine("{0} : line ({1},{2}) {3}",
-                                            (item is ErrorMessage) ? "Error" : "Warning", item.Line, item.Column,
+                                            (item is AnalysisError) ? "Error" : "Warning", item.Line, item.Column,
                                             item.InnerMessage);
             }
         }

@@ -10,10 +10,10 @@ namespace Bengala
     {
         public BengalaLexer(ICharStream iCharStream) : base(iCharStream)
         {
-            Errors = new List<ErrorMessage>();
+            Errors = new List<AnalysisError>();
         }
 
-        public List<ErrorMessage> Errors { get; private set; }
+        public List<AnalysisError> Errors { get; private set; }
 
         //public override string GetErrorMessage(RecognitionException e, string[] tokenNames)
         //{
