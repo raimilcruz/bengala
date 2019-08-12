@@ -59,7 +59,7 @@ namespace Bengala.Analysis
                 return true;
             }
             //error en caso q la variable no este definida
-            _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("VarUndecl"), ast.VarId), ast.Line, ast.Columns));
+            _errorListener.Add(AnalysisError.VariableIsNotDefined(ast,ast.VarId));
             ast.ReturnType = TigerType.GetType<ErrorType>();
             return false;
         }
@@ -170,7 +170,7 @@ namespace Bengala.Analysis
             }
             if (!expr.ExpressionValue.ReturnType.IsLegalType)
             {
-                _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("InferType"), expr.Id), expr.Line, expr.Columns));
+                _errorListener.Add(AnalysisError.TypeCannotBeInferred(expr,expr.Id));
                 expr.ReturnType = TigerType.GetType<ErrorType>();
                 _scope.AddVar(expr.Id, TigerType.GetType<ErrorType>().TypeID);
                 return false;
@@ -569,14 +569,13 @@ namespace Bengala.Analysis
                     recordAccess.ReturnType = r[recordAccess.FieldId];
                     return recordAccess.AlwaysReturn = true;
                 }
-                _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("RecField"), r.TypeID, recordAccess.FieldId), recordAccess.Line,
-                                               recordAccess.Columns));
+                _errorListener.Add(AnalysisError.RecordFieldDoNotExists(recordAccess));
                 recordAccess.ReturnType = TigerType.GetType<ErrorType>();
                 return false;
             }
             //la expresion no es un record
             recordAccess.ReturnType = TigerType.GetType<ErrorType>();
-            _errorListener.Add(new AnalysisError(AnalysisError.LoadMessage("RecAccess"), recordAccess.Line, recordAccess.Columns));
+            _errorListener.Add(AnalysisError.ExpressionIsNotARecord(recordAccess));
             return false;
         }
 
