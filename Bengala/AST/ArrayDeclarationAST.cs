@@ -35,5 +35,7 @@ namespace Bengala.AST
         {
             return visitor.VisitArrayDeclaration(this);
         }
+
+        public override IEnumerable<AstNode> Children => new AstNode[0];
     }
 }

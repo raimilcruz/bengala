@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Bengala.AST
 {
-    public class FormalParameterList: AstNode
+    public class FormalParameterList : AstNode, IEnumerable<FormalParameter>
     {
         public List<FormalParameter> Parameters { get; private set; }
 
@@ -11,14 +12,25 @@ namespace Bengala.AST
             Parameters = parameters;
         }
 
-        public FormalParameterList():this(new List<FormalParameter>())
+        public FormalParameterList() : this(new List<FormalParameter>())
         {
-            
+
         }
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {
             return visitor.VisitFormalParameterList(this);
+        }
+
+        public override IEnumerable<AstNode> Children => Parameters;
+        public IEnumerator<FormalParameter> GetEnumerator()
+        {
+            return Parameters.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 
@@ -27,7 +39,7 @@ namespace Bengala.AST
         public string Name { get; private set; }
         public string TypeIdentifier { get; private set; }
 
-        public FormalParameter(string name,string typeIdentifier)
+        public FormalParameter(string name, string typeIdentifier)
         {
             Name = name;
             TypeIdentifier = typeIdentifier;
@@ -37,5 +49,7 @@ namespace Bengala.AST
         {
             return visitor.VisitFormalParameter(this);
         }
+
+        public override IEnumerable<AstNode> Children => new AstNode[] { };
     }
 }

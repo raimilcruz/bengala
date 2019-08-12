@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
+using Bengala.AST.SemanticModel;
 using Bengala.AST.SemanticsUtils;
 
 #endregion
@@ -33,6 +34,7 @@ namespace Bengala.AST
       
         public bool IsForeignVar { get; set; }
 
+        public SemanticElement SemanticElement { get; set; }
 
         public override T Accept<T>(AstVisitor<T> visitor)
         {
