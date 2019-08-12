@@ -163,7 +163,7 @@ namespace Bengala.Analysis
                     return true;
                 }
                 // no existe el tipo de la variable
-                _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("TypeUndecl"), expr.TypeId), expr.Line, expr.Columns));
+                _errorListener.Add(AnalysisError.TypeIsNotDefined(expr,expr.TypeId));
                 expr.ReturnType = TigerType.GetType<ErrorType>();
                 _scope.AddVar(expr.Id, TigerType.GetType<ErrorType>().TypeID);
                 return false;
@@ -208,11 +208,7 @@ namespace Bengala.Analysis
                 {
                     if (sender.HasType(alias.AliasToWho) == ScopeLocation.NotDeclared)
                     {
-                        _errorListener.Insert(savedErrorPos,
-                                         new AnalysisError(
-                                             string.Format(
-                                                 AnalysisError.LoadMessage("TypeUndecl"),
-                                                 alias.AliasToWho), alias.Line, alias.Columns));
+                        _errorListener.Insert(savedErrorPos,AnalysisError.TypeIsNotDefined(alias,alias.AliasToWho));
                         alias.ReturnType = TigerType.GetType<ErrorType>();
                     }
                 };
@@ -273,11 +269,7 @@ namespace Bengala.Analysis
                 {
                     if (sender.HasType(arrayDeclaration.BaseTypeID) == ScopeLocation.NotDeclared)
                     {
-                        _errorListener.Insert(savedErrorPos,
-                                         new AnalysisError(
-                                             string.Format(
-                                                 AnalysisError.LoadMessage("TypeUndecl"),
-                                                 arrayDeclaration.BaseTypeID), arrayDeclaration.Line, arrayDeclaration.Columns));
+                        _errorListener.Insert(savedErrorPos,AnalysisError.TypeIsNotDefined(arrayDeclaration,arrayDeclaration.BaseTypeID));
                         arrayDeclaration.ReturnType = TigerType.GetType<ErrorType>();
                     }
                 };
@@ -319,7 +311,7 @@ namespace Bengala.Analysis
                     return false;
                 }
             }
-            _errorListener.Add(new AnalysisError(AnalysisError.LoadMessage("TypeUndecl"), arrayInstatiation.Line, arrayInstatiation.Columns));
+            _errorListener.Add(AnalysisError.TypeIsNotDefined(arrayInstatiation,arrayInstatiation.ArrayTypeIdentifier));
             return false;
         }
 
@@ -621,7 +613,7 @@ namespace Bengala.Analysis
                 return recordInstantiation.ReturnType != TigerType.GetType<ErrorType>();
             }
             recordInstantiation.ReturnType = TigerType.GetType<ErrorType>();
-            _errorListener.Add(new AnalysisError(string.Format(AnalysisError.LoadMessage("TypeUndecl"), recordInstantiation.Id), recordInstantiation.Line, recordInstantiation.Columns));
+            _errorListener.Add(AnalysisError.TypeIsNotDefined(recordInstantiation,recordInstantiation.Id));
             return false;
         }
 
@@ -807,9 +799,7 @@ namespace Bengala.Analysis
                 //esto lo garantiza haber organizado las declaraciones
                 if (_scope.HasType(fDecl.ReturnTypeId, out ret) == ScopeLocation.NotDeclared)
                 {
-                    _errorListener.Add(new AnalysisError(
-                                      string.Format(AnalysisError.LoadMessage("TypeUndecl"), fDecl.ReturnTypeId), fDecl.Line,
-                                      fDecl.Columns));
+                    _errorListener.Add(AnalysisError.TypeIsNotDefined(fDecl, fDecl.ReturnTypeId)); 
                     fDecl.ReturnType = TigerType.GetType<ErrorType>();
                     return false;
                 }
@@ -872,7 +862,7 @@ namespace Bengala.Analysis
                 //existen dos parametros con el mismo nombre.
                 if (_scope.HasVar(parameter.Key) == ScopeLocation.DeclaredLocal)
                 {
-                    _errorListener.Add(AnalysisError.FunctionParameterAlreadyExists(fDecl, parameter));
+                    _errorListener.Add(AnalysisError.FunctionParameterAlreadyExists(fDecl, parameter.Key));
                     fDecl.ReturnType = TigerType.GetType<ErrorType>();
                     return false;
                 }
