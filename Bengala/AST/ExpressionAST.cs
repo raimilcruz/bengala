@@ -59,6 +59,8 @@ namespace Bengala.AST
 
     public abstract class Declaration : ExpressionAst
     {
+        public abstract string Id { get; }
+
         protected Declaration()
         {
             

@@ -39,18 +39,14 @@ namespace Bengala
 
             var bengalaCompiler = new BengalaCompiler();
             var erroresWarning = bengalaCompiler.Compile(fileName);
-            var errores = from e in erroresWarning
-                                           where e is ErrorMessage
-                                           select e;
-            var warning = from w in erroresWarning
-                                           where w is WarningMessage
-                                           select w;
+
+            //TODO: Implement proper error printing (taking into account the error severity)
             if (erroresWarning != null)
             {
                 if (erroresWarning.Count == 0)
                     Console.WriteLine("Build Success");
                 else
-                    Console.WriteLine("{0} errors  {1} warning", errores.Count(), warning.Count());
+                    Console.WriteLine("{0} issues",erroresWarning.Count);
                 foreach (var item in erroresWarning)
                     Console.Error.WriteLine("{0} : line ({1},{2}) {3}",
                                             (item is ErrorMessage) ? "Error" : "Warning", item.Line, item.Column,
